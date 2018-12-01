@@ -4,6 +4,7 @@ function insertData() {
   var form = document.getElementById("inputForm");
   var data = new FormData(form);
 
+
   ajax.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
       loadData(this);

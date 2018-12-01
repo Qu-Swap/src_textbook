@@ -35,6 +35,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use("/css", express.static(__dirname + "/css"));
 app.use("/js", express.static(__dirname + "/js"));
 app.use("/sell.html", express.static(__dirname + "/sell.html"));
+app.use("/buy.html", express.static(__dirname + "/buy.html"));
 
 // Send selling homepage
 app.get("/", function(req, res) {
@@ -48,11 +49,23 @@ app.get("/getData", function(req, res) {
         throw err;
       }
       rows.forEach(function (row) {
-            console.log(row.name, row.book, row.isbn, row.price, row.email);
+          console.log(row.name, row.book, row.isbn, row.price, row.email);
       });
       res.send(rows);
-    });
+  });
 });
+
+// app.get("/getDatabuy", function(req, res) {
+//   db.all("SELECT name, book, isbn, price, email FROM buyers", (err, rowss) => {
+//       if (err){
+//         throw err;
+//       }
+//       rowss.forEach(function (row) {
+//           console.log(row.name, row.book, row.isbn, row.price, row.email);
+//       });
+//       res.send(rowss);
+//   });
+// });
 
 // POST request for insertion
 app.post("/postData", function(req, res) {
