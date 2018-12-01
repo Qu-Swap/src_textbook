@@ -3,7 +3,7 @@
   background-size: 300px 300px;
   background-repeat: no-repeat;
   margin:auto;
-  text-align: center;
+  text-align: inherit;
 }
 
 body {
@@ -15,11 +15,13 @@ body {
 h1{
   font-family: "Georgia", Times, serif !important;
   font-size: 100px !important;
+  font-style: oblique;
+  margin-left: 50px
 }
 
 .sell-btn{
   background-color: #BD2026;
-  margin: 50px;
+  margin: 40px;
   color: white !important
 }
 
