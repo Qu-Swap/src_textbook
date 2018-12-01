@@ -18,10 +18,10 @@ let db = new sqlite3.Database('dbtest.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN
 });
 db.parallelize(() => {
   // Queries scheduled here will be serialized.
-  db.run("CREATE TABLE sellers(name TEXT, book TEXT, isbn TEXT, price DOUBLE, email TEXT, password TEXT)", (err) =>{
+  db.run("CREATE TABLE sellers(name TEXT, bookName TEXT, isbn TEXT, price DOUBLE, email TEXT, password TEXT)", (err) =>{
     if (err){}
   });
-  db.run("CREATE TABLE buyers(name TEXT, book TEXT, isbn TEXT, price DOUBLE, email TEXT, password TEXT)", (err) =>{
+  db.run("CREATE TABLE buyers(name TEXT, bookName TEXT, isbn TEXT, price DOUBLE, email TEXT, password TEXT)", (err) =>{
     if (err){}
   });
 });
@@ -44,12 +44,12 @@ app.get("/", function(req, res) {
 
 // GET request for getting data
 app.get("/getData", function(req, res) {
-  db.all("SELECT name, book, isbn, price, email FROM sellers", (err, rows) => {
+  db.all("SELECT name, bookName, isbn, price, email FROM sellers", (err, rows) => {
       if (err){
         throw err;
       }
       rows.forEach(function (row) {
-          console.log(row.name, row.book, row.isbn, row.price, row.email);
+          console.log(row.name, row.bookName, row.isbn, row.price, row.email);
       });
       res.send(rows);
   });
@@ -76,13 +76,13 @@ app.post("/postData", function(req, res) {
   var email = req.body.email;
   var password = req.body.password;
   var data = [name, bookName, isbn, price, email, password];
-  db.run("INSERT INTO sellers(name, book, isbn, price, email, password) VALUES(?, ?, ?, ?, ?, ?)", data);
-  db.all("SELECT name, book, isbn, price, email FROM sellers", (err, rows) => {
+  db.run("INSERT INTO sellers(name, bookName, isbn, price, email, password) VALUES(?, ?, ?, ?, ?, ?)", data);
+  db.all("SELECT name, bookName, isbn, price, email FROM sellers", (err, rows) => {
       if (err){
         throw err;
       }
       rows.forEach(function (row) {
-        console.log(row.name, row.book, row.isbn, row.price, row.email);
+        console.log(row.name, row.bookName, row.isbn, row.price, row.email);
       });
       res.send(rows);
     });
