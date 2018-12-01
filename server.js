@@ -40,6 +40,7 @@ app.post("/postData", function(req, res) {
     data = JSON.parse(data);
     data.push({"name": name, "bookName": bookName, "price": price});
     console.log(data);
+    res.send(data);
 
     fs.writeFile(path, JSON.stringify(data), "utf8", function(err) {
       res.end();

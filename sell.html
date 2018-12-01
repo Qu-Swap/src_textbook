@@ -2,7 +2,8 @@
 <html>
   <head>
     <title>Textbook Selling Page</title>
-    <script src="js/getdata.js"></script>
+    <script src="js/getData.js"></script>
+    <script src="js/updateData.js"></script>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
@@ -26,7 +27,7 @@
         <input type="text" name="price">
         <input type="submit" value="Submit">
       </form> -->
-      <form method="POST" action="/postData">
+      <form id="inputForm" method="POST" onsubmit="updateData(); return false">
         <div class="form-group">
           <label for="exampleInputName1">Seller name</label>
           <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name">
