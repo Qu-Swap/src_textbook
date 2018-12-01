@@ -1,25 +1,24 @@
-function insertData() {
+function insertData(postReq, tableID) {
   var ajax =  new XMLHttpRequest();
 
   var form = document.getElementById("inputForm");
   var data = new FormData(form);
 
-
   ajax.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
-      loadData(this);
+      loadData(this, tableID);
     }
   }
 
-  ajax.open("POST", "/postData", true);
+  ajax.open("POST", postReq, true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   ajax.send(data_to_string(data));
   form.reset();
 }
 
-function updateData() {
+function updateData(postReq, tableID) {
   try {
-    insertData();
+    insertData(postReq, tableID);
   }
   catch(e) {
     alert("Error getting data!");

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/sell.css" type="text/css">
   </head>
 
-  <body onload="getData(); init()" class="container" data-spy="scroll" data-target="#navbarSupportedContent" data-offset="150">
+  <body onload="getData('/getSellData', 'sellTable'); getData('/getBuyData', 'buyTable')" class="container" data-spy="scroll" data-target="#navbarSupportedContent" data-offset="150">
     <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top" id="navbar">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -39,7 +39,7 @@
     <table id="buyTable" class="table table-striped table-bordered"></table>
     <p style="font-weight:bold">New Selling Offer</p>
     <div id="newEntry">
-      <form id="inputForm" method="POST" onsubmit="updateData(); return false">
+      <form id="inputForm" method="POST" onsubmit="updateData('/postSellData', 'sellTable'); return false">
         <div class="form-group">
           <label for="exampleInputName1">Seller name</label>
           <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name">
