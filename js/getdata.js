@@ -9,7 +9,7 @@ function requestData() {
     }
   }
 
-  ajax.open("GET", "data/sellOffers.json", true);
+  ajax.open("GET", "/getData", true);
   ajax.send();
 }
 
@@ -44,7 +44,7 @@ function loadData(ajax) {
 
   for(var i = 0; i < sellData.length; i++) {
     var currentEntry = sellData[i];
-    
+
     htmlStr += "<tr>\
     <td>" + currentEntry["name"] + "</td>\
     <td>" + currentEntry["bookName"] + "</td>\
