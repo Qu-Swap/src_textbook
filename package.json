@@ -1,0 +1,26 @@
+{
+  "name": "testserver",
+  "version": "1.0.0",
+  "description": "test database",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "nodemon": "^1.18.7",
+    "sqlite3": "^4.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/askdfjlas/src_textbook.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/askdfjlas/src_textbook/issues"
+  },
+  "homepage": "https://github.com/askdfjlas/src_textbook#readme"
+}
