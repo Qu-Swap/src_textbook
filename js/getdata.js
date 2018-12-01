@@ -1,4 +1,5 @@
 var sellData = [];
+var buyData = [];
 
 function requestData() {
   var ajax = new XMLHttpRequest();

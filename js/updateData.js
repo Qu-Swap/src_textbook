@@ -13,6 +13,7 @@ function insertData() {
   ajax.open("POST", "/postData", true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   ajax.send(data_to_string(data));
+  form.reset();
 }
 
 function updateData() {
