@@ -1,7 +1,6 @@
 .container-fluid{
   padding: 250px 0;
-  height: 100%;
-  background-color: #FEBABA;
+  background-size: auto;
   margin:auto;
   text-align: center;
 }
@@ -17,8 +16,18 @@ h1{
   color: white !important
 }
 
+.sell-btn:hover {
+    background-color: #f44336;
+    color: white;
+}
+
 .buy-btn{
   background-color: white;
   margin: 50px;
   color: #BD2026 !important
+}
+
+.buy-btn:hover {
+    background-color: #e7e7e7;
+    color: #BD2026;
 }
