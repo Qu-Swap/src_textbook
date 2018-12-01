@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Textbook Selling Page</title>
+    <script src="js/getdata.js"></script>
+    <link rel="stylesheet" href="css/styles.css" type="text/css">
+  </head>
+  <body onload="getData()">
+    <h1 style="text-align: center">Selling Offers</h1>
+    <table id="sellTable"></table>
+    <p style="font-weight:bold">New offer</p>
+    <div id="newEntry">
+      <form action="newEntry()">
+        <p>Seller name</p>
+        <input type="text" name="name">
+        <p>Textbook name</p>
+        <input type="text" name="bookName">
+        <p>Price</p>
+        <input type="text" name="price">
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </body>
+</html>
