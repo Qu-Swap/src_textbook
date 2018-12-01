@@ -33,7 +33,9 @@ function loadData(ajax) {
     htmlStr += "<tr>\
     <th>Seller Name</th>\
     <th>Textbook Name</th>\
-    <th>Price (USD)</th>\
+    <th>ISBN</th>\
+    <th>Price</th>\
+    <th>Email</th>\
     </tr>";
   }
   else {
@@ -48,7 +50,9 @@ function loadData(ajax) {
     htmlStr += "<tr>\
     <td>" + currentEntry["name"] + "</td>\
     <td>" + currentEntry["bookName"] + "</td>\
+    <td>" + currentEntry["isbn"] + "</td>\
     <td>" + currentEntry["price"] + "</td>\
+    <td>" + currentEntry["email"] + "</td>\
     </tr>";
   }
 

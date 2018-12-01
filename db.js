@@ -8,13 +8,16 @@ let db = new sqlite3.Database('dbtest.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN
 
 db.serialize(() => {
   // Queries scheduled here will be serialized.
-  db.run("CREATE TABLE sellers(name TEXT, book TEXT, price DOUBLE)", (err) =>{
+  db.run("CREATE TABLE sellers(name TEXT, book TEXT, isbn TEXT, price DOUBLE, email TEXT, password TEXT)", (err) =>{
     if (err){}
   });
   var name = 'kdai';
   var bookName = "as you like it";
+  var isbn = "xxxxxx";
   var money = 10000;
-  db.run("INSERT INTO sellers(name, book, price) VALUES(?, ?, ?)", [name, bookName, money])
+  var email = "example@email.com"
+  var password = "123456"
+  db.run("INSERT INTO sellers(name, book, isbn, price, email, password) VALUES(?, ?, ?, ?, ?, ?)", [name, bookName, isbn, money, email, passwords])
     .each("SELECT name FROM sellers", (err, row) => {
       if (err){
         throw err;
