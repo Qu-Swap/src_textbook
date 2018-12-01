@@ -37,8 +37,9 @@ function loadData(ajax, tableID) {
 
     htmlStr += "<th>Textbook Name</th>\
     <th>ISBN</th>\
-    <th>Price</th>\
+    <th>Price (USD)</th>\
     <th>Email</th>\
+    <th>Delete</th>\
     </tr>";
   }
   else {
@@ -56,6 +57,8 @@ function loadData(ajax, tableID) {
     <td>" + currentEntry["isbn"] + "</td>\
     <td>" + currentEntry["price"] + "</td>\
     <td>" + currentEntry["email"] + "</td>\
+    <td><button id='del' onclick=\"deleteData('/deleteSellData', 'sellTable'," +
+    (i + 1).toString() + ")\">X</button</td>\
     </tr>";
   }
 

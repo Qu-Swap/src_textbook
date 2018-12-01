@@ -42,8 +42,8 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + "/welcome.html");
 });
 
-// GET request for getting selling data
-app.get("/getSellData", function(req, res) {
+// Middleware function for getting sell data
+function get_sell_data(req, res) {
   db.all("SELECT name, bookName, isbn, price, email FROM sellers", (err, rows) => {
       if (err){
         throw err;
@@ -53,10 +53,10 @@ app.get("/getSellData", function(req, res) {
       });
       res.send(rows);
   });
-});
+}
 
-// GET request for getting buying data
-app.get("/getBuyData", function(req, res) {
+// Middleware function for getting buy data
+function get_buy_data(req, res) {
   db.all("SELECT name, bookName, isbn, price, email FROM buyers", (err, rows) => {
       if (err){
         throw err;
@@ -66,21 +66,15 @@ app.get("/getBuyData", function(req, res) {
       });
       res.send(rows);
   });
-});
+}
 
-// app.get("/getDatabuy", function(req, res) {
-//   db.all("SELECT name, book, isbn, price, email FROM buyers", (err, rowss) => {
-//       if (err){
-//         throw err;
-//       }
-//       rowss.forEach(function (row) {
-//           console.log(row.name, row.book, row.isbn, row.price, row.email);
-//       });
-//       res.send(rowss);
-//   });
-// });
+// GET request for getting selling data
+app.get("/getSellData", get_sell_data);
 
-// POST request for insertion
+// GET request for getting buying data
+app.get("/getBuyData", get_buy_data);
+
+// POST request for inserting sell data
 app.post("/postSellData", function(req, res) {
   var name = req.body.name;
   var bookName = req.body.bookName;
@@ -89,19 +83,20 @@ app.post("/postSellData", function(req, res) {
   var email = req.body.email;
   var password = req.body.password;
   var data = [name, bookName, isbn, price, email, password];
+
   db.run("INSERT INTO sellers(name, bookName, isbn, price, email, password) VALUES(?, ?, ?, ?, ?, ?)", data);
   db.all("SELECT name, bookName, isbn, price, email FROM sellers", (err, rows) => {
       if (err){
         throw err;
       }
       rows.forEach(function (row) {
-        console.log(row.name, row.bookName, row.isbn, row.price, row.email);
+          console.log(row.name, row.bookName, row.isbn, row.price, row.email);
       });
       res.send(rows);
-    });
+  });
 });
 
-// POST request for insertion
+// POST request for inserting buy data
 app.post("/postBuyData", function(req, res) {
   var name = req.body.name;
   var bookName = req.body.bookName;
@@ -110,19 +105,37 @@ app.post("/postBuyData", function(req, res) {
   var email = req.body.email;
   var password = req.body.password;
   var data = [name, bookName, isbn, price, email, password];
+
   db.run("INSERT INTO buyers(name, bookName, isbn, price, email, password) VALUES(?, ?, ?, ?, ?, ?)", data);
   db.all("SELECT name, bookName, isbn, price, email FROM buyers", (err, rows) => {
       if (err){
         throw err;
       }
       rows.forEach(function (row) {
-        console.log(row.name, row.bookName, row.isbn, row.price, row.email);
+          console.log(row.name, row.bookName, row.isbn, row.price, row.email);
       });
       res.send(rows);
-    });
+  });
 });
+
+// POST request for deleting sell data
+app.post('/deleteSellData', function(req, res) {
+  var rowid = req.body.rowid;
+
+  db.run("DELETE FROM sellers WHERE rowid = " + rowid.toString());
+  db.run("UPDATE sellers SET rowid = rowid - 1 WHERE rowid > " + rowid.toString());
+  db.all("SELECT name, bookName, isbn, price, email FROM sellers", (err, rows) => {
+      if (err){
+        throw err;
+      }
+      rows.forEach(function (row) {
+          console.log(row.name, row.bookName, row.isbn, row.price, row.email);
+      });
+      res.send(rows);
+  });
+})
 
 // Listen on the server
 server.listen(8080, function() {
-  console.log("Server running on port 8081.")
+  console.log("Server running on port 8080.")
 });
