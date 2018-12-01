@@ -1,6 +1,7 @@
 .container-fluid{
   padding: 250px 0;
-  background-size: auto;
+  background-size: 300px 300px;
+  background-repeat: no-repeat;
   margin:auto;
   text-align: center;
 }
