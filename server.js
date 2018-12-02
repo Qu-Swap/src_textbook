@@ -121,17 +121,27 @@ app.post("/postBuyData", function(req, res) {
 // POST request for deleting sell data
 app.post('/deleteSellData', function(req, res) {
   var rowid = req.body.rowid;
+  var password = req.body.password;
 
-  db.run("DELETE FROM sellers WHERE rowid = " + rowid.toString());
-  db.run("UPDATE sellers SET rowid = rowid - 1 WHERE rowid > " + rowid.toString());
-  db.all("SELECT name, bookName, isbn, price, email FROM sellers", (err, rows) => {
-      if (err){
-        throw err;
-      }
-      rows.forEach(function (row) {
-          console.log(row.name, row.bookName, row.isbn, row.price, row.email);
-      });
-      res.send(rows);
+  db.all("SELECT password FROM sellers WHERE rowid = " + rowid.toString(), (err, rows) => {
+    if (err){
+      throw err;
+    }
+
+    if(password == rows[0].password) {
+      db.run("DELETE FROM sellers WHERE rowid = " + rowid.toString());
+      db.run("UPDATE sellers SET rowid = rowid - 1 WHERE rowid > " + rowid.toString());
+    }
+    
+    db.all("SELECT name, bookName, isbn, price, email FROM sellers", (err, rows) => {
+        if (err){
+          throw err;
+        }
+        rows.forEach(function (row) {
+            console.log(row.name, row.bookName, row.isbn, row.price, row.email);
+        });
+        res.send(rows);
+    });
   });
 })
 
