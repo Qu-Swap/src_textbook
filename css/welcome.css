@@ -1,24 +1,42 @@
 .container-fluid{
   padding: 250px 0;
-  height: 100%;
-  background-color: #FEBABA;
+  background-size: 300px 300px;
+  background-repeat: no-repeat;
   margin:auto;
-  text-align: center;
+  text-align: inherit;
+}
+
+body {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: black;
 }
 
 h1{
   font-family: "Georgia", Times, serif !important;
-  font-size: 50px !important;
+  font-size: 100px !important;
+  font-style: oblique;
+  margin-left: 50px
 }
 
 .sell-btn{
   background-color: #BD2026;
-  margin: 50px;
+  margin: 40px;
   color: white !important
+}
+
+.sell-btn:hover {
+    background-color: #f44336;
+    color: white;
 }
 
 .buy-btn{
   background-color: white;
   margin: 50px;
   color: #BD2026 !important
+}
+
+.buy-btn:hover {
+    background-color: #e7e7e7;
+    color: #BD2026;
 }
