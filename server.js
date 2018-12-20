@@ -29,7 +29,7 @@ db.parallelize(() => {
 // body-parser
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: true}));
 
 // Static elements
 app.use("/css", express.static(__dirname + "/css"));
@@ -128,20 +128,23 @@ app.post('/deleteSellData', function(req, res) {
       throw err;
     }
 
-    if(password == rows[0].password) {
+    if(password === rows[0].password) {
       db.run("DELETE FROM sellers WHERE rowid = " + rowid.toString());
       db.run("UPDATE sellers SET rowid = rowid - 1 WHERE rowid > " + rowid.toString());
+      db.all("SELECT name, bookName, isbn, price, email FROM sellers", (err, rows) => {
+          if (err){
+            throw err;
+          }
+          rows.forEach(function (row) {
+              console.log(row.name, row.bookName, row.isbn, row.price, row.email);
+          });
+          res.send(rows);
+      });
     }
-    
-    db.all("SELECT name, bookName, isbn, price, email FROM sellers", (err, rows) => {
-        if (err){
-          throw err;
-        }
-        rows.forEach(function (row) {
-            console.log(row.name, row.bookName, row.isbn, row.price, row.email);
-        });
-        res.send(rows);
-    });
+    else {
+      res.send();
+    }
+
   });
 })
 

@@ -3,10 +3,12 @@ function removeData(deleteReq, tableID, rownum, password) {
 
   ajax.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
-      loadData(this, tableID);
-
-      console.log(this.responseText);
-      return this.responseText;
+      if(!this.responseText) {
+        alert("Incorrect password.")
+      }
+      else {
+        loadData(this, tableID);
+      }
     }
   }
 
@@ -20,11 +22,10 @@ function deleteData(deleteReq, tableID, rownum) {
   var password = prompt("Please input the password.");
 
   try {
-    if(!removeData(deleteReq, tableID, rownum, password))
-      alert("Incorrect password.")
+    removeData(deleteReq, tableID, rownum, password);
   }
   catch(e) {
-    alert("Error getting data!");
+    alert("Error deleting data!");
     console.log(e.title + "\n" + e.messsage);
   }
 }
