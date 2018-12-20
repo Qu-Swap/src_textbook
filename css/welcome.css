@@ -16,7 +16,23 @@ h1{
   font-family: "Georgia", Times, serif !important;
   font-size: 100px !important;
   font-style: oblique;
-  margin-left: 50px
+  margin-left: 50px;
+  margin-bottom: 0px;
+}
+
+h3{
+  font-family:inherit;
+  font-size: 30px !important;
+  font-style:normal;
+  margin-left: 50px;
+  margin-bottom: 0px;
+}
+
+h7{
+  font-family:monospace;
+  font-size: 10px !important;
+  font-style:normal;
+  margin-left: 600px
 }
 
 .sell-btn{
