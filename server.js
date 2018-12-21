@@ -34,12 +34,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Static elements
 app.use("/css", express.static(__dirname + "/css"));
 app.use("/js", express.static(__dirname + "/js"));
-app.use("/sell.html", express.static(__dirname + "/sell.html"));
-app.use("/buy.html", express.static(__dirname + "/buy.html"));
+app.use("/", express.static(__dirname + "/html"));
 
 // Send homepage
 app.get("/", function(req, res) {
-  res.sendFile(__dirname + "/welcome.html");
+  res.sendFile(__dirname + "/html/welcome.html");
 });
 
 // Middleware function for getting sell data
