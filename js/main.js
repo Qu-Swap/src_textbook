@@ -1,6 +1,11 @@
 const SELLREQUEST = ["/postSellData", "sellTable"];
 const BUYREQUEST = ["/postBuyData", "buyTable"];
 
+function get_default() {
+  if(window.location.search.substr(1) === "y") return 1;
+  return 2;
+}
+
 function init() {
   sellBtn = document.getElementById("sellBtn");
   sellingOffers = document.getElementById("sellingOffers");
@@ -14,7 +19,7 @@ function init() {
   dropDown = document.getElementById("dropDown");
   dropDown.addEventListener("change", drop_change, false);
 
-  update_layout(2);
+  update_layout(get_default());
 
   getData('/getSellData', 'sellTable');
   getData('/getBuyData', 'buyTable');
