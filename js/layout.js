@@ -2,6 +2,8 @@ var sellBtn, sellingOffers;
 var buyBtn, buyingOffers;
 var newBtn, newOffer;
 
+var dropDown, dropVal = "sell";
+
 function set_inactive() {
   sellBtn.className = "inactive";
   buyBtn.className = "inactive";
@@ -36,4 +38,19 @@ function update_layout(state) {
       newOffer.style = show;
       break;
   }
+}
+
+function drop_change() {
+  var name = document.getElementById("merchantName");
+
+  switch(this.value) {
+    case "sell":
+      name.innerHTML = "Seller name";
+      break;
+    case "buy":
+      name.innerHTML = "Buyer name";
+      break;
+  }
+
+  dropVal = this.value;
 }

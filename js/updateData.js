@@ -16,9 +16,16 @@ function insertData(postReq, tableID) {
   form.reset();
 }
 
-function updateData(postReq, tableID) {
+function updateData() {
   try {
-    insertData(postReq, tableID);
+    switch(dropVal) {
+      case "sell":
+        insertData(SELLREQUEST[0], SELLREQUEST[1]);
+        break;
+      case "buy":
+        insertData(BUYREQUEST[0], BUYREQUEST[1]);
+        break;
+    }
   }
   catch(e) {
     alert("Error getting data!");

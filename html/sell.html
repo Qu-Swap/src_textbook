@@ -14,7 +14,7 @@
   </head>
 
   <body onload="init()" class="container" data-spy="scroll" data-target="#navbarSupportedContent" data-offset="150">
-    <ul id="navbar">
+    <ul class="navbar">
       <li id="buyBtn" onclick="update_layout(1)">
         <a>Buying Offers</a>
       </li>
@@ -39,11 +39,19 @@
       </div>
 
       <div id="newOffer">
-        <h1>Create New Offer</h1>
+        <div id="offerTextBox">
+          <h2 class="offerText">I would like to create a</h2>
+          <select class="offerText" id="dropDown">
+            <option value="sell">Selling</option>
+            <option value="buy">Buying</option>
+          </select>
+          <h2 class="offerText">offer</h2>
+        </div>
+
         <div id="newEntry">
-          <form id="inputForm" method="POST" onsubmit="updateData('/postSellData', 'sellTable'); return false">
+          <form id="inputForm" method="POST" onsubmit="updateData(); return false">
             <div class="form-group">
-              <label for="exampleInputName1">Seller name</label>
+              <label for="exampleInputName1" id="merchantName">Seller name</label>
               <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name">
             </div>
             <div class="form-group">
@@ -66,7 +74,7 @@
               <label for="exampleInputPassword1">Password</label>
               <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button style="margin-bottom: 5vh" type="submit" class="btn btn-primary">Submit</button>
           </form>
         </div>
       </div>

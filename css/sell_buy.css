@@ -1,5 +1,5 @@
 @media only screen and (max-width: 768px) {
-  #navbar {
+  .navbar {
     font-size: 14px;
     width: 80%;
     left: 10%;
@@ -7,7 +7,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-  #navbar {
+  .navbar {
     width: 60%;
     left: 20%;
   }
@@ -17,7 +17,7 @@ table {
   border-collapse: collapse;
 }
 
-h1{
+h1 {
   padding-top: 5vh;
   padding-bottom: 5vh;
   text-align: center;
@@ -27,8 +27,7 @@ body{
   font-family: "Cambria", Times;
 }
 
-h2{
-  padding-top: 5vh;
+h2 {
   text-align: center;
 }
 
@@ -42,7 +41,7 @@ button{
   padding-top: 10vh;
 }
 
-#navbar {
+.navbar {
   position: absolute;
   list-style-type: none;
   margin: 0;
@@ -51,8 +50,21 @@ button{
   top: 5vh;
 }
 
+#offerTextBox {
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  text-align: center;
+}
+
+.offerText {
+  display: inline-block;
+  text-align: center;
+  margin-right: 0.4vw;
+  margin-left: 0.4vw;
+}
+
 li {
-  width: 33.3%;
+  width: 33.333%;
   float: left;
   color: #BD2026;
   border: 1px solid #BD2026;
