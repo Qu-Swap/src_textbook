@@ -12,7 +12,7 @@ function removeData(deleteReq, tableID, rownum, password) {
     }
   }
 
-  ajax.open("POST", deleteReq, true);
+  ajax.open("DELETE", deleteReq, true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
   ajax.send("rowid="+(rownum).toString() + "&password=" + password);

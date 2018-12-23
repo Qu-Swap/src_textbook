@@ -57,7 +57,13 @@ function loadData(ajax, tableID) {
     <td>" + currentEntry["isbn"] + "</td>\
     <td>" + currentEntry["price"] + "</td>\
     <td>" + currentEntry["email"] + "</td>\
-    <td><button id='del' onclick=\"deleteData('/deleteSellData', 'sellTable'," +
+    <td><button id='del' onclick=\"deleteData('";
+
+    (tableID == "sellTable") ?
+    htmlStr += "/deleteSellData" :
+    htmlStr += "/deleteBuyData"
+
+    htmlStr += "' , '" + tableID + "', " +
     (i + 1).toString() + ")\">X</button</td>\
     </tr>";
   }

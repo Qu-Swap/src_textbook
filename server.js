@@ -41,40 +41,19 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + "/html/welcome.html");
 });
 
-// Middleware function for getting sell data
-function get_sell_data(req, res) {
-  db.all("SELECT name, bookName, isbn, price, email FROM sellers", (err, rows) => {
-      if (err){
+// General method for sending buying/selling table
+function get_table(req, res, table) {
+  db.all("SELECT name, bookName, isbn, price, email FROM " + table, (err, rows) => {
+      if (err) {
         throw err;
       }
-      rows.forEach(function (row) {
-          console.log(row.name, row.bookName, row.isbn, row.price, row.email);
-      });
+
       res.send(rows);
   });
 }
 
-// Middleware function for getting buy data
-function get_buy_data(req, res) {
-  db.all("SELECT name, bookName, isbn, price, email FROM buyers", (err, rows) => {
-      if (err){
-        throw err;
-      }
-      rows.forEach(function (row) {
-          console.log(row.name, row.bookName, row.isbn, row.price, row.email);
-      });
-      res.send(rows);
-  });
-}
-
-// GET request for getting selling data
-app.get("/getSellData", get_sell_data);
-
-// GET request for getting buying data
-app.get("/getBuyData", get_buy_data);
-
-// POST request for inserting sell data
-app.post("/postSellData", function(req, res) {
+// General method for inserting data
+function post_entry(req, res, table) {
   var name = req.body.name;
   var bookName = req.body.bookName;
   var isbn = req.body.isbn;
@@ -83,69 +62,61 @@ app.post("/postSellData", function(req, res) {
   var password = req.body.password;
   var data = [name, bookName, isbn, price, email, password];
 
-  db.run("INSERT INTO sellers(name, bookName, isbn, price, email, password) VALUES(?, ?, ?, ?, ?, ?)", data);
-  db.all("SELECT name, bookName, isbn, price, email FROM sellers", (err, rows) => {
-      if (err){
-        throw err;
-      }
-      rows.forEach(function (row) {
-          console.log(row.name, row.bookName, row.isbn, row.price, row.email);
-      });
-      res.send(rows);
-  });
-});
+  db.run("INSERT INTO " + table + "(name, bookName, isbn, price, email, password) VALUES(?, ?, ?, ?, ?, ?)", data);
+  get_table(req, res, table);
+}
 
-// POST request for inserting buy data
-app.post("/postBuyData", function(req, res) {
-  var name = req.body.name;
-  var bookName = req.body.bookName;
-  var isbn = req.body.isbn;
-  var price = req.body.price;
-  var email = req.body.email;
-  var password = req.body.password;
-  var data = [name, bookName, isbn, price, email, password];
-
-  db.run("INSERT INTO buyers(name, bookName, isbn, price, email, password) VALUES(?, ?, ?, ?, ?, ?)", data);
-  db.all("SELECT name, bookName, isbn, price, email FROM buyers", (err, rows) => {
-      if (err){
-        throw err;
-      }
-      rows.forEach(function (row) {
-          console.log(row.name, row.bookName, row.isbn, row.price, row.email);
-      });
-      res.send(rows);
-  });
-});
-
-// POST request for deleting sell data
-app.post('/deleteSellData', function(req, res) {
+// General method for deleting data
+function delete_entry(req, res, table) {
   var rowid = req.body.rowid;
   var password = req.body.password;
 
-  db.all("SELECT password FROM sellers WHERE rowid = " + rowid.toString(), (err, rows) => {
-    if (err){
+  db.all("SELECT password FROM " + table + " WHERE rowid = " + rowid.toString(), (err, rows) => {
+    if (err) {
       throw err;
     }
 
     if(password === rows[0].password) {
-      db.run("DELETE FROM sellers WHERE rowid = " + rowid.toString());
-      db.run("UPDATE sellers SET rowid = rowid - 1 WHERE rowid > " + rowid.toString());
-      db.all("SELECT name, bookName, isbn, price, email FROM sellers", (err, rows) => {
-          if (err){
-            throw err;
-          }
-          rows.forEach(function (row) {
-              console.log(row.name, row.bookName, row.isbn, row.price, row.email);
-          });
-          res.send(rows);
-      });
+      db.run("DELETE FROM " + table + " WHERE rowid = " + rowid.toString());
+      db.run("UPDATE " + table + " SET rowid = rowid - 1 WHERE rowid > " + rowid.toString());
+
+      get_table(req, res, table);
     }
     else {
       res.send();
     }
-
   });
-})
+}
+
+// GET request for getting selling data
+app.get("/getSellData", function(req, res) {
+  get_table(req, res, "sellers");
+});
+
+// GET request for getting buying data
+app.get("/getBuyData", function(req, res) {
+  get_table(req, res, "buyers");
+});
+
+// POST request for inserting sell data
+app.post("/postSellData", function(req, res) {
+  post_entry(req, res, "sellers");
+});
+
+// POST request for inserting buy data
+app.post("/postBuyData", function(req, res) {
+  post_entry(req, res, "buyers");
+});
+
+// DELETE request for deleting sell data
+app.delete('/deleteSellData', function(req, res) {
+  delete_entry(req, res, "sellers");
+});
+
+// DELETE request for deleting buy data
+app.delete('/deleteBuyData', function(req, res) {
+  delete_entry(req, res, "buyers");
+});
 
 // Listen on the server
 server.listen(8080, function() {
