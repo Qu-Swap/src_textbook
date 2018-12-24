@@ -3,6 +3,7 @@ var express = require("express");
 var app = express();
 var server = require("http").Server(app);
 var fs = require("fs");
+const uuid = require("uuid/v1");
 
 // Path to database files
 var path = __dirname + "/data/";
@@ -16,12 +17,15 @@ let db = new sqlite3.Database(path + "offers.db", sqlite3.OPEN_READWRITE | sqlit
   console.log('Connected to the database.');
 });
 
-db.parallelize(() => {
+db.serialize(() => {
   // Queries scheduled here will be serialized.
-  db.run("CREATE TABLE sellers(name TEXT, bookName TEXT, isbn TEXT, price DOUBLE, email TEXT, password TEXT)", (err) =>{
+  db.run("CREATE TABLE sellers(uuid NOT NULL PRIMARY KEY, name TEXT, bookName TEXT, isbn TEXT, price DOUBLE, email TEXT, password TEXT)", (err) =>{
     if (err){}
   });
-  db.run("CREATE TABLE buyers(name TEXT, bookName TEXT, isbn TEXT, price DOUBLE, email TEXT, password TEXT)", (err) =>{
+  db.run("CREATE TABLE buyers(uuid NOT NULL PRIMARY KEY, name TEXT, bookName TEXT, isbn TEXT, price DOUBLE, email TEXT, password TEXT)", (err) =>{
+    if (err){}
+  });
+  db.run("CREATE TABLE textbooks(uuid NOT NULL PRIMARY KEY, name TEXT, isbn TEXT, author TEXT)", (err) =>{
     if (err){}
   });
 });
@@ -43,7 +47,7 @@ app.get("/", function(req, res) {
 
 // General method for sending buying/selling table
 function get_table(req, res, table) {
-  db.all("SELECT name, bookName, isbn, price, email FROM " + table, (err, rows) => {
+  db.all("SELECT uuid, name, bookName, isbn, price, email FROM " + table, (err, rows) => {
       if (err) {
         throw err;
       }
@@ -54,31 +58,31 @@ function get_table(req, res, table) {
 
 // General method for inserting data
 function post_entry(req, res, table) {
+  var id = uuid();
   var name = req.body.name;
   var bookName = req.body.bookName;
   var isbn = req.body.isbn;
   var price = req.body.price;
   var email = req.body.email;
   var password = req.body.password;
-  var data = [name, bookName, isbn, price, email, password];
+  var data = [id, name, bookName, isbn, price, email, password];
 
-  db.run("INSERT INTO " + table + "(name, bookName, isbn, price, email, password) VALUES(?, ?, ?, ?, ?, ?)", data);
+  db.run("INSERT INTO " + table + " VALUES(?, ?, ?, ?, ?, ?, ?)", data);
   get_table(req, res, table);
 }
 
 // General method for deleting data
 function delete_entry(req, res, table) {
-  var rowid = req.body.rowid;
+  var id = req.body.id;
   var password = req.body.password;
 
-  db.all("SELECT password FROM " + table + " WHERE rowid = " + rowid.toString(), (err, rows) => {
+  db.all("SELECT password FROM " + table + " WHERE uuid = \"" + id +"\"", (err, rows) => {
     if (err) {
       throw err;
     }
 
     if(password === rows[0].password) {
-      db.run("DELETE FROM " + table + " WHERE rowid = " + rowid.toString());
-      db.run("UPDATE " + table + " SET rowid = rowid - 1 WHERE rowid > " + rowid.toString());
+      db.run("DELETE FROM " + table + " WHERE uuid = \"" + id + "\"");
 
       get_table(req, res, table);
     }

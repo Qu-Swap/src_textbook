@@ -1,4 +1,4 @@
-function removeData(deleteReq, tableID, rownum, password) {
+function removeData(deleteReq, tableID, id, password) {
   var ajax = new XMLHttpRequest();
 
   ajax.onreadystatechange = function() {
@@ -15,14 +15,14 @@ function removeData(deleteReq, tableID, rownum, password) {
   ajax.open("DELETE", deleteReq, true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-  ajax.send("rowid="+(rownum).toString() + "&password=" + password);
+  ajax.send("id=" + id + "&password=" + password);
 }
 
-function deleteData(deleteReq, tableID, rownum) {
+function deleteData(deleteReq, tableID, id) {
   var password = prompt("Please input the password.");
 
   try {
-    removeData(deleteReq, tableID, rownum, password);
+    removeData(deleteReq, tableID, id, password);
   }
   catch(e) {
     alert("Error deleting data!");

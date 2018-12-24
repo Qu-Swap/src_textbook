@@ -25,12 +25,12 @@ function getData(getReq, tableID) {
 }
 
 function loadData(ajax, tableID) {
-  sellData = JSON.parse(ajax.responseText);
+  var data = JSON.parse(ajax.responseText);
 
   var table = document.getElementById(tableID);
   var htmlStr = ""
 
-  if(sellData.length > 0) {
+  if(data.length > 0) {
     (tableID == "sellTable") ?
     htmlStr += "<tr><th>Seller Name</th>" :
     htmlStr += "<tr><th>Buyer Name</th>"
@@ -48,8 +48,8 @@ function loadData(ajax, tableID) {
     </tr>";
   }
 
-  for(var i = 0; i < sellData.length; i++) {
-    var currentEntry = sellData[i];
+  for(var i = 0; i < data.length; i++) {
+    var currentEntry = data[i];
 
     htmlStr += "<tr>\
     <td>" + currentEntry["name"] + "</td>\
@@ -63,10 +63,14 @@ function loadData(ajax, tableID) {
     htmlStr += "/deleteSellData" :
     htmlStr += "/deleteBuyData"
 
-    htmlStr += "' , '" + tableID + "', " +
-    (i + 1).toString() + ")\">X</button</td>\
+    htmlStr += "' , '" + tableID + "', '" +
+    currentEntry["uuid"] + "')\">X</button</td>\
     </tr>";
   }
+
+  (tableID == "sellTable") ?
+  sellData = data :
+  buyData = data
 
   table.innerHTML = htmlStr;
 }
