@@ -20,7 +20,7 @@ function removeData(deleteReq, tableID, id, password) {
     }
   }
 
-  ajax.open("DELETE", deleteReq, true);
+  ajax.open("POST", deleteReq, true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
   ajax.send("id=" + id + "&password=" + password);

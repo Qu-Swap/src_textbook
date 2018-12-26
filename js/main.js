@@ -1,5 +1,5 @@
-const SELLREQUEST = ["/postSellData", "sellTable"];
-const BUYREQUEST = ["/postBuyData", "buyTable"];
+const SELLREQUEST = ["postSellData", "sellTable"];
+const BUYREQUEST = ["postBuyData", "buyTable"];
 
 function get_default() {
   if(window.location.search.substr(1) === "y") return 1;
@@ -25,7 +25,7 @@ function init() {
   update_layout(get_default());
 
   loaded = 0;
-  getData('/getSellData', 'sellTable');
-  getData('/getBuyData', 'buyTable');
-  getData('/getTextbookData', 'bookDown');
+  getData('getSellData', 'sellTable');
+  getData('getBuyData', 'buyTable');
+  getData('getTextbookData', 'bookDown');
 }

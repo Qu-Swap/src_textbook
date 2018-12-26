@@ -46,12 +46,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Static elements
-app.use("/css", express.static(__dirname + "/css"));
-app.use("/js", express.static(__dirname + "/js"));
+app.use("css", express.static(__dirname + "/css"));
+app.use("js", express.static(__dirname + "/js"));
 app.use("/", express.static(__dirname + "/html"));
 
 // Send homepage
-app.get("/", function(req, res) {
+app.get("/index.html", function(req, res) {
   res.sendFile(__dirname + "/html/welcome.html");
 });
 
@@ -132,17 +132,17 @@ app.post("/postBuyData", function(req, res) {
   post_entry(req, res, "buyers");
 });
 
-// DELETE request for deleting sell data
-app.delete('/deleteSellData', function(req, res) {
+// POST request for deleting sell data
+app.post('/deleteSellData', function(req, res) {
   delete_entry(req, res, "sellers");
 });
 
-// DELETE request for deleting buy data
-app.delete('/deleteBuyData', function(req, res) {
+// POST request for deleting buy data
+app.post('/deleteBuyData', function(req, res) {
   delete_entry(req, res, "buyers");
 });
 
 // Listen on the server
-server.listen(8080, function() {
-  console.log("Server running on port 8080.")
+server.listen(8085, function() {
+  console.log("Server running on port 8085.")
 });
