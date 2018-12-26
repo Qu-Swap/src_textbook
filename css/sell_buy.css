@@ -50,7 +50,7 @@ button{
   top: 5vh;
 }
 
-#offerTextBox {
+.textbox {
   padding-top: 5vh;
   padding-bottom: 5vh;
   text-align: center;
@@ -61,6 +61,11 @@ button{
   text-align: center;
   margin-right: 0.4vw;
   margin-left: 0.4vw;
+}
+
+#newBook {
+  display: none;
+  padding-bottom: 10vh;
 }
 
 li {

@@ -19,8 +19,13 @@ function init() {
   dropDown = document.getElementById("dropDown");
   dropDown.addEventListener("change", drop_change, false);
 
+  bookDown = document.getElementById("bookDown");
+  bookDown.addEventListener("change", book_change, false);
+
   update_layout(get_default());
 
+  loaded = 0;
   getData('/getSellData', 'sellTable');
   getData('/getBuyData', 'buyTable');
+  getData('/getTextbookData', 'bookDown');
 }

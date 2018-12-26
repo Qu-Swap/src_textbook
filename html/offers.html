@@ -39,7 +39,7 @@
       </div>
 
       <div id="newOffer">
-        <div id="offerTextBox">
+        <div class="textbox">
           <h2 class="offerText">I would like to create a</h2>
           <select class="offerText" id="dropDown">
             <option value="sell">Selling</option>
@@ -48,12 +48,16 @@
           <h2 class="offerText">offer</h2>
         </div>
 
-        <div id="newEntry">
-          <form id="inputForm" method="POST" onsubmit="updateData(); return false">
-            <div class="form-group">
-              <label for="exampleInputName1" id="merchantName">Seller name</label>
-              <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name">
-            </div>
+        <div class="textbox" style="padding-top: 0">
+          <p id="textbookText" style="font-style: italic">
+            I would like to sell the following book:</p>
+          <select id="bookDown">
+          </select>
+        </div>
+
+        <div id="newBook">
+          <h4 style="text-align: center">Book Details</h4>
+          <form id="bookForm">
             <div class="form-group">
               <label for="exampleInputBook1">Book Name</label>
               <input name="bookName" type="text" class="form-control" id="exampleInputBook1" placeholder="xxx (Calculus II)">
@@ -61,6 +65,20 @@
             <div class="form-group">
               <label for="exampleInputISBN1">ISBN</label>
               <input name="isbn" type="text" class="form-control" id="exampleInputISBN" placeholder="Enter ISBN of book">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputAuthor">Author</label>
+              <input name="author" type="text" class="form-control" id="exampleInputAuthor" placeholder="John Smith">
+            </div>
+          </form>
+        </div>
+
+        <div id="newEntry">
+          <h4 style="text-align: center">Offer Details</h4>
+          <form id="inputForm" method="POST" onsubmit="updateData(); return false">
+            <div class="form-group">
+              <label for="exampleInputName1" id="merchantName">Seller name</label>
+              <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name">
             </div>
             <div class="form-group">
               <label for="exampleInputPrice1">Price</label>

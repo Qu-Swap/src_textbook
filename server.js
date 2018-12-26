@@ -3,29 +3,39 @@ var express = require("express");
 var app = express();
 var server = require("http").Server(app);
 var fs = require("fs");
-const uuid = require("uuid/v1");
+global.uuid = require("uuid/v4");
 
 // Path to database files
 var path = __dirname + "/data/";
 
+// Imports
+var textbooks = require("./textbooks");
+
 // Open database
 const sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database(path + "offers.db", sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+global.db = new sqlite3.Database(path + "offers.db", sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
   if (err) {
     console.error(err.message);
   }
   console.log('Connected to the database.');
 });
 
-db.serialize(() => {
+global.db.serialize(() => {
   // Queries scheduled here will be serialized.
-  db.run("CREATE TABLE sellers(uuid NOT NULL PRIMARY KEY, name TEXT, bookName TEXT, isbn TEXT, price DOUBLE, email TEXT, password TEXT)", (err) =>{
+  global.db.run("CREATE TABLE textbooks(uuid NOT NULL PRIMARY KEY, bookName TEXT, isbn TEXT, author TEXT)", (err) =>{
     if (err){}
   });
-  db.run("CREATE TABLE buyers(uuid NOT NULL PRIMARY KEY, name TEXT, bookName TEXT, isbn TEXT, price DOUBLE, email TEXT, password TEXT)", (err) =>{
+  global.db.run("CREATE TABLE sellers(uuid NOT NULL PRIMARY KEY, name TEXT, \
+  price DOUBLE, email TEXT, password TEXT, book_id, FOREIGN KEY (book_id) \
+  REFERENCES textbooks(uuid))", (err) => {
     if (err){}
   });
-  db.run("CREATE TABLE textbooks(uuid NOT NULL PRIMARY KEY, name TEXT, isbn TEXT, author TEXT)", (err) =>{
+  global.db.run("CREATE TABLE buyers(uuid NOT NULL PRIMARY KEY, name TEXT, \
+  price DOUBLE, email TEXT, password TEXT, book_id, FOREIGN KEY (book_id) \
+  REFERENCES textbooks(uuid))", (err) => {
+    if (err){}
+  });
+  global.db.run("PRAGMA foreign_keys = ON", (err) => {
     if (err){}
   });
 });
@@ -47,12 +57,15 @@ app.get("/", function(req, res) {
 
 // General method for sending buying/selling table
 function get_table(req, res, table) {
-  db.all("SELECT uuid, name, bookName, isbn, price, email FROM " + table, (err, rows) => {
-      if (err) {
-        throw err;
-      }
+  // Don't retrieve password, otherwise it's accessible client-side
+  // Use an inner join to get the textbook name
+  global.db.all("SELECT a.uuid, a.name, a.price, a.email, a.book_id, b.bookName FROM "
+  + table + " AS a INNER JOIN textbooks AS b ON a.book_id = b.uuid", (err, rows) => {
+    if (err) {
+      throw err;
+    }
 
-      res.send(rows);
+    res.send(rows);
   });
 }
 
@@ -60,14 +73,18 @@ function get_table(req, res, table) {
 function post_entry(req, res, table) {
   var id = uuid();
   var name = req.body.name;
-  var bookName = req.body.bookName;
-  var isbn = req.body.isbn;
   var price = req.body.price;
   var email = req.body.email;
   var password = req.body.password;
-  var data = [id, name, bookName, isbn, price, email, password];
+  var book_id = req.body.book_id;
 
-  db.run("INSERT INTO " + table + " VALUES(?, ?, ?, ?, ?, ?, ?)", data);
+  if(!book_id) {
+    book_id = textbooks.insert(req, res);
+  }
+
+  var data = [id, name, price, email, password, book_id];
+
+  global.db.run("INSERT INTO " + table + " VALUES(?, ?, ?, ?, ?, ?)", data);
   get_table(req, res, table);
 }
 
@@ -76,13 +93,13 @@ function delete_entry(req, res, table) {
   var id = req.body.id;
   var password = req.body.password;
 
-  db.all("SELECT password FROM " + table + " WHERE uuid = \"" + id +"\"", (err, rows) => {
+  global.db.all("SELECT password FROM " + table + " WHERE uuid = \"" + id +"\"", (err, rows) => {
     if (err) {
       throw err;
     }
 
     if(password === rows[0].password) {
-      db.run("DELETE FROM " + table + " WHERE uuid = \"" + id + "\"");
+      global.db.run("DELETE FROM " + table + " WHERE uuid = \"" + id + "\"");
 
       get_table(req, res, table);
     }
@@ -101,6 +118,9 @@ app.get("/getSellData", function(req, res) {
 app.get("/getBuyData", function(req, res) {
   get_table(req, res, "buyers");
 });
+
+// GET request for getting textbook data
+app.get("/getTextbookData", textbooks.get_table);
 
 // POST request for inserting sell data
 app.post("/postSellData", function(req, res) {

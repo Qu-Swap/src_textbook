@@ -3,6 +3,7 @@ var buyBtn, buyingOffers;
 var newBtn, newOffer;
 
 var dropDown, dropVal = "sell";
+var bookDown, bookVal = "na";
 
 function set_inactive() {
   sellBtn.className = "inactive";
@@ -42,15 +43,33 @@ function update_layout(state) {
 
 function drop_change() {
   var name = document.getElementById("merchantName");
+  var textbook = document.getElementById("textbookText");
 
   switch(this.value) {
     case "sell":
       name.innerHTML = "Seller name";
+      textbook.innerHTML = "I would like to sell the following book:";
       break;
     case "buy":
       name.innerHTML = "Buyer name";
+      textbook.innerHTML = "I would like to buy the following book:";
       break;
   }
 
   dropVal = this.value;
+}
+
+function book_change() {
+  var newBook = document.getElementById("newBook");
+
+  switch(this.value) {
+    case "new":
+      newBook.style="display: block";
+      break;
+    default:
+      newBook.style="display: none";
+      break;
+  }
+
+  bookVal = this.value;
 }

@@ -7,7 +7,15 @@ function removeData(deleteReq, tableID, id, password) {
         alert("Incorrect password.")
       }
       else {
-        loadData(this, tableID);
+        var data = JSON.parse(this.responseText);
+        if(tableID === "sellTable") {
+          sellData = data;
+        }
+        else {
+          buyData = data;
+        }
+
+        loadTableData(tableID);
       }
     }
   }
