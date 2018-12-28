@@ -56,6 +56,37 @@ function updateData() {
   }
 }
 
+function searchTextbooks(column, selectID) {
+  var ajax =  new XMLHttpRequest();
+
+  var form = document.getElementById(column);
+  var data = new FormData(form);
+  var dataStr = data_to_string(data);
+
+  ajax.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+      textbookData = JSON.parse(this.responseText);
+
+      loadSelectData(selectID);
+    }
+  }
+
+  ajax.open("POST", "get" + column, true);
+  ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  ajax.send(dataStr);
+  form.reset();
+}
+
+// Update the book list using a column among book name, isbn, or author
+function updateBookList(column) {
+  try {
+    searchTextbooks(column, "bookDown");
+  }
+  catch(e) {
+    alert("Error searching for textbooks.")
+  }
+}
+
 function data_to_string(formData) {
   var str = "";
 

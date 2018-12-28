@@ -46,8 +46,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Static elements
-app.use("css", express.static(__dirname + "/css"));
-app.use("js", express.static(__dirname + "/js"));
+app.use("/css", express.static(__dirname + "/css"));
+app.use("/js", express.static(__dirname + "/js"));
 app.use("/", express.static(__dirname + "/html"));
 
 // Send homepage
@@ -141,6 +141,12 @@ app.post('/deleteSellData', function(req, res) {
 app.post('/deleteBuyData', function(req, res) {
   delete_entry(req, res, "buyers");
 });
+
+// POST request for searching textbooks by book Name
+app.post('/getbookName', textbooks.search_name);
+
+// POST request for searching textbooks by isbn
+app.post('/getisbn', textbooks.search_isbn);
 
 // Listen on the server
 server.listen(8085, function() {

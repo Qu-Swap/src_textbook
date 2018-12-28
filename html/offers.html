@@ -48,6 +48,24 @@
           <h2 class="offerText">offer</h2>
         </div>
 
+        <div class = "searchBook">
+          <h4>Search for a book</h4>
+          <form id="bookName" onsubmit="updateBookList('bookName'); return false">
+            <label for="exampleInputBookName1">Book Name</label>
+            <div class="form-group">
+              <input style="display: inline-block; width: 50%; vertical-align: middle" name="bookName" type="text" class="form-control" id="exampleInputBookName1" placeholder="The Very Hungry Caterpillar">
+              <button style="display: inline-block; vertical-align: middle" type="submit" class="btn btn-primary">Search</button>
+            </div>
+          </form>
+          <form id="isbn" onsubmit="updateBookList('isbn'); return false">
+            <label for="exampleInputISBN1">ISBN</label>
+            <div class="form-group">
+              <input style="display: inline-block; width: 50%; vertical-align: middle" name="isbn" type="text" class="form-control" id="exampleInputISBN1" placeholder="Example ISBN">
+              <button style="display: inline-block; vertical-align: middle" type="submit" class="btn btn-primary">Search</button>
+            </div>
+          </form>
+        </div>
+
         <div class="textbox" style="padding-top: 0">
           <p id="textbookText" style="font-style: italic">
             I would like to sell the following book:</p>
@@ -75,7 +93,7 @@
 
         <div id="newEntry">
           <h4 style="text-align: center">Offer Details</h4>
-          <form id="inputForm" method="POST" onsubmit="updateData(); return false">
+          <form onsubmit="updateData(); return false">
             <div class="form-group">
               <label for="exampleInputName1" id="merchantName">Seller name</label>
               <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name">
