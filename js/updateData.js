@@ -19,6 +19,7 @@ function insertData(postReq, tableID) {
   }
 
   var dataStr = data_to_string(data);
+
   if(bookVal === "new") {
     var bookForm = document.getElementById("bookForm");
     var bookData = new FormData(bookForm);
