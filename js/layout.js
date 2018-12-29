@@ -1,62 +1,52 @@
+var state;
+
 var sellBtn, sellingOffers;
 var buyBtn, buyingOffers;
-var newBtn, newOffer;
 
-var dropDown, dropVal = "sell";
 var bookDown, bookVal = "na";
+var formText, textbookText, merchantName;
 
+// Set both buttons at the top to be unselected
 function set_inactive() {
   sellBtn.className = "inactive";
   buyBtn.className = "inactive";
-  newBtn.className = "inactive";
 }
 
+// Set both tables to be invisible
 function set_invisible() {
   var invis = "display: none";
 
   sellingOffers.style = invis;
   buyingOffers.style = invis;
-  newOffer.style = invis;
 }
 
-function update_layout(state) {
+// Update the layout depending on whether "Buy Books" or "Sell Books" is selected
+function update_layout(val) {
+  state = val;
+
   set_inactive();
   set_invisible();
 
   var show = "display: block";
 
   switch(state) {
-    case 1:
+    case STATES.BUY:
       buyBtn.className = "active";
-      buyingOffers.style = show;
-      break;
-    case 2:
-      sellBtn.className = "active";
       sellingOffers.style = show;
+      formText.innerHTML =
+      "Don't see a book you want to buy? <br> Submit a <i>buying request</i>.";
+      textbookText.innerHTML = "I would like to buy the following book:";
+      merchantName.innerHTML = "Buyer name";
       break;
-    case 3:
-      newBtn.className = "active";
-      newOffer.style = show;
-      break;
-  }
-}
-
-function drop_change() {
-  var name = document.getElementById("merchantName");
-  var textbook = document.getElementById("textbookText");
-
-  switch(this.value) {
-    case "sell":
-      name.innerHTML = "Seller name";
-      textbook.innerHTML = "I would like to sell the following book:";
-      break;
-    case "buy":
-      name.innerHTML = "Buyer name";
-      textbook.innerHTML = "I would like to buy the following book:";
+    case STATES.SELL:
+      sellBtn.className = "active";
+      buyingOffers.style = show;
+      formText.innerHTML =
+      "Can't find a book you want to sell? <br> Submit a <i>selling request</i>.";
+      textbookText.innerHTML = "I would like to sell the following book:";
+      merchantName.innerHTML = "Seller name";
       break;
   }
-
-  dropVal = this.value;
 }
 
 function book_change() {

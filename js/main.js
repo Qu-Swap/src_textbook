@@ -1,3 +1,5 @@
+var STATES = Object.freeze({BUY: 1, SELL: 2});
+
 const SELLREQUEST = ["postSellData", "sellTable"];
 const BUYREQUEST = ["postBuyData", "buyTable"];
 
@@ -13,14 +15,12 @@ function init() {
   buyBtn = document.getElementById("buyBtn");
   buyingOffers = document.getElementById("buyingOffers");
 
-  newBtn = document.getElementById("newBtn");
-  newOffer = document.getElementById("newOffer");
-
-  dropDown = document.getElementById("dropDown");
-  dropDown.addEventListener("change", drop_change, false);
-
   bookDown = document.getElementById("bookDown");
   bookDown.addEventListener("change", book_change, false);
+
+  formText = document.getElementById("formText");
+  textbookText = document.getElementById("textbookText");
+  merchantName = document.getElementById("merchantName");
 
   update_layout(get_default());
 

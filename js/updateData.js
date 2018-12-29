@@ -7,11 +7,11 @@ function insertData(postReq, tableID) {
   ajax.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
       var data = JSON.parse(this.responseText);
-      if(tableID === "sellTable") {
-        sellData = data;
+      if(tableID === "buyTable") {
+        buyData = data;
       }
       else {
-        buyData = data;
+        sellData = data;
       }
 
       loadTableData(tableID);
@@ -42,12 +42,12 @@ function insertData(postReq, tableID) {
 
 function updateData() {
   try {
-    switch(dropVal) {
-      case "sell":
-        insertData(SELLREQUEST[0], SELLREQUEST[1]);
-        break;
-      case "buy":
+    switch(state) {
+      case STATES.BUY:
         insertData(BUYREQUEST[0], BUYREQUEST[1]);
+        break;
+      case STATES.SELL:
+        insertData(SELLREQUEST[0], SELLREQUEST[1]);
         break;
     }
   }

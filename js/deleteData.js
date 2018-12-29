@@ -8,11 +8,11 @@ function removeData(deleteReq, tableID, id, password) {
       }
       else {
         var data = JSON.parse(this.responseText);
-        if(tableID === "sellTable") {
-          sellData = data;
+        if(tableID === "buyTable") {
+          buyData = data;
         }
         else {
-          buyData = data;
+          sellData = data;
         }
 
         loadTableData(tableID);
