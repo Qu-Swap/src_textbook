@@ -13,9 +13,10 @@ module.exports = {
     var bookName = req.body.bookName;
     var isbn = req.body.isbn;
     var author = req.body.author;
-    var data = [id, bookName, isbn, author];
+    var subject_id = req.body.subject_id;
+    var data = [id, bookName, isbn, author, subject_id];
 
-    global.db.run("INSERT INTO textbooks VALUES(?, ?, ?, ?)", data);
+    global.db.run("INSERT INTO textbooks VALUES(?, ?, ?, ?, ?)", data);
 
     return id;
   },

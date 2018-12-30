@@ -23,7 +23,7 @@ function insertData(postReq, tableID) {
   if(bookVal === "new") {
     var bookForm = document.getElementById("bookForm");
     var bookData = new FormData(bookForm);
-    dataStr += "&" + data_to_string(bookData);
+    dataStr += "&" + data_to_string(bookData) + "&subject_id=" + subjectID;
     bookForm.reset();
   }
   else if(bookVal !== "na"){

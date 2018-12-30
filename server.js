@@ -2,14 +2,14 @@
 var express = require("express");
 var app = express();
 var server = require("http").Server(app);
-var fs = require("fs");
 global.uuid = require("uuid/v4");
 
 // Path to database files
 var path = __dirname + "/data/";
 
 // Imports
-var textbooks = require("./textbooks");
+var textbooks = require("./server_modules/textbooks");
+var subjects = require("./server_modules/subjects");
 
 // Open database
 const sqlite3 = require('sqlite3').verbose();
@@ -22,19 +22,31 @@ global.db = new sqlite3.Database(path + "offers.db", sqlite3.OPEN_READWRITE | sq
 
 global.db.serialize(() => {
   // Queries scheduled here will be serialized.
-  global.db.run("CREATE TABLE textbooks(uuid NOT NULL PRIMARY KEY, bookName TEXT, isbn TEXT, author TEXT)", (err) =>{
+  global.db.run("CREATE TABLE textbooks(uuid NOT NULL PRIMARY KEY, bookName \
+  TEXT, isbn TEXT, author TEXT, subject_id, FOREIGN KEY (subject_id) REFERENCES \
+  subjects(uuid))", (err) =>{
     if (err){}
   });
+
   global.db.run("CREATE TABLE sellers(uuid NOT NULL PRIMARY KEY, name TEXT, \
-  price DOUBLE, email TEXT, password TEXT, book_id, FOREIGN KEY (book_id) \
-  REFERENCES textbooks(uuid))", (err) => {
+  price DOUBLE, email TEXT, password TEXT, book_id, FOREIGN KEY \
+  (book_id) REFERENCES textbooks(uuid))", (err) => {
     if (err){}
   });
+
   global.db.run("CREATE TABLE buyers(uuid NOT NULL PRIMARY KEY, name TEXT, \
-  price DOUBLE, email TEXT, password TEXT, book_id, FOREIGN KEY (book_id) \
-  REFERENCES textbooks(uuid))", (err) => {
+  price DOUBLE, email TEXT, password TEXT, book_id, FOREIGN KEY \
+  (book_id) REFERENCES textbooks(uuid))", (err) => {
     if (err){}
   });
+
+  global.db.run("CREATE TABLE subjects(uuid NOT NULL PRIMARY KEY, subjectName TEXT)", (err) => {
+    if (err){}
+    else {
+      subjects.insert_subjects(path + "subjects.csv");
+    }
+  });
+
   global.db.run("PRAGMA foreign_keys = ON", (err) => {
     if (err){}
   });
@@ -147,6 +159,9 @@ app.post('/getbookName', textbooks.search_name);
 
 // POST request for searching textbooks by isbn
 app.post('/getisbn', textbooks.search_isbn);
+
+// GET request for getting a list of subjects
+app.get('/getSubjects', subjects.get_subjects);
 
 // Listen on the server
 server.listen(8085, function() {

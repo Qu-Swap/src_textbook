@@ -1,6 +1,8 @@
-var sellData = [];
-var buyData = [];
-var textbookData = [];
+var sellData;
+var buyData;
+var textbookData;
+var subjectData;
+
 var loaded;
 
 /* Function to request data from the server, it currently waits before
@@ -26,15 +28,20 @@ function requestData(getReq, elementID) {
         case "bookDown":
           textbookData = data;
           break;
+        case "subjectDown":
+          subjectData = data;
+          subjectID = subjectData[0]["uuid"];
+          break;
       }
 
       loaded++;
 
       // If all data has been loaded (indicating this is the last response)
-      if(loaded === 3) {
+      if(loaded === TOTALASSETS) {
         loadTableData("sellTable");
         loadTableData("buyTable");
         loadSelectData("bookDown");
+        loadSelectData("subjectDown");
       }
     }
   }
@@ -106,21 +113,32 @@ function loadTableData(tableID) {
 }
 
 function loadSelectData(selectID) {
-  var data;
-  if(selectID === "bookDown") {
-    data = textbookData;
-  }
+  var data, htmlStr, inner, select;
 
-  var select = document.getElementById(selectID);
-  var htmlStr = "<option value =\"na\"></option>";
+  switch(selectID) {
+    case "bookDown":
+      data = textbookData;
+      htmlStr = "<option value =\"na\"></option>";
+      inner = "bookName";
+      select = bookDown;
+      break;
+    case "subjectDown":
+      data = subjectData;
+      htmlStr = "";
+      inner = "subjectName";
+      select = subjectDown;
+      break;
+  }
 
   for(var i = 0; i < data.length; i++) {
     var currentEntry = data[i];
     htmlStr += "<option value=\"" + currentEntry["uuid"] + "\" >"
-    + currentEntry["bookName"] + "</option>";
+    + currentEntry[inner] + "</option>";
   }
 
-  htmlStr += "<option value=\"new\">Insert new book</option>";
+  if(selectID == "bookDown") {
+    htmlStr += "<option value=\"new\">Insert new book</option>";
+  }
 
   select.innerHTML = htmlStr;
 }

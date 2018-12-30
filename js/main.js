@@ -3,6 +3,8 @@ var STATES = Object.freeze({BUY: 1, SELL: 2});
 const SELLREQUEST = ["postSellData", "sellTable"];
 const BUYREQUEST = ["postBuyData", "buyTable"];
 
+const TOTALASSETS = 4;
+
 function get_default() {
   if(window.location.search.substr(1) === "y") return 1;
   return 2;
@@ -18,6 +20,11 @@ function init() {
   bookDown = document.getElementById("bookDown");
   bookDown.addEventListener("change", book_change, false);
 
+  subjectDown = document.getElementById("subjectDown");
+  subjectDown.addEventListener("change", function() {
+    subjectID = this.value;
+  }, false);
+
   formText = document.getElementById("formText");
   textbookText = document.getElementById("textbookText");
   merchantName = document.getElementById("merchantName");
@@ -28,4 +35,5 @@ function init() {
   getData('getSellData', 'sellTable');
   getData('getBuyData', 'buyTable');
   getData('getTextbookData', 'bookDown');
+  getData('getSubjects', 'subjectDown');
 }
