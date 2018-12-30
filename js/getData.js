@@ -70,44 +70,50 @@ function loadTableData(tableID) {
   var htmlStr = ""
 
   if(data.length > 0) {
-    (tableID == "sellTable") ?
-    htmlStr += "<tr><th>Seller Name</th>" :
-    htmlStr += "<tr><th>Buyer Name</th>"
+    var prevSubject;
 
-    htmlStr += "<th>Textbook Name</th>\
-    <th>Price (USD)</th>\
-    <th>Email</th>\
-    <th>Delete</th>\
-    </tr>";
+    for(var i = 0; i < data.length; i++) {
+      var currentEntry = data[i];
+      if(currentEntry["subjectName"] != prevSubject) {
+        prevSubject = currentEntry["subjectName"];
+        htmlStr += "</table><h4>" + prevSubject + "</h4>\
+        <table class=\"table table-striped table-bordered\">";
+
+        (tableID === "sellTable") ?
+        htmlStr += "<tr><th>Seller Name</th>" :
+        htmlStr += "<tr><th>Buyer Name</th>"
+
+        htmlStr += "<th>Textbook Name</th>\
+        <th>Price (USD)</th>\
+        <th>Email</th>\
+        <th>Delete</th>\
+        </tr>";
+      }
+
+      htmlStr += "<tr>\
+      <td>" + currentEntry["name"] + "</td>\
+      <td>" + currentEntry["bookName"] + "</td>\
+      <td>" + currentEntry["price"] + "</td>\
+      <td>" + currentEntry["email"] + "</td>\
+      <td><button id='del' onclick=\"deleteData('";
+
+      (tableID == "sellTable") ?
+      htmlStr += "/deleteSellData" :
+      htmlStr += "/deleteBuyData"
+
+      htmlStr += "' , '" + tableID + "', '" +
+      currentEntry["uuid"] + "')\">X</button</td>\
+      </tr>";
+    }
+
+    htmlStr += "</table>";
   }
   else {
-    htmlStr += "<tr>\
+    htmlStr += "<table class=\"table table-striped table-bordered\">\
+    <tr>\
     <td>No offers so far!</td>\
-    </tr>";
+    </tr></table>";
   }
-
-  for(var i = 0; i < data.length; i++) {
-    var currentEntry = data[i];
-
-    htmlStr += "<tr>\
-    <td>" + currentEntry["name"] + "</td>\
-    <td>" + currentEntry["bookName"] + "</td>\
-    <td>" + currentEntry["price"] + "</td>\
-    <td>" + currentEntry["email"] + "</td>\
-    <td><button id='del' onclick=\"deleteData('";
-
-    (tableID == "sellTable") ?
-    htmlStr += "/deleteSellData" :
-    htmlStr += "/deleteBuyData"
-
-    htmlStr += "' , '" + tableID + "', '" +
-    currentEntry["uuid"] + "')\">X</button</td>\
-    </tr>";
-  }
-
-  (tableID == "sellTable") ?
-  sellData = data :
-  buyData = data
 
   table.innerHTML = htmlStr;
 }

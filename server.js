@@ -70,9 +70,11 @@ app.get("/index.html", function(req, res) {
 // General method for sending buying/selling table
 function get_table(req, res, table) {
   // Don't retrieve password, otherwise it's accessible client-side
-  // Use an inner join to get the textbook name
-  global.db.all("SELECT a.uuid, a.name, a.price, a.email, a.book_id, b.bookName FROM "
-  + table + " AS a INNER JOIN textbooks AS b ON a.book_id = b.uuid", (err, rows) => {
+  // Use an inner join to get the textbook and subject name
+  global.db.all("SELECT a.uuid, a.name, a.price, a.email, a.book_id, b.bookName, \
+   c.subjectName FROM " + table + " AS a INNER JOIN textbooks AS b INNER JOIN \
+   subjects AS c ON a.book_id = b.uuid AND b.subject_id = c.uuid ORDER BY \
+   c.rowid", (err, rows) => {
     if (err) {
       throw err;
     }
