@@ -21,6 +21,13 @@ function insertData(postReq, tableID) {
   var dataStr = data_to_string(data);
 
   if(bookVal === "new") {
+    var isbn = document.getElementById("exampleInputISBN").value;
+    var isbnregex = /^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$/;
+    if(!isbnregex.test(isbn)){
+      alert("Invalid ISBN");
+      return;
+    }
+
     var bookForm = document.getElementById("bookForm");
     var bookData = new FormData(bookForm);
     dataStr += "&" + data_to_string(bookData) + "&subject_id=" + subjectID;
@@ -31,6 +38,19 @@ function insertData(postReq, tableID) {
   }
   else {
     alert("Please select a textbook.")
+    return;
+  }
+
+  var price = document.getElementById("exampleInputPrice1").value;
+  var priceregex = /^\$?[0-9]+\.?[0-9]?[0-9]?$/;
+  var personname = document.getElementById('exampleInputName').value;
+  var nameregex = /^[a-z]([-']?[a-z]+)*( [a-z]([-']?[a-z]+)*)+$/;
+  if(!nameregex.test(personname)){
+    alert("Invalid buyer/seller name");
+    return;
+  }
+  else if(!priceregex.test(price)){
+    alert("Invalid price");
     return;
   }
 
@@ -56,6 +76,7 @@ function updateData() {
     console.log(e.title + "\n" + e.messsage);
   }
 }
+
 
 function searchTextbooks(column, selectID) {
   var ajax =  new XMLHttpRequest();
