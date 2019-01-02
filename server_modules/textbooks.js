@@ -24,8 +24,8 @@ module.exports = {
     var query = req.body.query;
 
     global.db.all("SELECT a.*, b.subjectName FROM textbooks as a INNER JOIN \
-    subjects as b ON a.bookName LIKE '%" + query + "%' OR a.author LIKE '%" +
-    query + "%' OR a.isbn = '" + query + "' ON a.subject_id = b.uuid", (err, rows) => {
+    subjects as b ON (a.bookName LIKE '%" + query + "%' OR a.author LIKE '%" +
+    query + "%' OR a.isbn = '" + query + "') AND a.subject_id = b.uuid", (err, rows) => {
       if(err) {
         throw err;
       }

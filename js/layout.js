@@ -93,7 +93,8 @@ function show_form_info() {
   var htmlStr = "<p>Book Name: " + selectBookInfo["bookName"] + "</p>\
   <p>Author: " + selectBookInfo["author"] + "</p>\
   <p>ISBN: " + selectBookInfo["isbn"] + "</p>\
-  <p>Subject: " + get_subject_name(subjectID) + "</p>";
+  <p>Subject: " + (selectBookInfo["subjectName"] ?
+  selectBookInfo["subjectName"] : get_subject_name(subjectID)) + "</p>";
 
   bookInfo.innerHTML = htmlStr;
   update_search_layout(5);
