@@ -85,21 +85,26 @@ function get_table(req, res, table) {
 
 // General method for inserting data
 function post_entry(req, res, table) {
-  var id = uuid();
-  var name = req.body.name;
-  var price = req.body.price;
-  var email = req.body.email;
-  var password = req.body.password;
-  var book_id = req.body.book_id;
+  /* These should be serialized, otherwise there is a race betweeen inserting
+  into buyers/sellers and textbooks */
+  global.db.serialize(() => {
+    var id = uuid();
+    var name = req.body.name;
+    var price = req.body.price;
+    var email = req.body.email;
+    var password = req.body.password;
+    var book_id = req.body.book_id;
 
-  if(!book_id) {
-    book_id = textbooks.insert(req, res);
-  }
+    // If the book_id is empty, then the user is inserting a new textbook
+    if(!book_id) {
+      book_id = textbooks.insert(req, res);
+    }
 
-  var data = [id, name, price, email, password, book_id];
+    var data = [id, name, price, email, password, book_id];
 
-  global.db.run("INSERT INTO " + table + " VALUES(?, ?, ?, ?, ?, ?)", data);
-  get_table(req, res, table);
+    global.db.run("INSERT INTO " + table + " VALUES(?, ?, ?, ?, ?, ?)", data);
+    get_table(req, res, table);
+  });
 }
 
 // General method for deleting data
@@ -156,11 +161,8 @@ app.post('/deleteBuyData', function(req, res) {
   delete_entry(req, res, "buyers");
 });
 
-// POST request for searching textbooks by book Name
-app.post('/getbookName', textbooks.search_name);
-
-// POST request for searching textbooks by isbn
-app.post('/getisbn', textbooks.search_isbn);
+// POST request for searching textbooks
+app.post('/postSearchData', textbooks.search);
 
 // GET request for getting a list of subjects
 app.get('/getSubjects', subjects.get_subjects);

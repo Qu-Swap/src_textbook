@@ -56,6 +56,12 @@ button{
   text-align: center;
 }
 
+.smallbox {
+  padding-top: 2.5vh;
+  padding-bottom: 2.5vh;
+  text-align: center;
+}
+
 .offerText {
   display: inline-block;
   text-align: center;

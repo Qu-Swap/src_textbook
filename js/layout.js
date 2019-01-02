@@ -1,4 +1,5 @@
-var state;
+// Put these into a single object someday
+var state, searchState, prevSearchState;
 
 var sellBtn, sellingOffers;
 var buyBtn, buyingOffers;
@@ -7,6 +8,8 @@ var bookDown, bookVal = "na";
 var subjectDown, subjectID;
 
 var formText, textbookText, merchantName;
+
+var selectBookInfo;
 
 // Set both buttons at the top to be unselected
 function set_inactive() {
@@ -37,7 +40,7 @@ function update_layout(val) {
       sellingOffers.style = show;
       formText.innerHTML =
       "Don't see a book you want to buy? <br> Submit a <i>buying request</i>.";
-      textbookText.innerHTML = "I would like to buy the following book:";
+      textbookText.innerHTML = "Select a book you would like to buy";
       merchantName.innerHTML = "Buyer name";
       break;
     case STATES.SELL:
@@ -45,7 +48,7 @@ function update_layout(val) {
       buyingOffers.style = show;
       formText.innerHTML =
       "Can't find a book you want to sell? <br> Submit a <i>selling request</i>.";
-      textbookText.innerHTML = "I would like to sell the following book:";
+      textbookText.innerHTML = "Select a book you would like to sell";
       merchantName.innerHTML = "Seller name";
       break;
   }
@@ -64,4 +67,52 @@ function book_change() {
   }
 
   bookVal = this.value;
+}
+
+function update_search_layout(val) {
+  prevSearchState = searchState;
+  searchState = val;
+
+  for(var i = 1; i <= TOTALSEARCHSTATES; i++) {
+    var el = document.getElementById("searchState" + (i).toString());
+
+    if(i === searchState) {
+      el.style = "display: block";
+    }
+    else {
+      el.style = "display: none";
+    }
+  }
+}
+
+function show_form_info() {
+  var bookInfo = document.getElementById("bookInfo");
+  var form = document.getElementById("bookForm");
+  var formData = new FormData(form);
+
+  var htmlStr = "<p>Book Name: " + selectBookInfo["bookName"] + "</p>\
+  <p>Author: " + selectBookInfo["author"] + "</p>\
+  <p>ISBN: " + selectBookInfo["isbn"] + "</p>\
+  <p>Subject: " + get_subject_name(subjectID) + "</p>";
+
+  bookInfo.innerHTML = htmlStr;
+  update_search_layout(5);
+}
+
+function info_from_form() {
+  var form = document.getElementById("bookForm");
+  var formData = new FormData(form);
+
+  selectBookInfo =
+  {"bookName": formData.get("bookName"),
+  "author": formData.get("author"),
+  "isbn": formData.get("isbn")};
+
+  show_form_info();
+}
+
+function set_book_info(index) {
+  selectBookInfo = queriedBookData[index];
+
+  show_form_info();
 }

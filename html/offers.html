@@ -6,6 +6,7 @@
     <script src="js/updateData.js"></script>
     <script src="js/deleteData.js"></script>
     <script src="js/layout.js"></script>
+    <script src="js/validation.js"></script>
     <script src="js/main.js"></script>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -35,38 +36,50 @@
       </div>
 
       <div id="newOffer">
-        <div class="textbox">
-          <h2 class="offerText" id="formText">I would like to create a</h2>
+        <div class="smallbox">
+          <h2 class="offerText" id="formText"></h2>
         </div>
 
-        <div class = "searchBook">
-          <h4>Search for a book</h4>
-          <form id="bookName" onsubmit="updateBookList('bookName'); return false">
-            <label for="exampleInputBookName1">Book Name</label>
-            <div class="form-group">
-              <input style="display: inline-block; width: 50%; vertical-align: middle" name="bookName" type="text" class="form-control" id="exampleInputBookName1" placeholder="The Very Hungry Caterpillar">
-              <button style="display: inline-block; vertical-align: middle" type="submit" class="btn btn-primary">Search</button>
-            </div>
-          </form>
-          <form id="isbn" onsubmit="updateBookList('isbn'); return false">
-            <label for="exampleInputISBN1">ISBN</label>
-            <div class="form-group">
-              <input style="display: inline-block; width: 50%; vertical-align: middle" name="isbn" type="text" class="form-control" id="exampleInputISBN1" placeholder="Example ISBN">
-              <button style="display: inline-block; vertical-align: middle" type="submit" class="btn btn-primary">Search</button>
-            </div>
-          </form>
-        </div>
-
-        <div class="textbox" style="padding-top: 0">
+        <div class="smallbox" style="padding-top: 0">
           <p id="textbookText" style="font-style: italic">
-            I would like to sell the following book:</p>
+            I would like to sell the following book</p>
+        </div>
+
+        <div style="display: none">
           <select id="bookDown">
           </select>
         </div>
 
-        <div id="newBook">
-          <h4 style="text-align: center">Book Details</h4>
-          <form id="bookForm">
+        <div class="smallbox" id="searchState1">
+          <button onclick="update_search_layout(2)">Search for a book</button>
+        </div>
+
+        <div class="smallbox" class="searchBook" id="searchState2">
+          <h4>Search for a book</h4>
+          <form id="searchForm" onsubmit="updateBookList(); return false" autocomplete="off">
+            <div class="form-group">
+              <input style="display: inline-block; width: 50%; vertical-align: middle" name="query" type="text" class="form-control" id="exampleInputBookName1" placeholder="Book Name, Author, or ISBN">
+              <button style="display: inline-block; vertical-align: middle" type="submit" class="btn btn-primary">Search</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Delete Tomorrow -->
+        <select style="display: none" id="bookDown">
+        </select>
+
+        <div id="searchState3">
+          <button style="margin-bottom: 5vh;" onclick="update_search_layout(2)">Back</button>
+          <table class="table table-striped table-bordered" id="queriedBooks"></table>
+          <div class="smallbox">
+            <button onclick="update_search_layout(4)">I don't see my book</button>
+          </div>
+        </div>
+
+        <div id="searchState4">
+          <button onclick="update_search_layout(3)">Back</button>
+          <h4 style="text-align: center">New Book Details</h4>
+          <form id="bookForm" onsubmit="info_from_form(); return false" autocomplete="off">
             <div class="form-group">
               <label for="exampleInputBook1">Book Name</label>
               <input name="bookName" type="text" class="form-control" id="exampleInputBook1" placeholder="xxx (Calculus II)">
@@ -79,15 +92,24 @@
               <label for="exampleInputAuthor">Author</label>
               <input name="author" type="text" class="form-control" id="exampleInputAuthor" placeholder="John Smith">
             </div>
-            <label>Subject</label>
-            <select id="subjectDown"></select>
+            <div class="form-group">
+              <label>Subject</label>
+              <select id="subjectDown"></select>
+            </div>
+            <button style="margin-bottom: 5vh" type="submit" class="btn btn-primary">OK</button>
           </form>
         </div>
       </div>
 
+      <div id="searchState5">
+        <button onclick="update_search_layout(prevSearchState)">Back</button>
+        <h4 style="text-align: center">Book Details</h4>
+        <div class="smallbox" style="background-color: #EEEEEE" id="bookInfo"></div>
+      </div>
+
       <div id="newEntry">
-        <h4 style="text-align: center">Offer Details</h4>
-        <form id="inputForm" onsubmit="updateData(); return false">
+        <h4 class="smallbox">Offer Details</h4>
+        <form id="inputForm" onsubmit="updateData(); return false" autocomplete="off">
           <div class="form-group">
             <label for="exampleInputName1" id="merchantName">Seller name</label>
             <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name">

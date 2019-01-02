@@ -1,9 +1,10 @@
 var STATES = Object.freeze({BUY: 1, SELL: 2});
+const TOTALSEARCHSTATES = 5;
 
 const SELLREQUEST = ["postSellData", "sellTable"];
 const BUYREQUEST = ["postBuyData", "buyTable"];
 
-const TOTALASSETS = 4;
+const TOTALASSETS = 3;
 
 function get_default() {
   if(window.location.search.substr(1) === "y") return 1;
@@ -30,10 +31,10 @@ function init() {
   merchantName = document.getElementById("merchantName");
 
   update_layout(get_default());
+  update_search_layout(1);
 
   loaded = 0;
   getData('getSellData', 'sellTable');
   getData('getBuyData', 'buyTable');
-  getData('getTextbookData', 'bookDown');
   getData('getSubjects', 'subjectDown');
 }

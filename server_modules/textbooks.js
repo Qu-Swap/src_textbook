@@ -20,29 +20,12 @@ module.exports = {
 
     return id;
   },
-  search_name: function(req, res) {
-    global.db.all("SELECT * FROM textbooks WHERE \
-    bookName LIKE '%" + req.body.bookName +"%'", (err, rows) => {
-      if(err) {
-        throw err;
-      }
+  search: function(req, res) {
+    var query = req.body.query;
 
-      res.send(rows);
-    });
-  },
-  search_author: function(req, res) {
-    global.db.all("SELECT * FROM textbooks WHERE \
-    author LIKE '%" + req.body.author +"%'", (err, rows) => {
-      if(err) {
-        throw err;
-      }
-
-      res.send(rows);
-    });
-  },
-  search_isbn: function(req, res) {
-    global.db.all("SELECT * FROM textbooks WHERE \
-    isbn = '" + req.body.isbn + "'", (err, rows) => {
+    global.db.all("SELECT a.*, b.subjectName FROM textbooks as a INNER JOIN \
+    subjects as b ON a.bookName LIKE '%" + query + "%' OR a.author LIKE '%" +
+    query + "%' OR a.isbn = '" + query + "' ON a.subject_id = b.uuid", (err, rows) => {
       if(err) {
         throw err;
       }

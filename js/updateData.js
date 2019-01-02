@@ -20,44 +20,37 @@ function insertData(postReq, tableID) {
 
   var dataStr = data_to_string(data);
 
-  if(bookVal === "new") {
-    var isbn = document.getElementById("exampleInputISBN").value;
-    var isbnregex = /^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$/;
-    if(!isbnregex.test(isbn)){
-      alert("Invalid ISBN");
-      return;
-    }
-
+  /* If the user is at the last search state (i.e. the confirmation thing) and
+  was at the new book details form previously */
+  if(searchState === TOTALSEARCHSTATES && prevSearchState === TOTALSEARCHSTATES - 1) {
     var bookForm = document.getElementById("bookForm");
     var bookData = new FormData(bookForm);
+
+    if(!validate_book_form(bookData)) return;
+
     dataStr += "&" + data_to_string(bookData) + "&subject_id=" + subjectID;
-    bookForm.reset();
   }
-  else if(bookVal !== "na"){
-    dataStr += "&book_id=" + bookVal;
+  // If the user came directly from 2 states ago – selected existing book
+  else if(searchState === TOTALSEARCHSTATES && prevSearchState === TOTALSEARCHSTATES - 2){
+    dataStr += "&book_id=" + selectBookInfo["uuid"];
   }
   else {
     alert("Please select a textbook.")
     return;
   }
 
-  var price = document.getElementById("exampleInputPrice1").value;
-  var priceregex = /^\$?[0-9]+\.?[0-9]?[0-9]?$/;
-  var personname = document.getElementById('exampleInputName').value;
-  var nameregex = /^[a-z]([-']?[a-z]+)*( [a-z]([-']?[a-z]+)*)+$/;
-  if(!nameregex.test(personname)){
-    alert("Invalid buyer/seller name");
-    return;
-  }
-  else if(!priceregex.test(price)){
-    alert("Invalid price");
-    return;
-  }
+  if(!validate_offer_form(data)) return;
 
   ajax.open("POST", postReq, true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   ajax.send(dataStr);
+
+  if(bookForm) {
+    bookForm.reset();
+  }
   form.reset();
+
+  update_search_layout(1);
 }
 
 function updateData() {
@@ -78,31 +71,32 @@ function updateData() {
 }
 
 
-function searchTextbooks(column, selectID) {
+function searchTextbooks(postReq, tableID) {
   var ajax =  new XMLHttpRequest();
 
-  var form = document.getElementById(column);
+  var form = document.getElementById("searchForm");
   var data = new FormData(form);
   var dataStr = data_to_string(data);
 
   ajax.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
-      textbookData = JSON.parse(this.responseText);
+      queriedBookData = JSON.parse(this.responseText);
 
-      loadSelectData(selectID);
+      loadSearchedTextbooks(tableID);
     }
   }
 
-  ajax.open("POST", "get" + column, true);
+  ajax.open("POST", postReq, true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   ajax.send(dataStr);
   form.reset();
 }
 
 // Update the book list using a column among book name, isbn, or author
-function updateBookList(column) {
+function updateBookList() {
   try {
-    searchTextbooks(column, "bookDown");
+    searchTextbooks("postSearchData", "queriedBooks");
+    update_search_layout(3);
   }
   catch(e) {
     alert("Error searching for textbooks.")

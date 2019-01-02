@@ -1,7 +1,8 @@
+// Put these into a single object someday
 var sellData;
 var buyData;
-var textbookData;
 var subjectData;
+var queriedBookData;
 
 var loaded;
 
@@ -17,6 +18,7 @@ function requestData(getReq, elementID) {
   ajax.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
       // Will make this a separate function someday as this code gets reused
+      // Will also make it better
       var data = JSON.parse(ajax.responseText);
       switch(elementID) {
         case "sellTable":
@@ -24,9 +26,6 @@ function requestData(getReq, elementID) {
           break;
         case "buyTable":
           buyData = data;
-          break;
-        case "bookDown":
-          textbookData = data;
           break;
         case "subjectDown":
           subjectData = data;
@@ -40,7 +39,6 @@ function requestData(getReq, elementID) {
       if(loaded === TOTALASSETS) {
         loadTableData("sellTable");
         loadTableData("buyTable");
-        loadSelectData("bookDown");
         loadSelectData("subjectDown");
       }
     }
@@ -60,6 +58,7 @@ function getData(getReq, elementID) {
   }
 }
 
+// Creates multiple tables in a div element to show buying/selling offers
 function loadTableData(tableID) {
   var data;
   (tableID == "sellTable") ?
@@ -98,8 +97,8 @@ function loadTableData(tableID) {
       <td><button id='del' onclick=\"deleteData('";
 
       (tableID == "sellTable") ?
-      htmlStr += "/deleteSellData" :
-      htmlStr += "/deleteBuyData"
+      htmlStr += "deleteSellData" :
+      htmlStr += "deleteBuyData"
 
       htmlStr += "' , '" + tableID + "', '" +
       currentEntry["uuid"] + "')\">X</button</td>\
@@ -110,9 +109,7 @@ function loadTableData(tableID) {
   }
   else {
     htmlStr += "<table class=\"table table-striped table-bordered\">\
-    <tr>\
-    <td>No offers so far!</td>\
-    </tr></table>";
+    <tr><td>No offers so far!</td></tr></table>";
   }
 
   table.innerHTML = htmlStr;
@@ -147,4 +144,44 @@ function loadSelectData(selectID) {
   }
 
   select.innerHTML = htmlStr;
+}
+
+// Populates a single table with textbook search results
+function loadSearchedTextbooks(tableID) {
+  var table = document.getElementById(tableID);
+  var htmlStr = "";
+
+  if(queriedBookData.length > 0) {
+    htmlStr += "<tr><th>Textbook Name</th>\
+    <th>Author</th>\
+    <th>ISBN</th>\
+    <th>Select</th>\
+    </tr>";
+
+    for(var i = 0; i < queriedBookData.length; i++) {
+      var currentEntry = queriedBookData[i];
+
+      htmlStr += "<tr>\
+      <td>" + currentEntry["bookName"] + "</td>\
+      <td>" + currentEntry["author"] + "</td>\
+      <td>" + currentEntry["isbn"] + "</td>\
+      <td><button onclick=\"set_book_info(" + i.toString() + ")\"]>Select</button></td>\
+      </tr>";
+    }
+  }
+  else {
+    htmlStr += "<tr><td>No textbooks found</td></tr>";
+  }
+
+  table.innerHTML = htmlStr;
+}
+
+function get_subject_name(subjectID) {
+  for(var i = 0; i < subjectData.length; i++) {
+    var currentEntry = subjectData[i];
+
+    if(currentEntry["uuid"] === subjectID) {
+      return currentEntry["subjectName"];
+    }
+  }
 }
