@@ -75,7 +75,11 @@ function loadTableData(tableID) {
       var currentEntry = data[i];
       if(currentEntry["subjectName"] != prevSubject) {
         prevSubject = currentEntry["subjectName"];
-        htmlStr += "</table><h4>" + prevSubject + "</h4>\
+        htmlStr += "</table></div>\
+        <button class='dropDown' \
+        onclick=\"toggle_element('" + prevSubject + "')\">" +
+        prevSubject + "</button><div style='display: none;'\
+        id=\"" + prevSubject + "\"> \
         <table class=\"table table-striped table-bordered\">";
 
         (tableID === "sellTable") ?
@@ -105,7 +109,7 @@ function loadTableData(tableID) {
       </tr>";
     }
 
-    htmlStr += "</table>";
+    htmlStr += "</div></table>";
   }
   else {
     htmlStr += "<table class=\"table table-striped table-bordered\">\

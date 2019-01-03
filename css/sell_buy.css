@@ -13,28 +13,30 @@
   }
 }
 
-table {
-  border-collapse: collapse;
+button {
+  background-color: white;
+  color: #BD2026;
+  border-color: #BD2026;
 }
 
-h1 {
-  padding-top: 5vh;
-  padding-bottom: 5vh;
-  text-align: center;
+/* Override bootstrap */
+.btn {
+  background-color: white;
+  color: #BD2026;
+  border-color: #BD2026;
+}
+
+table {
+  border-collapse: collapse;
 }
 
 body{
   font-family: "Cambria", Times;
 }
 
-h2 {
-  text-align: center;
-}
-
-button{
-  background-color: white !important;
-  color: #BD2026 !important;
-  border-color: #BD2026 !important;
+p {
+  margin: 0;
+  padding: 0;
 }
 
 .non-navbar {
@@ -60,6 +62,19 @@ button{
   padding-top: 2.5vh;
   padding-bottom: 2.5vh;
   text-align: center;
+}
+
+.dropDown {
+  width: 100%;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  margin: 1vh 0;
+}
+
+.dropDown:hover {
+  cursor: pointer;
+  color: #ED2026;
+  border-color: #ED2026;
 }
 
 .offerText {

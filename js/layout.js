@@ -117,3 +117,14 @@ function set_book_info(index) {
 
   show_form_info();
 }
+
+function toggle_element(elementID) {
+  var el = document.getElementById(elementID);
+
+  if(el.style.display === "none" ) {
+    el.style.display = "block";
+  }
+  else {
+    el.style.display = "none";
+  }
+}

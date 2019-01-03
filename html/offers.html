@@ -26,12 +26,12 @@
 
     <div class="non-navbar">
       <div id="sellingOffers">
-        <h1>Books people are selling</h1>
+        <h1 class="smallbox">Books people are selling</h1>
         <div id="sellTable"></div>
       </div>
 
       <div id="buyingOffers">
-        <h1>Books people are buying</h1>
+        <h1 class="smallbox">Books people are buying</h1>
         <div id="buyTable"></div>
       </div>
 
@@ -41,8 +41,7 @@
         </div>
 
         <div class="smallbox" style="padding-top: 0">
-          <p id="textbookText" style="font-style: italic">
-            I would like to sell the following book</p>
+          <p id="textbookText" style="font-style: italic"></p>
         </div>
 
         <div style="display: none">
@@ -59,7 +58,7 @@
           <form id="searchForm" onsubmit="updateBookList(); return false" autocomplete="off">
             <div class="form-group">
               <input style="display: inline-block; width: 50%; vertical-align: middle" name="query" type="text" class="form-control" id="exampleInputBookName1" placeholder="Book Name, Author, or ISBN">
-              <button style="display: inline-block; vertical-align: middle" type="submit" class="btn btn-primary">Search</button>
+              <button style="display: inline-block; vertical-align: middle" type="submit" class="btn">Search</button>
             </div>
           </form>
         </div>
@@ -126,7 +125,7 @@
             <label for="exampleInputPassword1">Password</label>
             <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
           </div>
-          <button style="margin-bottom: 5vh" type="submit" class="btn btn-primary">Submit</button>
+          <button style="margin-bottom: 5vh" type="submit" class="btn">Submit</button>
         </form>
       </div>
     </div>
