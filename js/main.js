@@ -18,9 +18,6 @@ function init() {
   buyBtn = document.getElementById("buyBtn");
   buyingOffers = document.getElementById("buyingOffers");
 
-  bookDown = document.getElementById("bookDown");
-  bookDown.addEventListener("change", book_change, false);
-
   subjectDown = document.getElementById("subjectDown");
   subjectDown.addEventListener("change", function() {
     subjectID = this.value;

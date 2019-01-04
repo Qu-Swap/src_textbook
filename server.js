@@ -10,6 +10,7 @@ var path = __dirname + "/data/";
 // Imports
 var textbooks = require("./server_modules/textbooks");
 var subjects = require("./server_modules/subjects");
+var comments = require("./server_modules/comments");
 
 // Open database
 const sqlite3 = require('sqlite3').verbose();
@@ -20,6 +21,7 @@ global.db = new sqlite3.Database(path + "offers.db", sqlite3.OPEN_READWRITE | sq
   console.log('Connected to the database.');
 });
 
+// Generate tables, ignore an error if the table already exists
 global.db.serialize(() => {
   // Queries scheduled here will be serialized.
   global.db.run("CREATE TABLE textbooks(uuid NOT NULL PRIMARY KEY, bookName \
@@ -29,14 +31,16 @@ global.db.serialize(() => {
   });
 
   global.db.run("CREATE TABLE sellers(uuid NOT NULL PRIMARY KEY, name TEXT, \
-  price DOUBLE, email TEXT, password TEXT, book_id, FOREIGN KEY \
-  (book_id) REFERENCES textbooks(uuid))", (err) => {
+  price DOUBLE, email TEXT, password TEXT, book_id, comment_id, FOREIGN KEY \
+  (book_id) REFERENCES textbooks(uuid), FOREIGN KEY (comment_id) REFERENCES \
+  comments(uuid))", (err) => {
     if (err){}
   });
 
   global.db.run("CREATE TABLE buyers(uuid NOT NULL PRIMARY KEY, name TEXT, \
-  price DOUBLE, email TEXT, password TEXT, book_id, FOREIGN KEY \
-  (book_id) REFERENCES textbooks(uuid))", (err) => {
+  price DOUBLE, email TEXT, password TEXT, book_id, comment_id, FOREIGN KEY \
+  (book_id) REFERENCES textbooks(uuid), FOREIGN KEY (comment_id) REFERENCES \
+  comments(uuid))", (err) => {
     if (err){}
   });
 
@@ -45,6 +49,10 @@ global.db.serialize(() => {
     else {
       subjects.insert_subjects(path + "subjects.csv");
     }
+  });
+
+  global.db.run("CREATE TABLE comments(uuid NOT NULL PRIMARY KEY, comment TEXT)", (err) => {
+    if(err){}
   });
 
   global.db.run("PRAGMA foreign_keys = ON", (err) => {
@@ -76,8 +84,9 @@ function get_table(req, res, table, condition) {
   // Don't retrieve password, otherwise it's accessible client-side
   // Use an inner join to get the textbook and subject name
   global.db.all("SELECT a.uuid, a.name, a.price, a.email, a.book_id, b.bookName, \
-   b.isbn, b.author, c.subjectName FROM " + table + " AS a INNER JOIN textbooks \
-   AS b INNER JOIN subjects AS c ON a.book_id = b.uuid AND b.subject_id = c.uuid " +
+   b.isbn, b.author, c.subjectName, d.comment FROM " + table + " AS a INNER JOIN textbooks \
+   AS b INNER JOIN subjects AS c INNER JOIN comments AS d \
+   ON a.book_id = b.uuid AND b.subject_id = c.uuid AND a.comment_id = d.uuid " +
    condition + " ORDER BY c.rowid", (err, rows) => {
     if (err) {
       throw err;
@@ -110,15 +119,16 @@ function post_entry(req, res, table) {
     var email = req.body.email;
     var password = req.body.password;
     var book_id = req.body.book_id;
+    var comment_id = comments.insert(req, res);
 
     // If the book_id is empty, then the user is inserting a new textbook
     if(!book_id) {
       book_id = textbooks.insert(req, res);
     }
 
-    var data = [id, name, price, email, password, book_id];
+    var data = [id, name, price, email, password, book_id, comment_id];
 
-    global.db.run("INSERT INTO " + table + " VALUES(?, ?, ?, ?, ?, ?)", data);
+    global.db.run("INSERT INTO " + table + " VALUES(?, ?, ?, ?, ?, ?, ?)", data);
     get_table(req, res, table);
   });
 }

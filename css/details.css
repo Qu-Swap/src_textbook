@@ -3,7 +3,7 @@ body {
   background-color: #333333;
 }
 
-p {
+p, i {
   color: #BD2026;
   margin: 1vh;
 }

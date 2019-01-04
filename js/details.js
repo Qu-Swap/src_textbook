@@ -25,6 +25,7 @@ function populate(data, sellBuy) {
 
   var offerDetails = document.getElementById("offerDetails");
   var bookDetails = document.getElementById("bookDetails");
+  var extraDetails = document.getElementById("extraDetails");
 
   offerDetails.innerHTML =
   "<h2>Offer Details</h2>\
@@ -39,8 +40,13 @@ function populate(data, sellBuy) {
   <p>ISBN: " + data["isbn"] + "</p>\
   <p>Subject: " + data["subjectName"] + "</p>";
 
+  extraDetails.innerHTML =
+  "<h2>Additional Details</h2>\
+  <i>" + data["comment"] + "</i>";
+
   offerDetails.style.display = "block";
   bookDetails.style.display = "block";
+  extraDetails.style.display = "block";
 }
 
 function init() {

@@ -4,7 +4,6 @@ var state, searchState, prevSearchState;
 var sellBtn, sellingOffers;
 var buyBtn, buyingOffers;
 
-var bookDown, bookVal = "na";
 var subjectDown, subjectID;
 
 var formText, textbookText, merchantName;

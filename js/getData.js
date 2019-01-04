@@ -125,12 +125,6 @@ function loadSelectData(selectID) {
   var data, htmlStr, inner, select;
 
   switch(selectID) {
-    case "bookDown":
-      data = textbookData;
-      htmlStr = "<option value =\"na\"></option>";
-      inner = "bookName";
-      select = bookDown;
-      break;
     case "subjectDown":
       data = subjectData;
       htmlStr = "";
@@ -143,10 +137,6 @@ function loadSelectData(selectID) {
     var currentEntry = data[i];
     htmlStr += "<option value=\"" + currentEntry["uuid"] + "\" >"
     + currentEntry[inner] + "</option>";
-  }
-
-  if(selectID == "bookDown") {
-    htmlStr += "<option value=\"new\">Insert new book</option>";
   }
 
   select.innerHTML = htmlStr;
