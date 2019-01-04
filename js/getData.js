@@ -88,7 +88,8 @@ function loadTableData(tableID) {
 
         htmlStr += "<th>Textbook Name</th>\
         <th>Price (USD)</th>\
-        <th>Email</th>\
+        <th>Contact Email</th>\
+        <th>Details</th>\
         <th>Delete</th>\
         </tr>";
       }
@@ -98,6 +99,7 @@ function loadTableData(tableID) {
       <td>" + currentEntry["bookName"] + "</td>\
       <td>" + currentEntry["price"] + "</td>\
       <td>" + currentEntry["email"] + "</td>\
+      <td><a href=\"details.html?" + currentEntry["uuid"] + "\">Details</a></td>\
       <td><button id='del' onclick=\"deleteData('";
 
       (tableID == "sellTable") ?

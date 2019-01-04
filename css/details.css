@@ -1,0 +1,29 @@
+body {
+  font-family: "Cambria", Times;
+  background-color: #333333;
+}
+
+p {
+  color: #BD2026;
+  margin: 1vh;
+}
+
+h2 {
+  margin: 0 0 2.5vh;
+}
+
+button {
+  margin: 1.5vh;
+  background-color: #EEEEEE;
+  color: #BD2026;
+  border-color: #BD2026;
+}
+
+.box {
+  background-color: #EEEEEE;
+  text-align: center;
+  width: 80%;
+  margin: 2.5vh auto;
+  padding: 2.5vh;
+  border: 2px solid #BD2026;
+}

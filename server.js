@@ -68,19 +68,35 @@ app.get("/index.html", function(req, res) {
 });
 
 // General method for sending buying/selling table
-function get_table(req, res, table) {
+function get_table(req, res, table, condition) {
+  if(!condition) {
+    condition = "";
+  }
+
   // Don't retrieve password, otherwise it's accessible client-side
   // Use an inner join to get the textbook and subject name
   global.db.all("SELECT a.uuid, a.name, a.price, a.email, a.book_id, b.bookName, \
-   c.subjectName FROM " + table + " AS a INNER JOIN textbooks AS b INNER JOIN \
-   subjects AS c ON a.book_id = b.uuid AND b.subject_id = c.uuid ORDER BY \
-   c.rowid", (err, rows) => {
+   b.isbn, b.author, c.subjectName FROM " + table + " AS a INNER JOIN textbooks \
+   AS b INNER JOIN subjects AS c ON a.book_id = b.uuid AND b.subject_id = c.uuid " +
+   condition + " ORDER BY c.rowid", (err, rows) => {
     if (err) {
       throw err;
     }
 
     res.send(rows);
   });
+}
+
+// General method for searching table based on req.body.query
+function search_table(req, res, table) {
+  var condition = "AND a.uuid = \"" + req.body.query + "\"";
+
+  if(condition) {
+    get_table(req, res, table, condition);
+  }
+  else {
+    res.end();
+  }
 }
 
 // General method for inserting data
@@ -166,6 +182,16 @@ app.post('/postSearchData', textbooks.search);
 
 // GET request for getting a list of subjects
 app.get('/getSubjects', subjects.get_subjects);
+
+// POST request for searching selling offers
+app.post('/postSearchSellingOffers', function(req, res) {
+  search_table(req, res, "sellers");
+});
+
+// POST request for searching buying offers
+app.post('/postSearchBuyingOffers', function(req, res) {
+  search_table(req, res, "buyers");
+});
 
 // Listen on the server
 server.listen(8085, function() {
