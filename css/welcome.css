@@ -1,41 +1,28 @@
-.container-fluid{
-  padding: 10% 0;
-  background-size: 300px 300px;
-  background-repeat: no-repeat;
-  margin:auto;
-  text-align: inherit;
+.welcome-box {
+	background-repeat: no-repeat;
+	background-image: url("welcome_background.jpg");
+	background-size: 100%;
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
-body {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: black;
+.welcome-cta {
+	padding-top: 10%;
 }
 
-h1{
+.cta-text {
   font-family: "Georgia", Times, serif !important;
   font-size: 100px !important;
   font-style: oblique;
   margin-left: 50px;
   margin-bottom: 0px;
+  color: white;
 }
 
-h3{
-  font-family:inherit;
-  font-size: 30px !important;
-  font-style:normal;
-  margin-left: 50px;
-  margin-bottom: 0px;
-}
-
-h7{
-  font-family:monospace;
-  font-size: 10px !important;
-  font-style:normal;
-  margin-left: 600px
-}
-
-.sell-btn{
+.sell-btn {
   background-color: #BD2026;
   margin: 40px;
   color: white !important
@@ -46,7 +33,7 @@ h7{
     color: white;
 }
 
-.buy-btn{
+.buy-btn {
   background-color: white;
   margin: 50px;
   color: #BD2026 !important
