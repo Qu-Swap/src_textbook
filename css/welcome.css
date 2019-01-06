@@ -2,28 +2,35 @@
 .welcome-image {
 	background-repeat: no-repeat;
 	background-image: url("welcome_background.jpg");
-	background-size: 100%;
+	background-size: cover;
 }
 
 .welcome-cta {
-	padding-top: 10%;
+	padding: 10% 50px;
 }
 
 .cta-text {
-  font-family: "Georgia", Times, serif !important;
-  font-size: 100px !important;
+  font-family: "Georgia", Times, serif;
+  font-size: 100px;
   font-style: oblique;
-  margin-left: 50px;
-  margin-bottom: 0px;
   color: white;
+}
+#buttons {
+	display: flex;
+	justify-content: flex-start;
+	padding: 20px;
+}
+#buttons .btn {
+	font-size: 25px;
+	margin-right: 35px;
+	box-shadow: 0 1px 2px #0003;
+	border-radius: 6px;
 }
 
 .sell-btn {
   background-color: #BD2026;
-  margin: 40px;
   color: white !important
 }
-
 .sell-btn:hover {
     background-color: #f44336;
     color: white;
@@ -31,10 +38,8 @@
 
 .buy-btn {
   background-color: white;
-  margin: 50px;
   color: #BD2026 !important
 }
-
 .buy-btn:hover {
     background-color: #e7e7e7;
     color: #BD2026;
