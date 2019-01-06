@@ -1,0 +1,29 @@
+.static-page {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.footer {
+	width: 100%;
+	list-style: none;
+	display: flex;
+	justify-content: center;
+}
+
+.footer li {
+	margin: 4px 15px;
+}
+
+.footer li a {
+	color: black;
+	opacity: 0.6;
+	text-decoration: none;
+	will-change: opacity;
+}
+
+.footer li a:hover {
+	opacity: 1 !important;
+}
