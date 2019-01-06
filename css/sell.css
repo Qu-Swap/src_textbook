@@ -1,6 +1,7 @@
 table {
   border-collapse: collapse;
   width: 100%;
+  table-layout: fixed;
 }
 
 h1 {
@@ -8,7 +9,6 @@ h1 {
   text-align: center;
 }
 
-/* td, th {
-  border: 2px solid black;
-  padding: 8px;
-} */
+table td {
+	word-wrap: break-word;
+}

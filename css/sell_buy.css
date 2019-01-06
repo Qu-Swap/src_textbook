@@ -28,6 +28,10 @@ button {
 
 table {
   border-collapse: collapse;
+  table-layout: fixed;
+}
+td {
+	word-wrap: break-word;
 }
 
 body{
