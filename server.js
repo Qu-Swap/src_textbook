@@ -24,10 +24,20 @@ global.db = new sqlite3.Database(path + "offers.db", sqlite3.OPEN_READWRITE | sq
 // Generate tables, ignore an error if the table already exists
 global.db.serialize(() => {
   // Queries scheduled here will be serialized.
-  global.db.run("CREATE TABLE textbooks(uuid NOT NULL PRIMARY KEY, bookName \
-  TEXT, isbn TEXT, author TEXT, subject_id, FOREIGN KEY (subject_id) REFERENCES \
-  subjects(uuid))", (err) =>{
+  global.db.run("CREATE TABLE subjects(uuid NOT NULL PRIMARY KEY, subjectName TEXT)", (err) => {
     if (err){}
+    else {
+      subjects.insert_subjects(path + "subjects.csv");
+    }
+  });
+
+  global.db.run("CREATE TABLE textbooks(uuid NOT NULL PRIMARY KEY, bookName \
+  TEXT, isbn TEXT, author TEXT, publisher TEXT, edition INTEGER, subject_id, \
+  FOREIGN KEY (subject_id) REFERENCES subjects(uuid))", (err) =>{
+    if (err){}
+    else {
+      textbooks.populate(path + "courses.json");
+    }
   });
 
   global.db.run("CREATE TABLE sellers(uuid NOT NULL PRIMARY KEY, name TEXT, \
@@ -42,13 +52,6 @@ global.db.serialize(() => {
   (book_id) REFERENCES textbooks(uuid), FOREIGN KEY (comment_id) REFERENCES \
   comments(uuid))", (err) => {
     if (err){}
-  });
-
-  global.db.run("CREATE TABLE subjects(uuid NOT NULL PRIMARY KEY, subjectName TEXT)", (err) => {
-    if (err){}
-    else {
-      subjects.insert_subjects(path + "subjects.csv");
-    }
   });
 
   global.db.run("CREATE TABLE comments(uuid NOT NULL PRIMARY KEY, comment TEXT)", (err) => {
