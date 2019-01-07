@@ -13,8 +13,11 @@ function validate_book_form(bookData) {
 // Input validation for offer details, general
 function validate_offer_form(offerData) {
   var price = offerData.get("price");
+  if (price.startsWith("$")) {
+	price = price.substring(1);
+  }
   var priceregex = /^\$?[0-9]+\.?[0-9]?[0-9]?$/;
-  var personname = offerData.get("name");
+  var personname = offerData.get("name").toLowerCase();
   var nameregex = /^[a-z]([-']?[a-z]+)*( [a-z]([-']?[a-z]+)*)+$/;
   if(!nameregex.test(personname)){
     alert("Invalid buyer/seller name");

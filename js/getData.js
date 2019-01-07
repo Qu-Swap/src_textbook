@@ -33,13 +33,20 @@ function requestData(getReq, elementID) {
           break;
       }
 
-      loaded++;
+      loaded.push(elementID);
 
       // If all data has been loaded (indicating this is the last response)
-      if(loaded === TOTALASSETS) {
-        loadTableData("sellTable");
-        loadTableData("buyTable");
-        loadSelectData("subjectDown");
+      if (loaded.length == TOTALASSETS) {
+		for (element in loaded) {
+			var el = loaded[element];
+			switch(el) {
+				case "subjectDown":
+				  loadSelectData(el);
+				  break;
+				default:
+				  loadTableData(el);
+			}
+		}
       }
     }
   }
@@ -60,55 +67,50 @@ function getData(getReq, elementID) {
 
 // Creates multiple tables in a div element to show buying/selling offers
 function loadTableData(tableID) {
-	var data;
-	(tableID == "sellTable") ?
-	data = sellData :
-	data = buyData
+	var data = (tableID == "sellTable") ? sellData : buyData;
 
 	var table = document.getElementById(tableID);
-	var htmlStr = "<table class=\"table table-striped table-bordered\">";
+	var htmlStr = "<table class=\"omni table table-striped table-bordered\">";
 
-	htmlStr += "<thead><tr><th>Textbook Name</th>";
-	if (tableID === "sellTable") {
-		htmlStr += "<th>Seller Name</th>"
-	} else {
-		htmlStr += "<th>Buyer Name</th>"
-	}
+    if(data.length > 0) {
+		htmlStr += "<thead><tr><th>Textbook Name</th>";
+		if (tableID === "sellTable") {
+			htmlStr += "<th>Seller Name</th>"
+		} else {
+			htmlStr += "<th>Buyer Name</th>"
+		}
 	
-	htmlStr += "<th>Price (USD)</th>\
-	<th>Contact Email</th>\
-	<th>Actions</th>\
-	</tr></thead><tbody>";
+		htmlStr += "<th>Price (USD)</th>\
+		<th>Contact Email</th>\
+		<th>Actions</th>\
+		</tr></thead><tbody>";
 
-  if(data.length > 0) {
+		for(var i = 0; i < data.length; i++) {
+		  var currentEntry = data[i];
 
-    for(var i = 0; i < data.length; i++) {
-      var currentEntry = data[i];
+		  htmlStr += "<tr>\
+		  <td>" + currentEntry["bookName"] + "</td>\
+		  <td>" + currentEntry["name"] + "</td>\
+		  <td>" + currentEntry["price"] + "</td>\
+		  <td>" + currentEntry["email"] + "</td>\
+		  <td><a class='btn-small' href=\"details.html?" + currentEntry["uuid"] + "\"><i class='fas fa-ellipsis-h'></i></a>\
+		  <a class='btn-small' href='mailto:" + currentEntry["email"] + "'><i class='fas fa-reply'></i></a>\
+		  <a class='btn-small' onclick=\"deleteData('";
 
-      htmlStr += "<tr>\
-	  <td>" + currentEntry["bookName"] + "</td>\
-      <td>" + currentEntry["name"] + "</td>\
-      <td>" + currentEntry["price"] + "</td>\
-      <td>" + currentEntry["email"] + "</td>\
-      <td><a class='btn-small details' href=\"details.html?" + currentEntry["uuid"] + "\"><i class='fas fa-ellipsis-h'></i></a>\
-	  <a class='btn-small reply' href='mailto:" + currentEntry["email"] + "'><i class='fas fa-reply'></i></a>\
-      <a class='btn-small del' onclick=\"deleteData('";
+		  (tableID == "sellTable") ?
+		  htmlStr += "deleteSellData" :
+		  htmlStr += "deleteBuyData"
 
-      (tableID == "sellTable") ?
-      htmlStr += "deleteSellData" :
-      htmlStr += "deleteBuyData"
+		  htmlStr += "' , '" + tableID + "', '" +
+		  currentEntry["uuid"] + "')\"><i class='fas fa-trash-alt'></i></a</td>\
+		  </tr>";
+		}
 
-      htmlStr += "' , '" + tableID + "', '" +
-      currentEntry["uuid"] + "')\"><i class='fas fa-trash-alt'></i></a</td>\
-      </tr>";
-    }
-
-    htmlStr += "</tbody></table>";
-  }
-  else {
-    htmlStr += "<table class=\"table table-striped table-bordered\">\
-    <tr><td>No offers so far!</td></tr></table>";
-  }
+		htmlStr += "</tbody></table>";
+	}
+	else {
+	htmlStr += "<tr><td>No offers so far!</td></tr></table>";
+	}
 
   table.innerHTML = htmlStr;
 }
@@ -153,7 +155,7 @@ function loadSearchedTextbooks(tableID) {
       <td>" + currentEntry["bookName"] + "</td>\
       <td>" + currentEntry["author"] + "</td>\
       <td>" + currentEntry["isbn"] + "</td>\
-      <td><button onclick=\"set_book_info(" + i.toString() + ")\"]>Select</button></td>\
+      <td><a class='btn-small' onclick=\"set_book_info(" + i.toString() + ")\"]><i class='fas fa-arrow-right'></i></a></td>\
       </tr>";
     }
   }

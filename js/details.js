@@ -57,6 +57,14 @@ function populate(data, sellBuy) {
   if (!isBlank(data["comment"])) {
 	extraDetails.style.display = "block";
   }
+  
+  update_back(sellBuy);
+}
+function update_back(sellBuy) {
+	var back = document.getElementById("back");
+	if (sellBuy === "Seller") {
+		back.href += "?y";
+	}
 }
 
 function init() {

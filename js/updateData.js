@@ -96,7 +96,7 @@ function searchTextbooks(postReq, tableID) {
 function updateBookList() {
   try {
     searchTextbooks("postSearchData", "queriedBooks");
-    update_search_layout(3);
+    update_search_layout(2);
   }
   catch(e) {
     alert("Error searching for textbooks.")

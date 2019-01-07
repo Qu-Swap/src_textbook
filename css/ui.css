@@ -48,8 +48,8 @@
   display: block;
   text-align: center;
 }
-.back-btn {
-	margin-top: 20px;
+.floating-btn {
+	
 	width: 50px;
 	height: 50px;
 	display: block;
@@ -69,33 +69,42 @@
 	
 	z-index: 1;
 }
-.back-btn:hover {
+
+.floating-btn:hover {
 	color: var(--theme-color);
 	background-color: white;
 }
+.back-btn {
+	margin-top: 20px;
+}
+.add-btn {
+	position: absolute;
+	right: calc(5% + 10px);
+	bottom: calc(2% + 20px);
+}
 
 /* Offer table */
-table {
+omni {
   border-collapse: collapse;
   table-layout: fixed;
 }
 
-thead, tr {
+.omni thead, .omni tr {
 	display: block;
 	width: 100%;
 }
-tbody {
+.omni tbody {
 	display: block;
 	height: calc(100vh - 135px);
 	overflow-y: auto;
 }
-td, th {
-	width: 1%;
+.omni td, .omni th {
+	width: 10%;
 }
-td {
-	word-wrap: break-word;
+.omni td {
+	word-break: break-all;
+	vertical-align: middle;
 }
-
 
 .btn-small {
 	cursor: pointer;
@@ -124,8 +133,10 @@ td {
 }
 
 /* Details */
-.back-btn.indent {
-	margin-left: 30px;
+.floating-btn.indent {
+	left: 35px;
+	top: 20px;
+	position: absolute;
 }
 
 .box {
@@ -146,4 +157,92 @@ td {
 }
 .box .propname {
 	font-weight: 600;
+}
+
+/* Add offer */
+#newOffer {
+	margin-top: 20px;
+}
+
+.book-search {
+	padding: 25px;
+	margin: 10px;
+	background-color: #f5f5f5;
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+}
+.book-search h4 {
+	margin-bottom: 0.8rem;
+}
+.book-search .form-group {
+	display: flex;
+}
+.book-search .form-group .btn {
+	margin-left: 10px;
+	background-color: white;
+	border: 1px solid #ced4da
+}
+
+.form-control:focus {
+	box-shadow: inset 0 0 4px rgba(0,123,255,.25);
+}
+.search-back {
+	cursor: pointer;
+	position: absolute;
+	transform: translateX(-17px) translateY(-22px);
+	display: inline-block;
+}
+#searchState2 {
+	overflow: auto;
+}
+.add-book {
+	float: right;
+	background-color: white;
+	display: inline-block;
+	cursor: pointer;
+	padding: 6px 12px;
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+}
+#searchState3 .form-group {
+	justify-content: space-between;
+	align-items: center;
+}
+#searchState3 .form-group input, #searchState3 .form-group select{
+	width: 80%;
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+	padding: 6px 12px;
+}
+#searchState3 button {
+	float: right;
+	background-color: white;
+	display: inline-block;
+	cursor: pointer;
+	padding: 6px 12px;
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+}
+#searchState3 #bookForm {
+	overflow: auto;
+}
+#searchState4 p {
+	margin-bottom: 0.5rem;
+}
+#searchState4 p:last-child {
+	margin-bottom: 0;
+}
+
+#newEntry button {
+	float: right;
+	background-color: white;
+	display: inline-block;
+	cursor: pointer;
+	padding: 6px 12px;
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+}
+#newEntry #inputForm {
+	overflow: auto;
+	margin-bottom: 10px;
 }

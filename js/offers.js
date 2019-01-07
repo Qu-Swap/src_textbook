@@ -54,7 +54,7 @@ var STATES = Object.freeze({BUY: 1, SELL: 2});
 const SELLREQUEST = ["postSellData", "sellTable"];
 const BUYREQUEST = ["postBuyData", "buyTable"];
 
-const TOTALASSETS = 3;
+const TOTALASSETS = 2;
 
 function get_default() {
   if (window.location.search.substr(1) === "y") return 1;
@@ -70,8 +70,7 @@ function init() {
 
   update_layout(get_default());
 
-  loaded = 0;
+  loaded = [];
   getData('getSellData', 'sellTable');
   getData('getBuyData', 'buyTable');
-  getData('getSubjects', 'subjectDown');
 }

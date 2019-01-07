@@ -6,7 +6,7 @@ var buyBtn, buyingOffers;
 
 var subjectDown, subjectID;
 
-var formText, textbookText, merchantName;
+var formText, merchantName;
 
 var selectBookInfo;
 
@@ -16,38 +16,25 @@ function set_inactive() {
   buyBtn.className = "inactive";
 }
 
-// Set both tables to be invisible
-function set_invisible() {
-  var invis = "display: none";
-
-  sellingOffers.style = invis;
-  buyingOffers.style = invis;
-}
-
 // Update the layout depending on whether "Buy Books" or "Sell Books" is selected
 function update_layout(val) {
   state = val;
 
   set_inactive();
-  set_invisible();
 
   var show = "display: block";
 
   switch(state) {
     case STATES.BUY:
       buyBtn.className = "active";
-      sellingOffers.style = show;
       formText.innerHTML =
       "Don't see a book you want to buy? <br> Submit a <i>buying request</i>.";
-      textbookText.innerHTML = "Select a book you would like to buy";
       merchantName.innerHTML = "Buyer name";
       break;
     case STATES.SELL:
       sellBtn.className = "active";
-      buyingOffers.style = show;
       formText.innerHTML =
       "Can't find a book you want to sell? <br> Submit a <i>selling request</i>.";
-      textbookText.innerHTML = "Select a book you would like to sell";
       merchantName.innerHTML = "Seller name";
       break;
   }
@@ -72,7 +59,7 @@ function update_search_layout(val) {
   prevSearchState = searchState;
   searchState = val;
 
-  for(var i = 1; i <= TOTALSEARCHSTATES; i++) {
+  for (var i = 1; i <= TOTALSEARCHSTATES; i++) {
     var el = document.getElementById("searchState" + (i).toString());
 
     if(i === searchState) {
@@ -96,7 +83,7 @@ function show_form_info() {
   selectBookInfo["subjectName"] : get_subject_name(subjectID)) + "</p>";
 
   bookInfo.innerHTML = htmlStr;
-  update_search_layout(5);
+  update_search_layout(4);
 }
 
 function info_from_form() {
@@ -128,12 +115,12 @@ function toggle_element(elementID) {
   }
 }
 var STATES = Object.freeze({BUY: 1, SELL: 2});
-const TOTALSEARCHSTATES = 5;
+const TOTALSEARCHSTATES = 4;
 
 const SELLREQUEST = ["postSellData", "sellTable"];
 const BUYREQUEST = ["postBuyData", "buyTable"];
 
-const TOTALASSETS = 3;
+const TOTALASSETS = 1;
 
 function get_default() {
   if (window.location.search.substr(1) === "y") return 1;
@@ -142,10 +129,8 @@ function get_default() {
 
 function init() {
   sellBtn = document.getElementById("sellBtn");
-  sellingOffers = document.getElementById("sellingOffers");
 
   buyBtn = document.getElementById("buyBtn");
-  buyingOffers = document.getElementById("buyingOffers");
 
   subjectDown = document.getElementById("subjectDown");
   subjectDown.addEventListener("change", function() {
@@ -153,14 +138,11 @@ function init() {
   }, false);
 
   formText = document.getElementById("formText");
-  textbookText = document.getElementById("textbookText");
   merchantName = document.getElementById("merchantName");
 
   update_layout(get_default());
   update_search_layout(1);
 
-  loaded = 0;
-  getData('getSellData', 'sellTable');
-  getData('getBuyData', 'buyTable');
+  loaded = [];
   getData('getSubjects', 'subjectDown');
 }
