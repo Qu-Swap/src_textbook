@@ -19,6 +19,9 @@ function get_data(uuid, postReq, sellBuy) {
 function get_param() {
   return window.location.search.substr(1);
 }
+function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
+}
 
 function populate(data, sellBuy) {
   document.getElementById("none").style.display = "none";
@@ -29,24 +32,31 @@ function populate(data, sellBuy) {
 
   offerDetails.innerHTML =
   "<h2>Offer Details</h2>\
-  <p>" + sellBuy + " Name: " + data["name"] + "</p>\
-  <p>Price: " + data["price"] + "</p>\
-  <p>Contact Email: " + data["email"] + "</p>";
+  <div class=\"spacer\"></div>\
+  <p><span class=\"propname\">" + sellBuy + " Name:</span> " + data["name"] + "</p>\
+  <p><span class=\"propname\">Price:</span> " + data["price"] + "</p>\
+  <p><span class=\"propname\">Contact Email:</span> " + data["email"] + "</p>";
 
   bookDetails.innerHTML =
   "<h2>Book Details</h2>\
-  <p>Book Name: " + data["bookName"] + "</p>\
-  <p>Author: " + data["author"] + "</p>\
-  <p>ISBN: " + data["isbn"] + "</p>\
-  <p>Subject: " + data["subjectName"] + "</p>";
-
+  <div class=\"spacer\"></div>\
+  <p><span class=\"propname\">Book Name:</span> " + data["bookName"] + "</p>\
+  <p><span class=\"propname\">Author:</span> " + data["author"] + "</p>\
+  <p><span class=\"propname\">ISBN:</span> " + data["isbn"] + "</p>\
+  <p><span class=\"propname\">Subject:</span> " + data["subjectName"] + "</p>";
+  
   extraDetails.innerHTML =
   "<h2>Additional Details</h2>\
+  <div class=\"spacer\"></div>\
   <i>" + data["comment"] + "</i>";
+
 
   offerDetails.style.display = "block";
   bookDetails.style.display = "block";
-  extraDetails.style.display = "block";
+  
+  if (!isBlank(data["comment"])) {
+	extraDetails.style.display = "block";
+  }
 }
 
 function init() {

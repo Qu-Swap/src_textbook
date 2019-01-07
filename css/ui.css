@@ -1,0 +1,149 @@
+.single-page {
+	overflow-y: hidden;
+	height: 100vh;
+}
+
+.top-nav {
+	display: flex;
+	flex-direction: row;
+}
+
+.navbar {
+	list-style: none;
+
+	padding: 0;
+	margin: 20px auto 10px auto;
+	height: 50px;
+	width: calc(100vw - 100px);
+	max-width: 65%;
+	
+	border-radius: 25px;
+	overflow: hidden;
+	border: 1px solid var(--theme-color);
+}
+.navbar li {
+  width: 50%;
+  height: 100%;
+  float: left;
+  line-height: 46px;
+  
+  color: var(--theme-color);
+  font-size: 18px;
+  font-weight: 600;
+  
+}
+
+.navbar li:hover:not(.active) {
+  color: #ED2026;
+  cursor: pointer;
+}
+
+.navbar li.active {
+  color: white;
+  background-color: var(--theme-color);
+  cursor: pointer;
+}
+
+.navbar li a {
+  display: block;
+  text-align: center;
+}
+.back-btn {
+	margin-top: 20px;
+	width: 50px;
+	height: 50px;
+	display: block;
+	
+	border-radius: 100%;
+	text-decoration: none;
+	font-size: 20px;
+	
+	text-align: center;
+	line-height: 48px;
+	
+	background-color: var(--theme-color);
+	color: white;
+	
+	box-shadow: 0 1px 2px #0004;
+	transition: 0.1s color ease-out, 0.1s background-color ease-out;
+	
+	z-index: 1;
+}
+.back-btn:hover {
+	color: var(--theme-color);
+	background-color: white;
+}
+
+/* Offer table */
+table {
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+thead, tr {
+	display: block;
+	width: 100%;
+}
+tbody {
+	display: block;
+	height: calc(100vh - 135px);
+	overflow-y: auto;
+}
+td, th {
+	width: 1%;
+}
+td {
+	word-wrap: break-word;
+}
+
+
+.btn-small {
+	cursor: pointer;
+	text-decoration: none;
+	
+	height: 1.75em;
+	width: 1.75em;
+	line-height: 1.7em;
+	
+	margin: 0 1px;
+	
+	display: inline-block;
+	border-radius: 100%;
+	text-align: center;
+	
+	background-color: var(--theme-color);
+	color: white !important;
+	
+	box-shadow: 0 1px 1px #0004;
+	transition: 0.1s color ease-out, 0.1s background-color ease-out;
+	
+}
+.btn-small:hover {
+	color: var(--theme-color) !important;
+	background-color: white;
+}
+
+/* Details */
+.back-btn.indent {
+	margin-left: 30px;
+}
+
+.box {
+  text-align: center;
+  width: 80%;
+  margin: 2.5vh auto;
+  padding: 2.5vh;
+}
+.box h2 {
+	margin: 0;
+}
+.box .spacer {
+	margin: 0.1rem auto 0.5rem auto;
+	height: 2px;
+	border-radius: 2px;
+	background-color: var(--theme-color);
+	width: 50%;
+}
+.box .propname {
+	font-weight: 600;
+}

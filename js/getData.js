@@ -60,58 +60,50 @@ function getData(getReq, elementID) {
 
 // Creates multiple tables in a div element to show buying/selling offers
 function loadTableData(tableID) {
-  var data;
-  (tableID == "sellTable") ?
-  data = sellData :
-  data = buyData
+	var data;
+	(tableID == "sellTable") ?
+	data = sellData :
+	data = buyData
 
-  var table = document.getElementById(tableID);
-  var htmlStr = ""
+	var table = document.getElementById(tableID);
+	var htmlStr = "<table class=\"table table-striped table-bordered\">";
+
+	htmlStr += "<thead><tr><th>Textbook Name</th>";
+	if (tableID === "sellTable") {
+		htmlStr += "<th>Seller Name</th>"
+	} else {
+		htmlStr += "<th>Buyer Name</th>"
+	}
+	
+	htmlStr += "<th>Price (USD)</th>\
+	<th>Contact Email</th>\
+	<th>Actions</th>\
+	</tr></thead><tbody>";
 
   if(data.length > 0) {
-    var prevSubject;
 
     for(var i = 0; i < data.length; i++) {
       var currentEntry = data[i];
-      if(currentEntry["subjectName"] != prevSubject) {
-        prevSubject = currentEntry["subjectName"];
-        htmlStr += "</table></div>\
-        <button class='dropDown' \
-        onclick=\"toggle_element('" + prevSubject + "')\">" +
-        prevSubject + "</button><div style='display: none;'\
-        id=\"" + prevSubject + "\"> \
-        <table class=\"table table-striped table-bordered\">";
-
-        (tableID === "sellTable") ?
-        htmlStr += "<tr><th>Seller Name</th>" :
-        htmlStr += "<tr><th>Buyer Name</th>"
-
-        htmlStr += "<th>Textbook Name</th>\
-        <th>Price (USD)</th>\
-        <th>Contact Email</th>\
-        <th>Details</th>\
-        <th>Delete</th>\
-        </tr>";
-      }
 
       htmlStr += "<tr>\
+	  <td>" + currentEntry["bookName"] + "</td>\
       <td>" + currentEntry["name"] + "</td>\
-      <td>" + currentEntry["bookName"] + "</td>\
       <td>" + currentEntry["price"] + "</td>\
       <td>" + currentEntry["email"] + "</td>\
-      <td><a href=\"details.html?" + currentEntry["uuid"] + "\">Details</a></td>\
-      <td><button id='del' onclick=\"deleteData('";
+      <td><a class='btn-small details' href=\"details.html?" + currentEntry["uuid"] + "\"><i class='fas fa-ellipsis-h'></i></a>\
+	  <a class='btn-small reply' href='mailto:" + currentEntry["email"] + "'><i class='fas fa-reply'></i></a>\
+      <a class='btn-small del' onclick=\"deleteData('";
 
       (tableID == "sellTable") ?
       htmlStr += "deleteSellData" :
       htmlStr += "deleteBuyData"
 
       htmlStr += "' , '" + tableID + "', '" +
-      currentEntry["uuid"] + "')\">X</button</td>\
+      currentEntry["uuid"] + "')\"><i class='fas fa-trash-alt'></i></a</td>\
       </tr>";
     }
 
-    htmlStr += "</div></table>";
+    htmlStr += "</tbody></table>";
   }
   else {
     htmlStr += "<table class=\"table table-striped table-bordered\">\

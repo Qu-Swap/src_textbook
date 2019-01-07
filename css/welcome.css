@@ -28,7 +28,7 @@
 }
 
 .sell-btn {
-  background-color: #BD2026;
+  background-color: var(--theme-color);
   color: white !important
 }
 .sell-btn:hover {
@@ -38,11 +38,11 @@
 
 .buy-btn {
   background-color: white;
-  color: #BD2026 !important
+  color: var(--theme-color) !important;
 }
 .buy-btn:hover {
     background-color: #e7e7e7;
-    color: #BD2026;
+    color: var(--theme-color);
 }
 
 .welcome-image .footer li a {
