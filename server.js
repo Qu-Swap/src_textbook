@@ -5,62 +5,23 @@ var server = require("http").Server(app);
 global.uuid = require("uuid/v4");
 
 // Path to database files
-var path = __dirname + "/data/";
+global.path = __dirname + "/data/";
 
 // Imports
 var textbooks = require("./server_modules/textbooks");
 var subjects = require("./server_modules/subjects");
 var comments = require("./server_modules/comments");
+var schema = require("./server_modules/schema")
 
 // Open database
 const sqlite3 = require('sqlite3').verbose();
-global.db = new sqlite3.Database(path + "offers.db", sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+global.db = new sqlite3.Database(global.path + "offers.db", sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
   if (err) {
     console.error(err.message);
   }
-  console.log('Connected to the database.');
-});
-
-// Generate tables, ignore an error if the table already exists
-global.db.serialize(() => {
-  // Queries scheduled here will be serialized.
-  global.db.run("CREATE TABLE subjects(uuid NOT NULL PRIMARY KEY, subjectName TEXT)", (err) => {
-    if (err){}
-    else {
-      subjects.insert_subjects(path + "subjects.csv");
-    }
-  });
-
-  global.db.run("CREATE TABLE textbooks(uuid NOT NULL PRIMARY KEY, bookName \
-  TEXT, isbn TEXT, author TEXT, publisher TEXT, edition INTEGER, subject_id, \
-  FOREIGN KEY (subject_id) REFERENCES subjects(uuid))", (err) =>{
-    if (err){}
-    else {
-      textbooks.populate(path + "courses.json");
-    }
-  });
-
-  global.db.run("CREATE TABLE sellers(uuid NOT NULL PRIMARY KEY, name TEXT, \
-  price DOUBLE, email TEXT, password TEXT, book_id, comment_id, FOREIGN KEY \
-  (book_id) REFERENCES textbooks(uuid), FOREIGN KEY (comment_id) REFERENCES \
-  comments(uuid))", (err) => {
-    if (err){}
-  });
-
-  global.db.run("CREATE TABLE buyers(uuid NOT NULL PRIMARY KEY, name TEXT, \
-  price DOUBLE, email TEXT, password TEXT, book_id, comment_id, FOREIGN KEY \
-  (book_id) REFERENCES textbooks(uuid), FOREIGN KEY (comment_id) REFERENCES \
-  comments(uuid))", (err) => {
-    if (err){}
-  });
-
-  global.db.run("CREATE TABLE comments(uuid NOT NULL PRIMARY KEY, comment TEXT)", (err) => {
-    if(err){}
-  });
-
-  global.db.run("PRAGMA foreign_keys = ON", (err) => {
-    if (err){}
-  });
+  
+  // Setup schema
+  schema.setup();
 });
 
 // body-parser
