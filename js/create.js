@@ -79,6 +79,8 @@ function show_form_info() {
   var htmlStr = "<p>Book Name: " + selectBookInfo["bookName"] + "</p>\
   <p>Author: " + selectBookInfo["author"] + "</p>\
   <p>ISBN: " + selectBookInfo["isbn"] + "</p>\
+  <p>Edition/Copyright: " + selectBookInfo["edition"] + "</p>\
+  <p>Publisher: " + selectBookInfo["publisher"] + "</p>\
   <p>Subject: " + (selectBookInfo["subjectName"] ?
   selectBookInfo["subjectName"] : get_subject_name(subjectID)) + "</p>";
 
@@ -90,10 +92,13 @@ function info_from_form() {
   var form = document.getElementById("bookForm");
   var formData = new FormData(form);
 
-  selectBookInfo =
-  {"bookName": formData.get("bookName"),
-  "author": formData.get("author"),
-  "isbn": formData.get("isbn")};
+  // Should be made constant
+  var columns = ["bookName", "author", "isbn", "edition", "publisher"];
+  selectBookInfo = {}
+
+  for(category of columns) {
+    selectBookInfo[category] = formData.get(category);
+  }
 
   show_form_info();
 }

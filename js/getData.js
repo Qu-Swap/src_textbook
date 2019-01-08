@@ -79,7 +79,7 @@ function loadTableData(tableID) {
 		} else {
 			htmlStr += "<th>Buyer Name</th>"
 		}
-	
+
 		htmlStr += "<th>Price (USD)</th>\
 		<th>Contact Email</th>\
 		<th>Actions</th>\
@@ -145,6 +145,7 @@ function loadSearchedTextbooks(tableID) {
     htmlStr += "<tr><th>Textbook Name</th>\
     <th>Author</th>\
     <th>ISBN</th>\
+    <th>Edition/Copyright</th>\
     <th>Select</th>\
     </tr>";
 
@@ -155,6 +156,7 @@ function loadSearchedTextbooks(tableID) {
       <td>" + currentEntry["bookName"] + "</td>\
       <td>" + currentEntry["author"] + "</td>\
       <td>" + currentEntry["isbn"] + "</td>\
+      <td>" + currentEntry["edition"] + "</td>\
       <td><a class='btn-small' onclick=\"set_book_info(" + i.toString() + ")\"]><i class='fas fa-arrow-right'></i></a></td>\
       </tr>";
     }
