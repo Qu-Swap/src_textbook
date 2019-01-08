@@ -61,8 +61,8 @@ module.exports = {
     var bookName = req.body.bookName;
     var isbn = req.body.isbn;
     var author = req.body.author;
-    var publisher = "temp";
-    var edition = 0;
+    var publisher = req.body.publisher;
+    var edition = req.body.edition;
     var subject_id = req.body.subject_id;
     var data = [id, bookName, isbn, author, publisher, edition, subject_id];
 
