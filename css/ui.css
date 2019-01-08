@@ -84,26 +84,40 @@
 }
 
 /* Offer table */
-omni {
-  border-collapse: collapse;
-  table-layout: fixed;
+.omni {
+  /*! border-collapse: collapse; */
+  /*! table-layout: fixed; */
+  height: calc(100vh - 80px);
+  display: flex;
+  flex-flow: column;
+  width: 100%;
 }
 
 .omni thead, .omni tr {
-	display: block;
 	width: 100%;
+	display: table;
+	table-layout: fixed;
 }
+
+.omni thead {
+	flex: 0 0 auto;
+}
+
 .omni tbody {
 	display: block;
-	height: calc(100vh - 135px);
 	overflow-y: auto;
+	flex: 1 1 auto;
 }
-.omni td, .omni th {
-	width: 10%;
-}
+
 .omni td {
-	word-break: break-all;
+	/* overflow-wrap: break-word; */
 	vertical-align: middle;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.omni td:last-child {
+	white-space: nowrap;
+	overflow-wrap: normal;
 }
 
 .btn-small {
@@ -169,7 +183,7 @@ omni {
 	margin: 10px;
 	background-color: #f5f5f5;
 	border: 1px solid #ced4da;
-	border-radius: 4px;
+	border-radius: var(--input-rad);
 }
 .book-search h4 {
 	margin-bottom: 0.8rem;
@@ -181,6 +195,15 @@ omni {
 	margin-left: 10px;
 	background-color: white;
 	border: 1px solid #ced4da
+}
+/* Enable search text */
+.book-search .form-group .btn:after {
+	content: "Search";
+	display: inline;
+}
+/* Disable the icon */
+.book-search .form-group .btn i {
+	display: none;
 }
 
 .form-control:focus {
@@ -202,16 +225,19 @@ omni {
 	cursor: pointer;
 	padding: 6px 12px;
 	border: 1px solid #ced4da;
-	border-radius: 4px;
+	border-radius: var(--input-rad);
 }
 #searchState3 .form-group {
 	justify-content: space-between;
 	align-items: center;
 }
+#searchState3 .form-group label {
+	font-weight: bold;
+}
 #searchState3 .form-group input, #searchState3 .form-group select{
-	width: 80%;
+	width: calc(100% - 9em);
 	border: 1px solid #ced4da;
-	border-radius: 4px;
+	border-radius: var(--input-rad);
 	padding: 6px 12px;
 }
 #searchState3 button {
@@ -221,7 +247,7 @@ omni {
 	cursor: pointer;
 	padding: 6px 12px;
 	border: 1px solid #ced4da;
-	border-radius: 4px;
+	border-radius: var(--input-rad);
 }
 #searchState3 #bookForm {
 	overflow: auto;
@@ -240,9 +266,41 @@ omni {
 	cursor: pointer;
 	padding: 6px 12px;
 	border: 1px solid #ced4da;
-	border-radius: 4px;
+	border-radius: var(--input-rad);
 }
 #newEntry #inputForm {
 	overflow: auto;
 	margin-bottom: 10px;
+}
+.form-control {
+	border-radius: var(--input-rad);
+}
+@media screen and (max-width: 768px), screen and (max-aspect-ratio: 3/2) {
+
+	#formText {
+		font-size: calc(3vw + 0.5rem);
+	}
+	.book-search {
+		margin: 10px 0;
+		padding: 20px;
+	}
+	.book-search .form-group .btn {
+		margin-left: 3px;
+		border-radius: 6px;
+	}
+	/* Disable search text */
+	.book-search .form-group .btn:after {
+		display: none;
+	}
+	.book-search .form-group .btn i {
+		display: inline;
+	}
+	
+	#searchState3 .form-group input, #searchState3 .form-group select{
+		width: 100%;
+	}
+	#searchState3 .form-group {
+		flex-direction: column;
+		align-items: flex-start;
+	}
 }
