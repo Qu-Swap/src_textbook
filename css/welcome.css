@@ -50,3 +50,21 @@
 	text-shadow: 0 0 5px #000a;
 	opacity: 0.8;
 }
+
+@media screen and (max-width: 768px), screen and (max-aspect-ratio: 3/2) {
+	.cta-text {
+		text-align: center;
+		font-size: 12vw;
+	}
+	.welcome-cta {
+		margin-top: 15vh;
+	}
+	#buttons {
+		width: 100%;
+		padding: 20px 0;
+		justify-content: center;
+	}
+	#buttons .btn {
+		margin-right: 5%;
+	}
+}
