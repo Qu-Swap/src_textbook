@@ -23,7 +23,7 @@ tags = function() {
     }
 
     var dataStr = "uuid=" + bookId;
-    ajax.open("POST", "/postBookTags", true);
+    ajax.open("POST", "postBookTags", true);
     ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     ajax.send(dataStr);
   }
