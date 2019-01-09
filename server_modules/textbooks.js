@@ -35,5 +35,14 @@ module.exports = {
 
       res.send(rows);
     });
+  },
+  get_tags: function(req, res) {
+    global.db.all("SELECT a.predicate, b.shortName, b.courseName FROM \
+    course_requirements AS a INNER JOIN courses AS b ON a.course_id = b.uuid \
+    AND a.book_id = '" + req.body.uuid + "'", (err, rows) => {
+      if(err) {}
+
+      res.send(rows);
+    });
   }
 };

@@ -17,7 +17,11 @@ function sync_subjects() {
   });
 }
 
-var errHandler = function(err) {}
+/* An error means that the database has already been populated, and so we can
+connect immediately */
+var errHandler = function(err) {
+  console.log('Connected to the database.');
+}
 
 module.exports = {
   setup: function() {

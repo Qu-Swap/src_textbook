@@ -19,7 +19,7 @@ global.db = new sqlite3.Database(global.path + "offers.db", sqlite3.OPEN_READWRI
   if (err) {
     console.error(err.message);
   }
-  
+
   // Setup schema
   schema.setup();
 });
@@ -166,6 +166,9 @@ app.post('/postSearchSellingOffers', function(req, res) {
 app.post('/postSearchBuyingOffers', function(req, res) {
   search_table(req, res, "buyers");
 });
+
+// POST request for getting tags for a certain book
+app.post('/postBookTags', textbooks.get_tags);
 
 // Listen on the server
 server.listen(8085, function() {

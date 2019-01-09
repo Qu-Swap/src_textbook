@@ -82,6 +82,7 @@ function loadTableData(tableID) {
 
 		htmlStr += "<th>Price (USD)</th>\
 		<th>Contact Email</th>\
+    <th>Tags</th>\
 		<th>Actions</th>\
 		</tr></thead><tbody>";
 
@@ -93,6 +94,7 @@ function loadTableData(tableID) {
 		  <td>" + currentEntry["name"] + "</td>\
 		  <td>" + currentEntry["price"] + "</td>\
 		  <td>" + currentEntry["email"] + "</td>\
+      <td id='" + currentEntry["uuid"] + "'></td>\
 		  <td><a class='btn-small' href=\"details.html?" + currentEntry["uuid"] + "\"><i class='fas fa-ellipsis-h'></i></a>\
 		  <a class='btn-small' href='mailto:" + currentEntry["email"] + "'><i class='fas fa-reply'></i></a>\
 		  <a class='btn-small' onclick=\"deleteData('";
@@ -109,10 +111,16 @@ function loadTableData(tableID) {
 		htmlStr += "</tbody></table>";
 	}
 	else {
-	htmlStr += "<tr><td>No offers so far!</td></tr></table>";
+	   htmlStr += "<tr><td>No offers so far!</td></tr></table>";
 	}
 
   table.innerHTML = htmlStr;
+
+  /* Populate tags after html is loaded, just in case the textbook request happens
+  faster than the stringbuilder by some miracle */
+  for(entry of data) {
+    tags.populate_tags(entry["book_id"], entry["uuid"]);
+  }
 }
 
 function loadSelectData(selectID) {

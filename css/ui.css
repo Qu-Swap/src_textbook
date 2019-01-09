@@ -16,7 +16,7 @@
 	height: 50px;
 	width: calc(100vw - 100px);
 	max-width: 65%;
-	
+
 	border-radius: 25px;
 	overflow: hidden;
 	border: 1px solid var(--theme-color);
@@ -26,11 +26,11 @@
   height: 100%;
   float: left;
   line-height: 46px;
-  
+
   color: var(--theme-color);
   font-size: 18px;
   font-weight: 600;
-  
+
 }
 
 .navbar li:hover:not(.active) {
@@ -48,25 +48,45 @@
   display: block;
   text-align: center;
 }
+
+.tags {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+
+	overflow: hidden;
+	overflow-wrap: break-word;
+	text-align: center;
+}
+
+.tags li {
+	background-color: var(--tag-color);
+	font-weight: bold;
+	color: white;
+
+	border-radius: 6px;
+	white-space: normal;
+}
+
 .floating-btn {
-	
+
 	width: 50px;
 	height: 50px;
 	display: block;
-	
+
 	border-radius: 100%;
 	text-decoration: none;
 	font-size: 20px;
-	
+
 	text-align: center;
 	line-height: 48px;
-	
+
 	background-color: var(--theme-color);
 	color: white;
-	
+
 	box-shadow: 0 1px 2px #0004;
 	transition: 0.1s color ease-out, 0.1s background-color ease-out;
-	
+
 	z-index: 1;
 }
 
@@ -123,23 +143,23 @@
 .btn-small {
 	cursor: pointer;
 	text-decoration: none;
-	
+
 	height: 1.75em;
 	width: 1.75em;
 	line-height: 1.7em;
-	
+
 	margin: 0 1px;
-	
+
 	display: inline-block;
 	border-radius: 100%;
 	text-align: center;
-	
+
 	background-color: var(--theme-color);
 	color: white !important;
-	
+
 	box-shadow: 0 1px 1px #0004;
 	transition: 0.1s color ease-out, 0.1s background-color ease-out;
-	
+
 }
 .btn-small:hover {
 	color: var(--theme-color) !important;
@@ -295,7 +315,7 @@
 	.book-search .form-group .btn i {
 		display: inline;
 	}
-	
+
 	#searchState3 .form-group input, #searchState3 .form-group select{
 		width: 100%;
 	}
