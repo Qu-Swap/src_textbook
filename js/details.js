@@ -44,7 +44,7 @@ function populate(data, sellBuy) {
   <p><span class=\"propname\">Author:</span> " + data["author"] + "</p>\
   <p><span class=\"propname\">ISBN:</span> " + data["isbn"] + "</p>\
   <p><span class=\"propname\">Subject:</span> " + data["subjectName"] + "</p>";
-  
+
   extraDetails.innerHTML =
   "<h2>Additional Details</h2>\
   <div class=\"spacer\"></div>\
@@ -53,11 +53,11 @@ function populate(data, sellBuy) {
 
   offerDetails.style.display = "block";
   bookDetails.style.display = "block";
-  
+
   if (!isBlank(data["comment"])) {
 	extraDetails.style.display = "block";
   }
-  
+
   update_back(sellBuy);
 }
 function update_back(sellBuy) {
@@ -69,7 +69,7 @@ function update_back(sellBuy) {
 
 function init() {
   if(get_param()) {
-    get_data(get_param(), "postSearchBuyingOffers", "Buyer");
-    get_data(get_param(), "postSearchSellingOffers", "Seller");
+    get_data(get_param(), "postDetailsBuyingOffers", "Buyer");
+    get_data(get_param(), "postDetailsSellingOffers", "Seller");
   }
 }

@@ -19,7 +19,7 @@ function requestData(getReq, elementID) {
     if(this.readyState == 4 && this.status == 200) {
       // Will make this a separate function someday as this code gets reused
       // Will also make it better
-      var data = JSON.parse(ajax.responseText);
+      var data = JSON.parse(this.responseText);
       switch(elementID) {
         case "sellTable":
           sellData = data;

@@ -43,7 +43,7 @@
 			  <h4>Search for a book</h4>
 			  <form id="searchForm" onsubmit="updateBookList(); return false" autocomplete="off">
 				<div class="form-group">
-				  <input name="query" type="text" class="form-control" id="exampleInputBookName1" placeholder="Book Name, Author, or ISBN">
+				  <input name="query" type="text" class="form-control" id="exampleInputBookName1" placeholder="Search">
 				  <button type="submit" class="btn"><i class="fas fa-search"></i></button>
 				</div>
 			  </form>
@@ -97,7 +97,7 @@
 
 	  <div id="newEntry">
 		<h4 class="smallbox">Offer Details</h4>
-		<form id="inputForm" onsubmit="updateData(); return false" autocomplete="off">
+		<form id="inputForm" onsubmit="updateData('insert'); return false" autocomplete="off">
 		  <div class="form-group">
 			<label for="exampleInputName1" id="merchantName">Seller name</label>
 			<input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name">

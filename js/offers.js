@@ -1,4 +1,13 @@
 // Put these into a single object someday
+
+// BUY = selling offers, SELL = buying offers
+var STATES = Object.freeze({BUY: 1, SELL: 2});
+
+const SELLREQUEST = ["postSellData", "sellTable", "postSearchSellingOffers"];
+const BUYREQUEST = ["postBuyData", "buyTable", "postSearchBuyingOffers"];
+
+const TOTALASSETS = 2;
+
 var state;
 
 var sellBtn, sellingOffers;
@@ -49,12 +58,6 @@ function toggle_element(elementID) {
     el.style.display = "none";
   }
 }
-var STATES = Object.freeze({BUY: 1, SELL: 2});
-
-const SELLREQUEST = ["postSellData", "sellTable"];
-const BUYREQUEST = ["postBuyData", "buyTable"];
-
-const TOTALASSETS = 2;
 
 function get_default() {
   if (window.location.search.substr(1) === "y") return 1;

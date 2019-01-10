@@ -1,22 +1,8 @@
 function insertData(postReq, tableID) {
-  var ajax =  new XMLHttpRequest();
+  var ajax = basic_request(postReq, tableID);
 
   var form = document.getElementById("inputForm");
   var data = new FormData(form);
-
-  ajax.onreadystatechange = function() {
-    if(this.readyState == 4 && this.status == 200) {
-      var data = JSON.parse(this.responseText);
-      if(tableID === "buyTable") {
-        buyData = data;
-      }
-      else {
-        sellData = data;
-      }
-
-      loadTableData(tableID);
-    }
-  }
 
   var dataStr = data_to_string(data);
 
@@ -53,17 +39,72 @@ function insertData(postReq, tableID) {
   update_search_layout(1);
 }
 
-function updateData() {
+// A very basic search request
+function search_data(postReq, tableID) {
+  var ajax = basic_request(postReq, tableID);
+
+  var form = document.getElementById("searchBar");
+  var data = new FormData(form);
+
+  var dataStr = data_to_string(data);
+
+  ajax.open("POST", postReq, true);
+  ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  ajax.send(dataStr);
+
+  form.reset();
+}
+
+// The basic format for a POST request which populates one of the tables
+function basic_request(postReq, tableID) {
+  var ajax = new XMLHttpRequest;
+
+  ajax.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+      var data = JSON.parse(this.responseText);
+
+      if(tableID === "buyTable") {
+        buyData = data;
+      }
+      else {
+        sellData = data;
+      }
+
+      loadTableData(tableID);
+    }
+  }
+
+  return ajax;
+}
+
+function updateData(option) {
   try {
-    switch(state) {
-      case STATES.BUY:
-        insertData(BUYREQUEST[0], BUYREQUEST[1]);
+    switch(option) {
+      case "insert":
+        switch(state) {
+          case STATES.BUY:
+            insertData(BUYREQUEST[0], BUYREQUEST[1]);
+            break;
+          case STATES.SELL:
+            insertData(SELLREQUEST[0], SELLREQUEST[1]);
+            break;
+        }
         break;
-      case STATES.SELL:
-        insertData(SELLREQUEST[0], SELLREQUEST[1]);
+      case "search":
+        /* Search through the opposite table as the conventional name meaning, this is
+        confusing due to a change in terminology midway through the project */
+        switch(state) {
+          case STATES.BUY:
+            search_data(SELLREQUEST[2], SELLREQUEST[1]);
+            break;
+          case STATES.SELL:
+            search_data(BUYREQUEST[2], BUYREQUEST[1]);
+            break;
+        }
         break;
     }
   }
+
   catch(e) {
     alert("Error updating data!");
     console.log(e.title + "\n" + e.messsage);

@@ -60,16 +60,20 @@ function get_table(req, res, table, condition) {
   });
 }
 
-// General method for searching table based on req.body.query
+// General method for searching one of the sell/buy tables based on a query
 function search_table(req, res, table) {
+  var query = req.body.query;
+  var condition = "AND (a.name || b.bookName || b.author || c.subjectName LIKE \
+  '%" + query + "%' OR b.isbn = '" + query + "')";
+
+  get_table(req, res, table, condition);
+}
+
+// General method for looking up entry details based on uuid
+function search_table_details(req, res, table) {
   var condition = "AND a.uuid = \"" + req.body.query + "\"";
 
-  if(condition) {
-    get_table(req, res, table, condition);
-  }
-  else {
-    res.end();
-  }
+  get_table(req, res, table, condition);
 }
 
 // General method for inserting data
@@ -157,12 +161,22 @@ app.post('/postSearchData', textbooks.search);
 // GET request for getting a list of subjects
 app.get('/getSubjects', subjects.get_subjects);
 
-// POST request for searching selling offers
+// POST request for getting details for a selling offer
+app.post('/postDetailsSellingOffers', function(req, res) {
+  search_table_details(req, res, "sellers");
+});
+
+// POST request for getting details for a buying offer
+app.post('/postDetailsBuyingOffers', function(req, res) {
+  search_table_details(req, res, "buyers");
+});
+
+// POST request for searching the sell table
 app.post('/postSearchSellingOffers', function(req, res) {
   search_table(req, res, "sellers");
 });
 
-// POST request for searching buying offers
+// POST request for searching the buy table
 app.post('/postSearchBuyingOffers', function(req, res) {
   search_table(req, res, "buyers");
 });
