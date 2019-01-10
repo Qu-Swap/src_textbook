@@ -39,6 +39,17 @@ app.get("/index.html", function(req, res) {
   res.sendFile(__dirname + "/html/welcome.html");
 });
 
+// Remove HTML tags
+app.use(function(req, res, next) {
+  for(var key in req.body) {
+    if(!req.body.hasOwnProperty(key)) continue;
+
+    req.body[key] = req.body[key].replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  next();
+});
+
 // General method for sending buying/selling table
 function get_table(req, res, table, condition) {
   if(!condition) {
@@ -111,13 +122,19 @@ function delete_entry(req, res, table) {
       throw err;
     }
 
-    if(password === rows[0].password) {
-      global.db.run("DELETE FROM " + table + " WHERE uuid = \"" + id + "\"");
-
-      get_table(req, res, table);
+    // If the offer was deleted already or user manipulated ID
+    if(rows.length === 0) {
+      res.sendStatus(269); // Give the user a message that the offer does not exist :^)
     }
     else {
-      res.send();
+      if(password === rows[0].password) {
+        global.db.run("DELETE FROM " + table + " WHERE uuid = \"" + id + "\"");
+
+        get_table(req, res, table);
+      }
+      else {
+        res.send();
+      }
     }
   });
 }

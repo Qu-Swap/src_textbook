@@ -41,7 +41,7 @@ function insertData(postReq, tableID) {
 
 // A very basic search request
 function search_data(postReq, tableID) {
-  var ajax = basic_request(postReq, tableID);
+  var ajax = basic_request(tableID);
 
   var form = document.getElementById("offerSearch");
   var data = new FormData(form);
@@ -53,8 +53,16 @@ function search_data(postReq, tableID) {
   ajax.send(dataStr);
 }
 
+// Refresh the data in a table
+function refresh_data(getReq, tableID) {
+  var ajax = basic_request(tableID);
+
+  ajax.open("GET", getReq, true);
+  ajax.send();
+}
+
 // The basic format for a POST request which populates one of the tables
-function basic_request(postReq, tableID) {
+function basic_request(tableID) {
   var ajax = new XMLHttpRequest();
 
   ajax.onreadystatechange = function() {
@@ -97,6 +105,17 @@ function updateData(option) {
             break;
           case STATES.SELL:
             search_data(BUYREQUEST[2], BUYREQUEST[1]);
+            break;
+        }
+        break;
+      // Refresh the data through a fresh GET request from the database
+      case "refresh":
+        switch(state) {
+          case STATES.BUY:
+            refresh_data('getSellData', 'sellTable');
+            break;
+          case STATES.SELL:
+            refresh_data('getBuyData', 'buyTable');
             break;
         }
         break;

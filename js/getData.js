@@ -37,16 +37,16 @@ function requestData(getReq, elementID) {
 
       // If all data has been loaded (indicating this is the last response)
       if (loaded.length == TOTALASSETS) {
-		for (element in loaded) {
-			var el = loaded[element];
-			switch(el) {
-				case "subjectDown":
-				  loadSelectData(el);
-				  break;
-				default:
-				  loadTableData(el);
-			}
-		}
+    		for (element in loaded) {
+    			var el = loaded[element];
+    			switch(el) {
+    				case "subjectDown":
+    				  loadSelectData(el);
+    				  break;
+    				default:
+    				  loadTableData(el);
+    			}
+    		}
       }
     }
   }

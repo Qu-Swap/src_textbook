@@ -2,20 +2,26 @@ function removeData(deleteReq, tableID, id, password) {
   var ajax = new XMLHttpRequest();
 
   ajax.onreadystatechange = function() {
-    if(this.readyState == 4 && this.status == 200) {
-      if(!this.responseText) {
-        alert("Incorrect password.")
-      }
-      else {
-        var data = JSON.parse(this.responseText);
-        if(tableID === "buyTable") {
-          buyData = data;
+    if(this.readyState == 4) {
+      if(this.status == 200) {
+        if(!this.responseText) {
+          alert("Incorrect password.");
         }
         else {
-          sellData = data;
-        }
+          var data = JSON.parse(this.responseText);
+          if(tableID === "buyTable") {
+            buyData = data;
+          }
+          else {
+            sellData = data;
+          }
 
-        loadTableData(tableID);
+          loadTableData(tableID);
+        }
+      }
+      else if(this.status == 269) {
+        alert("The offer does not exist!");
+        updateData("refresh");
       }
     }
   }
@@ -28,6 +34,7 @@ function removeData(deleteReq, tableID, id, password) {
 
 function deleteData(deleteReq, tableID, id) {
   var password = prompt("Please input the password.");
+  if(password === null) {return};
 
   try {
     removeData(deleteReq, tableID, id, password);
