@@ -70,10 +70,11 @@ function loadTableData(tableID) {
 	var data = (tableID == "sellTable") ? sellData : buyData;
 
 	var table = document.getElementById(tableID);
-	var htmlStr = "<table class=\"omni table table-striped table-bordered\">";
+	var htmlStr;
 
     if(data.length > 0) {
-		htmlStr += "<thead><tr><th>Textbook Name</th>";
+		htmlStr = "<table class=\"omni table table-striped table-bordered\">\
+					   <thead><tr><th>Textbook Name</th>";
 		if (tableID === "sellTable") {
 			htmlStr += "<th>Seller Name</th>"
 		} else {
@@ -82,7 +83,7 @@ function loadTableData(tableID) {
 
 		htmlStr += "<th>Price (USD)</th>\
 		<th>Contact Email</th>\
-    <th>Tags</th>\
+		<th>Tags</th>\
 		<th>Actions</th>\
 		</tr></thead><tbody>";
 
@@ -94,7 +95,7 @@ function loadTableData(tableID) {
 		  <td>" + currentEntry["name"] + "</td>\
 		  <td>" + currentEntry["price"] + "</td>\
 		  <td>" + currentEntry["email"] + "</td>\
-      <td id='" + currentEntry["uuid"] + "'></td>\
+	  <td id='" + currentEntry["uuid"] + "'></td>\
 		  <td><a class='btn-small' href=\"details.html?" + currentEntry["uuid"] + "\"><i class='fas fa-ellipsis-h'></i></a>\
 		  <a class='btn-small' href='mailto:" + currentEntry["email"] + "'><i class='fas fa-reply'></i></a>\
 		  <a class='btn-small' onclick=\"deleteData('";
@@ -111,7 +112,8 @@ function loadTableData(tableID) {
 		htmlStr += "</tbody></table>";
 	}
 	else {
-	   htmlStr += "<tr><td>No offers so far!</td></tr></table>";
+		htmlStr = "<table class=\"omni table table-striped table-bordered\"><tr><td>No offers so far!</td></tr></table>";
+		table.classList.add("empty");
 	}
 
   table.innerHTML = htmlStr;

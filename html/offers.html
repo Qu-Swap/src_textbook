@@ -31,15 +31,12 @@
 	<a href="create.html" class="floating-btn add-btn"><i class="fas fa-plus"></i></a>
 
     <div class="non-navbar">
-      <div style="padding: 16px; width: 100%; margin-left: 0" class="book-search">
-        <h4>Search for an offer</h4>
-        <form id="searchBar" onsubmit="updateData('search'); return false">
-          <div class="form-group">
-      			<input name="query" type="text" class="form-control" id="exampleInputSearch" placeholder="Search">
-            <button type="submit" class="btn"><i class="fas fa-search"></i></button>
-          </div>
-        </form>
-      </div>
+		<form id="offerSearch" onsubmit="updateData('search'); return false" autocomplete="off">
+			<div class="form-group">
+				<input name="query" type="text" class="form-control" id="exampleInputSearch" placeholder="Search">
+				<button type="submit" class="btn"><i class="fas fa-search"></i></button>
+			</div>
+		</form>
 
       <div id="sellingOffers">
         <div id="sellTable"></div>

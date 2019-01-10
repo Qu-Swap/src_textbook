@@ -43,7 +43,7 @@ function insertData(postReq, tableID) {
 function search_data(postReq, tableID) {
   var ajax = basic_request(postReq, tableID);
 
-  var form = document.getElementById("searchBar");
+  var form = document.getElementById("offerSearch");
   var data = new FormData(form);
 
   var dataStr = data_to_string(data);
@@ -52,7 +52,7 @@ function search_data(postReq, tableID) {
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   ajax.send(dataStr);
 
-  form.reset();
+  
 }
 
 // The basic format for a POST request which populates one of the tables
