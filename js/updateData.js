@@ -1,5 +1,5 @@
 function insertData(postReq, tableID) {
-  var ajax = basic_request(postReq, tableID);
+  var ajax = new XMLHttpRequest();
 
   var form = document.getElementById("inputForm");
   var data = new FormData(form);
@@ -51,13 +51,11 @@ function search_data(postReq, tableID) {
   ajax.open("POST", postReq, true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   ajax.send(dataStr);
-
-  
 }
 
 // The basic format for a POST request which populates one of the tables
 function basic_request(postReq, tableID) {
-  var ajax = new XMLHttpRequest;
+  var ajax = new XMLHttpRequest();
 
   ajax.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
@@ -152,8 +150,13 @@ function data_to_string(formData) {
     if(c != 0) str += "&";
     else c = 1;
 
-    str += pair[0] + "=" + pair[1];
+    str += pair[0] + "=" + remove_special(pair[1]);
   }
 
   return str;
+}
+
+// Remove special characters (& and =) from query string
+function remove_special(str) {
+  return str.replace(/&/g, "%26").replace(/=/g, "%3D");
 }
