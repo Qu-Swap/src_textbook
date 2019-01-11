@@ -328,6 +328,14 @@
 #searchState2 {
 	overflow: auto;
 }
+#searchState2 .table-container {
+	display: block;
+	width: 100%;
+	overflow-x: auto;
+}
+#searchState2 .table-container .table {
+	min-width: 750px;
+}
 .add-book {
 	float: right;
 	background-color: white;
