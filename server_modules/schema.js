@@ -2,21 +2,6 @@
 var subjects = require("./subjects");
 var courses = require("./courses");
 
-// First synchronously load subject data
-function sync_subjects() {
-  return new Promise(function(resolve, reject) {
-    global.db.run("CREATE TABLE subjects(uuid NOT NULL PRIMARY KEY, subjectName TEXT)", (err) => {
-      if (err) {
-        reject();
-      }
-      else {
-        subjects.insert_subjects(global.path + "subjects.csv");
-        resolve();
-      }
-    });
-  });
-}
-
 /* An error means that the database has already been populated, and so we can
 connect immediately */
 var errHandler = function(err) {
@@ -26,7 +11,7 @@ var errHandler = function(err) {
 module.exports = {
   setup: function() {
     // Generate tables, ignore an error if the table already exists
-    var subjectPromise = sync_subjects(global.db);
+    var subjectPromise = subjects.insert_subjects(global.path + "subjects.csv");
 
     subjectPromise.then(() => {
       // Queries here will be serialized

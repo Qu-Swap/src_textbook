@@ -3,12 +3,23 @@ var fs = require("fs");
 module.exports = {
   // Inserts subjects into database, doing this synchronously is OK
   insert_subjects: function(path) {
-    var subjectArr = fs.readFileSync(path).toString().split("\n");
+    return new Promise(function(resolve, reject) {
+      global.db.run("CREATE TABLE subjects(uuid NOT NULL PRIMARY KEY, subjectName TEXT)", (err) => {
+        if (err) {
+          reject();
+        }
+        else {
+          var subjectArr = fs.readFileSync(path).toString().split("\n");
 
-    for(var i = 0; i < subjectArr.length; i++) {
-      global.db.run("INSERT INTO subjects VALUES(?, ?)",
-      [global.uuid(), subjectArr[i]]);
-    }
+          for(var i = 0; i < subjectArr.length; i++) {
+            global.db.run("INSERT INTO subjects VALUES(?, ?)",
+            [global.uuid(), subjectArr[i]]);
+          }
+
+          resolve();
+        }
+      });
+    });
   },
   get_subjects: function(req, res) {
     global.db.all("SELECT * FROM SUBJECTS", (err, rows) => {
