@@ -74,7 +74,7 @@ function hideMessage() {
 }
 
 function newOffer() {
-	window.location.href = "/create.html?state=" + state;
+	window.location.href = "create.html?state=" + state;
 }
 
 function init() {

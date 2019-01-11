@@ -30,7 +30,7 @@ function insertData(postReq, tableID) {
   ajax.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
 		// Redirect the user to the success page
-		window.location.href = "/offers.html?state=" + state + "&msg=" + MESSAGES.CREATE;
+		window.location.href = "offers.html?state=" + state + "&msg=" + MESSAGES.CREATE;
 	}
   };
   ajax.open("POST", postReq, true);

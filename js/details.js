@@ -63,10 +63,10 @@ function populate(data, sellBuy) {
 function update_back(sellBuy) {
 	var back = document.getElementById("back");
 	if (sellBuy === "Seller") {
-		back.href += "?sell";
+		back.href += "?state=sell";
 	}
 	else {
-		back.href += "?buy";
+		back.href += "?state=buy";
 	}
 }
 

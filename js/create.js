@@ -120,7 +120,7 @@ function toggle_element(elementID) {
   }
 }
 function back() {
-	window.location.href = "/offers.html?state=" + state;
+	window.location.href = "offers.html?state=" + state;
 }
 
 const TOTALSEARCHSTATES = 4;
