@@ -55,7 +55,6 @@
 	margin: 0;
 
 	overflow: hidden;
-	overflow-wrap: break-word;
 	text-align: center;
 }
 
@@ -66,6 +65,7 @@
 
 	border-radius: 6px;
 	white-space: normal;
+	font-size: 14px;
 }
 
 .floating-btn {
@@ -186,6 +186,9 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+.omni td:nth-child(3)::before {
+	content: '$';
 }
 .omni td:last-child {
 	white-space: nowrap;
