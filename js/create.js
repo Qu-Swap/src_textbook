@@ -3,6 +3,7 @@ var state, searchState, prevSearchState;
 
 var sellBtn, sellingOffers;
 var buyBtn, buyingOffers;
+var nav;
 
 var subjectDown, subjectID;
 
@@ -14,6 +15,8 @@ var selectBookInfo;
 function set_inactive() {
   sellBtn.className = "inactive";
   buyBtn.className = "inactive";
+  nav.classList.remove("sell");
+  nav.classList.remove("buy");
 }
 
 // Update the layout depending on whether "Buy Books" or "Sell Books" is selected
@@ -22,17 +25,17 @@ function update_layout(val) {
 
   set_inactive();
 
-  var show = "display: block";
-
   switch(state) {
     case STATES.BUY:
       buyBtn.className = "active";
+	  nav.classList.add("buy");
       formText.innerHTML =
       "Don't see a book you want to buy? <br> Submit a <i>buying request</i>.";
       merchantName.innerHTML = "Buyer name";
       break;
     case STATES.SELL:
       sellBtn.className = "active";
+	  nav.classList.add("sell");
       formText.innerHTML =
       "Can't find a book you want to sell? <br> Submit a <i>selling request</i>.";
       merchantName.innerHTML = "Seller name";
@@ -132,8 +135,8 @@ const TOTALASSETS = 1;
 
 function init() {
   sellBtn = document.getElementById("sellBtn");
-
   buyBtn = document.getElementById("buyBtn");
+  nav = document.getElementById("nav");
 
   subjectDown = document.getElementById("subjectDown");
   subjectDown.addEventListener("change", function() {

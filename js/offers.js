@@ -27,8 +27,6 @@ function update_layout(val) {
 
   set_inactive();
 
-  var show = "display: block";
-
   switch(state) {
     case STATES.BUY:
       buyBtn.className = "active";
