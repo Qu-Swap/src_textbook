@@ -10,20 +10,15 @@ var state;
 
 var sellBtn, sellingOffers;
 var buyBtn, buyingOffers;
+var nav;
 var msgBox, msgText;
 
 // Set both buttons at the top to be unselected
 function set_inactive() {
   sellBtn.className = "inactive";
   buyBtn.className = "inactive";
-}
-
-// Set both tables to be invisible
-function set_invisible() {
-  var invis = "display: none";
-
-  sellingOffers.style = invis;
-  buyingOffers.style = invis;
+  nav.classList.remove("sell");
+  nav.classList.remove("buy");
 }
 
 // Update the layout depending on whether "Buy Books" or "Sell Books" is selected
@@ -31,18 +26,17 @@ function update_layout(val) {
   state = val;
 
   set_inactive();
-  set_invisible();
 
   var show = "display: block";
 
   switch(state) {
     case STATES.BUY:
       buyBtn.className = "active";
-      buyingOffers.style = show;
+	  nav.classList.add("buy");
       break;
     case STATES.SELL:
       sellBtn.className = "active";
-      sellingOffers.style = show;
+	  nav.classList.add("sell");
       break;
   }
 }
@@ -84,6 +78,8 @@ function init() {
 
   buyBtn = document.getElementById("buyBtn");
   buyingOffers = document.getElementById("buyingOffers");
+  
+  nav = document.getElementById("nav");
   
   msgBox = document.getElementById("msgBox");
   msgText = document.getElementById("msgText");

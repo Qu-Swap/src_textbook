@@ -14,12 +14,14 @@
 	padding: 0;
 	margin: 20px auto 10px auto;
 	height: 50px;
-	width: calc(100vw - 100px);
+	width: calc(100vw - 150px);
 	max-width: 65%;
 
 	border-radius: 25px;
 	overflow: hidden;
 	border: 1px solid var(--theme-color);
+	
+	position: relative;
 }
 .navbar li {
   width: 50%;
@@ -30,24 +32,51 @@
   color: var(--theme-color);
   font-size: 18px;
   font-weight: 600;
-
-}
-
-.navbar li:hover:not(.active) {
-  color: #ED2026;
   cursor: pointer;
-}
+  transition: color 0.2s;
 
+}
 .navbar li.active {
-  color: white;
-  background-color: var(--theme-color);
-  cursor: pointer;
+	color: white;
+	cursor: default;
 }
 
-.navbar li a {
+.navbar li p {
   display: block;
   text-align: center;
 }
+
+/* Navbar show/hide */
+#nav.sell ~ .non-navbar #sellingOffers {
+	display: block;
+}
+#nav.sell ~ .non-navbar #buyingOffers {
+	display: none;
+}
+#nav.buy ~ .non-navbar #sellingOffers {
+	display: none;
+}
+#nav.buy ~ .non-navbar #buyingOffers {
+	display: block;
+}
+
+#nav:before {
+	content: '';
+	display: block;
+	width: 50%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	transition: 0.2s transform;
+	background-color: var(--theme-color);
+	z-index: -1;
+}
+#nav.sell:before{
+	transform: translateX(100%);
+}
+
 
 .tags {
 	list-style: none;
@@ -69,6 +98,7 @@
 }
 
 .floating-btn {
+	position: fixed;
 
 	width: 50px;
 	height: 50px;
@@ -95,7 +125,7 @@
 	background-color: white;
 }
 .back-btn {
-	margin-top: 20px;
+	top: 20px;
 }
 .add-btn {
 	position: absolute;
