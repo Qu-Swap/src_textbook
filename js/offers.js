@@ -1,8 +1,6 @@
 // Put these into a single object someday
 
 // BUY = selling offers, SELL = buying offers
-var STATES = Object.freeze({BUY: 1, SELL: 2});
-
 const SELLREQUEST = ["postSellData", "sellTable", "postSearchSellingOffers"];
 const BUYREQUEST = ["postBuyData", "buyTable", "postSearchBuyingOffers"];
 
@@ -12,6 +10,7 @@ var state;
 
 var sellBtn, sellingOffers;
 var buyBtn, buyingOffers;
+var msgBox, msgText;
 
 // Set both buttons at the top to be unselected
 function set_inactive() {
@@ -39,41 +38,62 @@ function update_layout(val) {
   switch(state) {
     case STATES.BUY:
       buyBtn.className = "active";
-      sellingOffers.style = show;
+      buyingOffers.style = show;
       break;
     case STATES.SELL:
       sellBtn.className = "active";
-      buyingOffers.style = show;
+      sellingOffers.style = show;
       break;
   }
 }
 
-function toggle_element(elementID) {
-  var el = document.getElementById(elementID);
-
-  if(el.style.display === "none" ) {
-    el.style.display = "block";
-  }
-  else {
-    el.style.display = "none";
-  }
+function display_message(msg) {
+	msgBox.style = "";
+	
+	switch (msg) {
+		case MESSAGES.CREATE:
+			msgText.innerHTML = "Offer was created successfully!";
+			break;
+		case MESSAGES.DELETE:
+			msgText.innerHTML = "Offer was deleted successfully!";
+			break;
+		default:
+			msgBox.style = "display: none";
+	}
+}
+function hideMessage() {
+	// So that on reload the message will still be gone
+	window.history.replaceState({}, document.title, "offers.html?state=" + state);
+	// Add a class to the messagebox so that it will hide
+	msgBox.classList.add("hide");
+	msgBox.addEventListener("transitionend", function() {
+		msgBox.style = "display: none";
+	}, false);
+	
+	
 }
 
-function get_default() {
-  if (window.location.search.substr(1) === "y") return 1;
-  return 2;
+function newOffer() {
+	window.location.href = "/create.html?state=" + state;
 }
 
 function init() {
+  
   sellBtn = document.getElementById("sellBtn");
   sellingOffers = document.getElementById("sellingOffers");
 
   buyBtn = document.getElementById("buyBtn");
   buyingOffers = document.getElementById("buyingOffers");
-
-  update_layout(get_default());
+  
+  msgBox = document.getElementById("msgBox");
+  msgText = document.getElementById("msgText");
+  
+  var query = QueryStringToJSON();
+  update_layout(query.state || STATES.BUY);
+  display_message(query.msg || MESSAGES.NONE);
 
   loaded = [];
   getData('getSellData', 'sellTable');
   getData('getBuyData', 'buyTable');
+  
 }

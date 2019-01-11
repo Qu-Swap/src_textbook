@@ -27,16 +27,23 @@ function insertData(postReq, tableID) {
 
   if(!validate_offer_form(data)) return;
 
+  ajax.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+		// Redirect the user to the success page
+		window.location.href = "/offers.html?state=" + state + "&msg=" + MESSAGES.CREATE;
+	}
+  };
   ajax.open("POST", postReq, true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   ajax.send(dataStr);
-
-  if(bookForm) {
+  
+/*   if(bookForm) {
     bookForm.reset();
   }
   form.reset();
 
-  update_search_layout(1);
+  update_search_layout(1); */
+  
 }
 
 // A very basic search request

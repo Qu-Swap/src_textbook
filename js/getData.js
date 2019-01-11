@@ -152,12 +152,13 @@ function loadSearchedTextbooks(tableID) {
   var htmlStr = "";
 
   if(queriedBookData.length > 0) {
-    htmlStr += "<tr><th>Textbook Name</th>\
+    htmlStr += "<thead><tr><th>Textbook Name</th>\
     <th>Author</th>\
     <th>ISBN</th>\
     <th>Edition/Copyright</th>\
     <th>Select</th>\
-    </tr>";
+    </tr></thead>\
+	<tbody>";
 
     for(var i = 0; i < queriedBookData.length; i++) {
       var currentEntry = queriedBookData[i];
@@ -187,3 +188,4 @@ function get_subject_name(subjectID) {
     }
   }
 }
+

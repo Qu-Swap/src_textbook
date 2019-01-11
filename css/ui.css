@@ -102,6 +102,40 @@
 	right: calc(5% + 10px);
 	bottom: calc(2% + 20px);
 }
+
+#msgBox {
+	display: flex;
+	justify-content: center;
+	margin-top: 0;
+	margin-bottom: 0.5rem;
+	height: 1.5em;
+	line-height: 1.5em;
+	z-index: -100;
+	transition: 0.5s margin-bottom;
+}
+#msgBox.hide {
+	margin-bottom: -1.5em;
+}
+#msgBox #msgText {
+	margin: 0;
+	font-weight: 600;
+	white-space: nowrap;
+}
+#msgBox .close-btn {
+	display: block;
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+	text-align: center;
+	width: 1.5em;
+	line-height: 1.5em;
+	height: 1.5em;
+	
+	margin-left: 0.5em;
+}
+#msgBox .close-btn:hover {
+	color: gray;
+}
 /* Offer Search */
 #offerSearch .form-group {
 	margin-bottom: 0.5rem;

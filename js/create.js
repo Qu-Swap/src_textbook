@@ -119,18 +119,16 @@ function toggle_element(elementID) {
     el.style.display = "none";
   }
 }
-var STATES = Object.freeze({BUY: 1, SELL: 2});
+function back() {
+	window.location.href = "/offers.html?state=" + state;
+}
+
 const TOTALSEARCHSTATES = 4;
 
 const SELLREQUEST = ["postSellData", "sellTable"];
 const BUYREQUEST = ["postBuyData", "buyTable"];
 
 const TOTALASSETS = 1;
-
-function get_default() {
-  if (window.location.search.substr(1) === "y") return 1;
-  return 2;
-}
 
 function init() {
   sellBtn = document.getElementById("sellBtn");
@@ -145,7 +143,8 @@ function init() {
   formText = document.getElementById("formText");
   merchantName = document.getElementById("merchantName");
 
-  update_layout(get_default());
+  var query = QueryStringToJSON();
+  update_layout(query.state || STATES.BUY);
   update_search_layout(1);
 
   loaded = [];
