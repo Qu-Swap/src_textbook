@@ -21,7 +21,7 @@ function set_inactive() {
   nav.removeClass("buy");
 }
 
-// Update the layout depending on whether "Buy Books" or "Sell Books" is selected
+// Update the layout depending on whether "Buy Offers" or "Sell Offers" is selected
 function update_layout(val) {
   state = val;
 
@@ -44,18 +44,18 @@ function newOffer() {
 }
 
 function init() {
-  
+
   sellBtn = $("#sellBtn");
   sellingOffers = $("#sellingOffers");
 
   buyBtn = $("#buyBtn");
   buyingOffers = $("#buyingOffers");
-  
+
   nav = $("#nav");
-  
+
   msgBox = $("#msgBox");
   msgText = $("#msgText");
-  
+
   var query = QueryStringToJSON();
   update_layout(query.state || STATES.BUY);
   display_message(query.msg || MESSAGES.NONE);
@@ -63,5 +63,5 @@ function init() {
   loaded = [];
   getData('getSellData', 'sellTable');
   getData('getBuyData', 'buyTable');
-  
+
 }

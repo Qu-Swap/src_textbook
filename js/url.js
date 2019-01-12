@@ -1,6 +1,7 @@
 var STATES = Object.freeze({BUY: "b", SELL: "s"});
 var MESSAGES = Object.freeze(
-	{CREATE: "c",
+	{CREATE_OFFER: "c",
+	 CREATE_REQUEST: "r",
 	 DELETE: "d",
 	 PASS: "p",
 	 BOOK: "b",
@@ -10,7 +11,7 @@ var MESSAGES = Object.freeze(
 	});
 function QueryStringToJSON() {
     var pairs = location.search.slice(1).split('&');
-    
+
     var result = {};
     pairs.forEach(function(pair) {
         pair = pair.split('=');
@@ -24,10 +25,13 @@ function display_message(msg) {
 	msgBox.css("display", "");
 	msgBox.removeClass("hide");
 	msgText.removeClass("fail");
-	
+
 	switch (msg) {
-		case MESSAGES.CREATE:
+		case MESSAGES.CREATE_OFFER:
 			msgText.html("Offer was created successfully!");
+			break;
+		case MESSAGES.CREATE_REQUEST:
+			msgText.html("Request was created successfully!");
 			break;
 		case MESSAGES.DELETE:
 			msgText.html("Offer was deleted successfully!");
@@ -69,5 +73,5 @@ function hideMessage() {
 	msgBox.on("transitionend", function() {
 		msgBox.css("display", "none");
 	});
-	
+
 }

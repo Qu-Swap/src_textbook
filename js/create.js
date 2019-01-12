@@ -29,13 +29,13 @@ function update_layout(val) {
     case STATES.BUY:
       buyBtn.addClass("active");
 	  nav.addClass("buy");
-      formText.html("Submit a <i>buying request</i>.");
+      formText.html("Submit a <i>request</i>.");
       merchantName.html("Buyer name");
       break;
     case STATES.SELL:
       sellBtn.addClass("active");
 	  nav.addClass("sell");
-      formText.html("Submit a <i>selling request</i>.");
+      formText.html("Submit an <i>offer</i>.");
       merchantName.html("Seller name");
       break;
   }
@@ -137,7 +137,7 @@ function init() {
   nav = $("#nav");
   msgBox = $("#msgBox");
   msgText = $("#msgText");
-  
+
   subjectDown = $("#subjectDown");
   subjectDown.on("change", function() {
     subjectID = this.value;

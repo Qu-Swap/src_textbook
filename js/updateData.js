@@ -25,21 +25,22 @@ function insertData(postReq, tableID) {
 
   ajax.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
+    var msgState = state === STATES.SELL ? MESSAGES.CREATE_OFFER : MESSAGES.CREATE_REQUEST;
 		// Redirect the user to the success page
-		window.location.href = "offers.html?state=" + state + "&msg=" + MESSAGES.CREATE;
+		window.location.href = "offers.html?state=" + state + "&msg=" + msgState;
 	}
   };
   ajax.open("POST", postReq, true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   ajax.send(dataStr);
-  
+
 /*   if(bookForm) {
     bookForm.reset();
   }
   form.reset();
 
   update_search_layout(1); */
-  
+
 }
 
 // A very basic search request
@@ -100,16 +101,9 @@ function updateData(option) {
         }
         break;
       case "search":
-        /* Search through the opposite table as the conventional name meaning, this is
-        confusing due to a change in terminology midway through the project */
-        switch(state) {
-          case STATES.BUY:
-            search_data(SELLREQUEST[2], SELLREQUEST[1]);
-            break;
-          case STATES.SELL:
-            search_data(BUYREQUEST[2], BUYREQUEST[1]);
-            break;
-        }
+        // Search through both tables
+        search_data(SELLREQUEST[2], SELLREQUEST[1]);
+        search_data(BUYREQUEST[2], BUYREQUEST[1]);
         break;
       // Refresh the data through a fresh GET request from the database
       case "refresh":
