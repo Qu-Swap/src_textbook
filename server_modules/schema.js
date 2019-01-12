@@ -54,12 +54,8 @@ module.exports = {
 
         global.db.run("CREATE TABLE comments(uuid NOT NULL PRIMARY KEY, comment TEXT)", (err) => {
           if(err){}
-        });
 
-        global.db.run("PRAGMA foreign_keys = ON", (err) => {
-          if (err){}
-
-          console.log('Connected to the database.');
+          console.log("Connected to the database.");
         });
       });
     }, errHandler);
