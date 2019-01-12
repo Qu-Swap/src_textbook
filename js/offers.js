@@ -15,10 +15,10 @@ var msgBox, msgText;
 
 // Set both buttons at the top to be unselected
 function set_inactive() {
-  sellBtn.className = "inactive";
-  buyBtn.className = "inactive";
-  nav.classList.remove("sell");
-  nav.classList.remove("buy");
+  sellBtn.removeClass("active");
+  buyBtn.removeClass("active");
+  nav.removeClass("sell");
+  nav.removeClass("buy");
 }
 
 // Update the layout depending on whether "Buy Books" or "Sell Books" is selected
@@ -29,12 +29,12 @@ function update_layout(val) {
 
   switch(state) {
     case STATES.BUY:
-      buyBtn.className = "active";
-	  nav.classList.add("buy");
+      buyBtn.addClass("active");
+	  nav.addClass("buy");
       break;
     case STATES.SELL:
-      sellBtn.className = "active";
-	  nav.classList.add("sell");
+      sellBtn.addClass("active");
+	  nav.addClass("sell");
       break;
   }
 }
@@ -45,16 +45,16 @@ function newOffer() {
 
 function init() {
   
-  sellBtn = document.getElementById("sellBtn");
-  sellingOffers = document.getElementById("sellingOffers");
+  sellBtn = $("#sellBtn");
+  sellingOffers = $("#sellingOffers");
 
-  buyBtn = document.getElementById("buyBtn");
-  buyingOffers = document.getElementById("buyingOffers");
+  buyBtn = $("#buyBtn");
+  buyingOffers = $("#buyingOffers");
   
-  nav = document.getElementById("nav");
+  nav = $("#nav");
   
-  msgBox = document.getElementById("msgBox");
-  msgText = document.getElementById("msgText");
+  msgBox = $("#msgBox");
+  msgText = $("#msgText");
   
   var query = QueryStringToJSON();
   update_layout(query.state || STATES.BUY);

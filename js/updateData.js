@@ -1,16 +1,16 @@
 function insertData(postReq, tableID) {
   var ajax = new XMLHttpRequest();
 
-  var form = document.getElementById("inputForm");
-  var data = new FormData(form);
+  var form = $("#inputForm");
+  var data = new FormData(form[0]);
 
   var dataStr = data_to_string(data);
 
   /* If the user is at the last search state (i.e. the confirmation thing) and
   was at the new book details form previously */
   if(searchState === TOTALSEARCHSTATES && prevSearchState === TOTALSEARCHSTATES - 1) {
-    var bookForm = document.getElementById("bookForm");
-    var bookData = new FormData(bookForm);
+    var bookForm = $("#bookForm");
+    var bookData = new FormData(bookForm[0]);
 
     dataStr += "&" + data_to_string(bookData) + "&subject_id=" + subjectID;
   }
@@ -46,8 +46,8 @@ function insertData(postReq, tableID) {
 function search_data(postReq, tableID) {
   var ajax = basic_request(tableID);
 
-  var form = document.getElementById("offerSearch");
-  var data = new FormData(form);
+  var form = $("#offerSearch");
+  var data = new FormData(form[0]);
 
   var dataStr = data_to_string(data);
 
@@ -126,8 +126,8 @@ function updateData(option) {
   }
 
   catch(e) {
+	console.log(e);
     display_message(MESSAGES.NET);
-    console.log(e.title + "\n" + e.messsage);
   }
 }
 
@@ -135,8 +135,8 @@ function updateData(option) {
 function searchTextbooks(postReq, tableID) {
   var ajax =  new XMLHttpRequest();
 
-  var form = document.getElementById("searchForm");
-  var data = new FormData(form);
+  var form = $("#searchForm");
+  var data = new FormData(form[0]);
   var dataStr = data_to_string(data);
 
   ajax.onreadystatechange = function() {
@@ -150,7 +150,7 @@ function searchTextbooks(postReq, tableID) {
   ajax.open("POST", postReq, true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   ajax.send(dataStr);
-  form.reset();
+  form.trigger("reset");
 }
 
 // Update the book list using a column among book name, isbn, or author
@@ -160,6 +160,7 @@ function updateBookList() {
     update_search_layout(2);
   }
   catch(e) {
+	console.log(e);
     display_message(MESSAGES.ERR);
   }
 }

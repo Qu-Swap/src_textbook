@@ -21,49 +21,53 @@ function QueryStringToJSON() {
 }
 
 function display_message(msg) {
-	msgBox.style = "";
-	msgBox.classList.remove("hide");
-	msgText.classList.remove("fail");
+	msgBox.css("display", "");
+	msgBox.removeClass("hide");
+	msgText.removeClass("fail");
 	
 	switch (msg) {
 		case MESSAGES.CREATE:
-			msgText.innerHTML = "Offer was created successfully!";
+			msgText.html("Offer was created successfully!");
 			break;
 		case MESSAGES.DELETE:
-			msgText.innerHTML = "Offer was deleted successfully!";
+			msgText.html("Offer was deleted successfully!");
 			break;
 		case MESSAGES.BOOK:
-			msgText.innerHTML = "Choose a textbook first.";
+			msgText.html("Choose a textbook first.");
 			break;
 		case MESSAGES.PASS:
-			msgText.innerHTML = "Bad password.";
-			msgText.classList.add("fail");
+			msgText.html("Bad password.");
+			msgText.addClass("fail");
 			break;
 		case MESSAGES.NET:
-			msgText.innerHTML = "Choose a textbook first.";
-			msgText.classList.add("fail");
+			msgText.html("Choose a textbook first.");
+			msgText.addClass("fail");
 			break;
 		case MESSAGES.ERR:
-			msgText.innerHTML = "An error occurred.";
-			msgText.classList.add("fail");
+			msgText.html("An error occurred.");
+			msgText.addClass("fail");
 			break;
 		case MESSAGES.NET:
-			msgText.innerHTML = "A network error occurred.";
-			msgText.classList.add("fail");
+			msgText.html("A network error occurred.");
+			msgText.addClass("fail");
 			break;
 		default:
-			msgBox.style = "display: none";
+			msgBox.css("display", "none");
 	}
-	msgBox.scrollIntoView({ block: "start", behavior: 'smooth' });
+	/*
+    if ((msgBox.offset().top - $(window).scrollTop()) > window.innerHeight) {
+		msgBox.scrollIntoView({ block: "start", behavior: 'smooth' });
+    } */
+
 }
 function hideMessage() {
 	// So that on reload the message will still be gone
 	var url = window.location.href.split(/[?#]/)[0];
 	window.history.replaceState({}, document.title, url + "?state=" + state);
 	// Add a class to the messagebox so that it will hide
-	msgBox.classList.add("hide");
-	msgBox.addEventListener("transitionend", function() {
-		msgBox.style = "display: none";
-	}, false);
+	msgBox.addClass("hide");
+	msgBox.on("transitionend", function() {
+		msgBox.css("display", "none");
+	});
 	
 }

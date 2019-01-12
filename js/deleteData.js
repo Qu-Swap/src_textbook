@@ -40,7 +40,7 @@ function deleteData(deleteReq, tableID, id) {
     removeData(deleteReq, tableID, id, password);
   }
   catch(e) {
-    display_message(MESSAGES.ERR, true);
-    console.log(e.title + "\n" + e.messsage);
+	console.log(e);
+    display_message(MESSAGES.ERR);
   }
 }

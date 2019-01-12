@@ -59,9 +59,9 @@ function getData(getReq, elementID) {
   try {
     requestData(getReq, elementID);
   }
-  catch(e) {
+  catch (e) {
+	console.log(e);
     display_message(MESSAGES.NET, true);
-    console.log(e.title + "\n" + e.messsage);
   }
 }
 
@@ -69,7 +69,7 @@ function getData(getReq, elementID) {
 function loadTableData(tableID) {
 	var data = (tableID == "sellTable") ? sellData : buyData;
 
-	var table = document.getElementById(tableID);
+	var table = $("#" + tableID);
 	var htmlStr;
 
     if(data.length > 0) {
@@ -115,7 +115,7 @@ function loadTableData(tableID) {
 		htmlStr = "<table class=\"omni table table-striped table-bordered empty\"><tr><td>No offers so far!</td></tr></table>";
 	}
 
-  table.innerHTML = htmlStr;
+  table.html(htmlStr);
 
   /* Populate tags after html is loaded, just in case the textbook request happens
   faster than the stringbuilder by some miracle */
