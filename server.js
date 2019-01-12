@@ -11,7 +11,8 @@ global.path = __dirname + "/data/";
 var textbooks = require("./server_modules/textbooks");
 var subjects = require("./server_modules/subjects");
 var comments = require("./server_modules/comments");
-var schema = require("./server_modules/schema")
+var schema = require("./server_modules/schema");
+var passmod = require("./server_modules/password")
 
 // Open database
 const sqlite3 = require('sqlite3').verbose();
@@ -105,10 +106,13 @@ function post_entry(req, res, table) {
       book_id = textbooks.insert(req, res);
     }
 
-    var data = [id, name, price, email, password, book_id, comment_id];
+    passmod.hash_salt(password).then(function(hash) {
+      var data = [id, name, price, email, hash, book_id, comment_id];
 
-    global.db.run("INSERT INTO " + table + " VALUES(?, ?, ?, ?, ?, ?, ?)", data);
-    get_table(req, res, table);
+      global.db.run("INSERT INTO " + table + " VALUES(?, ?, ?, ?, ?, ?, ?)", data, () => {
+        get_table(req, res, table);
+      });
+    });
   });
 }
 
@@ -127,14 +131,16 @@ function delete_entry(req, res, table) {
       res.sendStatus(269); // Give the user a message that the offer does not exist :^)
     }
     else {
-      if(password === rows[0].password) {
-        global.db.run("DELETE FROM " + table + " WHERE uuid = \"" + id + "\"");
-
-        get_table(req, res, table);
-      }
-      else {
-        res.send();
-      }
+      passmod.verify(password, rows[0].password).then(function(result) {
+        if(result) {
+          global.db.run("DELETE FROM " + table + " WHERE uuid = \"" + id + "\"", () => {
+            get_table(req, res, table);
+          });
+        }
+        else {
+          res.send();
+        }
+      });
     }
   });
 }

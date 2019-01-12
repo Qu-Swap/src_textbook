@@ -11,12 +11,11 @@ var errHandler = function(err) {
 module.exports = {
   setup: function() {
     // Generate tables, ignore an error if the table already exists
-    var subjectPromise = subjects.insert_subjects(global.path + "subjects.csv");
-
-    subjectPromise.then(() => {
-      // Queries here will be serialized
+    subjects.create_table().then(() => {
+      return subjects.insert_subjects(global.path + "subjects.csv");
+    }).then(() => {
       global.db.serialize(() => {
-
+        // Queries here will be serialized
         global.db.run("CREATE TABLE courses(uuid NOT NULL PRIMARY KEY, courseName TEXT, \
         shortName TEXT, link TEXT, subject_id, FOREIGN KEY (subject_id) REFERENCES subjects(uuid))",
         (err) => {
