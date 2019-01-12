@@ -5,7 +5,7 @@ function removeData(deleteReq, tableID, id, password) {
     if(this.readyState == 4) {
       if(this.status == 200) {
         if(!this.responseText) {
-          alert("Incorrect password.");
+          display_message(MESSAGES.PASS, true);
         }
         else {
           var data = JSON.parse(this.responseText);
@@ -20,7 +20,7 @@ function removeData(deleteReq, tableID, id, password) {
         }
       }
       else if(this.status == 269) {
-        alert("The offer does not exist!");
+        display_message(MESSAGES.ERR);
         updateData("refresh");
       }
     }
@@ -40,7 +40,7 @@ function deleteData(deleteReq, tableID, id) {
     removeData(deleteReq, tableID, id, password);
   }
   catch(e) {
-    alert("Error deleting data!");
+    display_message(MESSAGES.ERR, true);
     console.log(e.title + "\n" + e.messsage);
   }
 }

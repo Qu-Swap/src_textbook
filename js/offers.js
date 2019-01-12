@@ -39,32 +39,6 @@ function update_layout(val) {
   }
 }
 
-function display_message(msg) {
-	msgBox.style = "";
-	
-	switch (msg) {
-		case MESSAGES.CREATE:
-			msgText.innerHTML = "Offer was created successfully!";
-			break;
-		case MESSAGES.DELETE:
-			msgText.innerHTML = "Offer was deleted successfully!";
-			break;
-		default:
-			msgBox.style = "display: none";
-	}
-}
-function hideMessage() {
-	// So that on reload the message will still be gone
-	window.history.replaceState({}, document.title, "offers.html?state=" + state);
-	// Add a class to the messagebox so that it will hide
-	msgBox.classList.add("hide");
-	msgBox.addEventListener("transitionend", function() {
-		msgBox.style = "display: none";
-	}, false);
-	
-	
-}
-
 function newOffer() {
 	window.location.href = "create.html?state=" + state;
 }

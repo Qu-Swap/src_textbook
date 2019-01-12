@@ -29,15 +29,13 @@ function update_layout(val) {
     case STATES.BUY:
       buyBtn.className = "active";
 	  nav.classList.add("buy");
-      formText.innerHTML =
-      "Don't see a book you want to buy? <br> Submit a <i>buying request</i>.";
+      formText.innerHTML = "Submit a <i>buying request</i>.";
       merchantName.innerHTML = "Buyer name";
       break;
     case STATES.SELL:
       sellBtn.className = "active";
 	  nav.classList.add("sell");
-      formText.innerHTML =
-      "Can't find a book you want to sell? <br> Submit a <i>selling request</i>.";
+      formText.innerHTML = "Submit a <i>selling request</i>.";
       merchantName.innerHTML = "Seller name";
       break;
   }

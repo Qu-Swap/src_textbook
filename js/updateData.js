@@ -12,8 +12,6 @@ function insertData(postReq, tableID) {
     var bookForm = document.getElementById("bookForm");
     var bookData = new FormData(bookForm);
 
-    if(!validate_book_form(bookData)) return;
-
     dataStr += "&" + data_to_string(bookData) + "&subject_id=" + subjectID;
   }
   // If the user came directly from 2 states ago – selected existing book
@@ -21,11 +19,9 @@ function insertData(postReq, tableID) {
     dataStr += "&book_id=" + selectBookInfo["uuid"];
   }
   else {
-    alert("Please select a textbook.")
+    display_message(MESSAGES.BOOK);
     return;
   }
-
-  if(!validate_offer_form(data)) return;
 
   ajax.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -130,7 +126,7 @@ function updateData(option) {
   }
 
   catch(e) {
-    alert("Error updating data!");
+    display_message(MESSAGES.NET);
     console.log(e.title + "\n" + e.messsage);
   }
 }
@@ -164,7 +160,7 @@ function updateBookList() {
     update_search_layout(2);
   }
   catch(e) {
-    alert("Error searching for textbooks.")
+    display_message(MESSAGES.ERR);
   }
 }
 

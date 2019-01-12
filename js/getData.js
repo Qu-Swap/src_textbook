@@ -60,7 +60,7 @@ function getData(getReq, elementID) {
     requestData(getReq, elementID);
   }
   catch(e) {
-    alert("Error getting data!");
+    display_message(MESSAGES.NET, true);
     console.log(e.title + "\n" + e.messsage);
   }
 }
@@ -112,8 +112,7 @@ function loadTableData(tableID) {
 		htmlStr += "</tbody></table>";
 	}
 	else {
-		htmlStr = "<table class=\"omni table table-striped table-bordered\"><tr><td>No offers so far!</td></tr></table>";
-		table.classList.add("empty");
+		htmlStr = "<table class=\"omni table table-striped table-bordered empty\"><tr><td>No offers so far!</td></tr></table>";
 	}
 
   table.innerHTML = htmlStr;
@@ -171,12 +170,15 @@ function loadSearchedTextbooks(tableID) {
       <td><a class='btn-small' onclick=\"set_book_info(" + i.toString() + ")\"]><i class='fas fa-arrow-right'></i></a></td>\
       </tr>";
     }
+	table.classList.remove("empty");
   }
   else {
     htmlStr += "<tr><td>No textbooks found</td></tr>";
+	table.classList.add("empty");
   }
 
   table.innerHTML = htmlStr;
+
 }
 
 function get_subject_name(subjectID) {

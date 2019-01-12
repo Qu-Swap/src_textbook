@@ -4,8 +4,6 @@
     <title>Submit new offer</title>
     <script src="js/getData.js"></script>
     <script src="js/updateData.js"></script>
-    <script src="js/deleteData.js"></script>
-    <script src="js/validation.js"></script>
 	<script src="js/url.js"></script>
     <script src="js/create.js"></script>
     <meta charset="UTF-8"/>
@@ -27,7 +25,11 @@
 			</li>
 		</ul>
 	</div>
-
+	<div id="msgBox" class="no-bottom-margin" style="display: none">
+		<p id="msgText"></p>
+		<i class="fas fa-times close-btn" onclick="hideMessage()"></i>
+	</div>
+		
 	<div id="newOffer">
 		<div class="smallbox">
 		  <h2 class="offerText" id="formText"></h2>
@@ -64,27 +66,29 @@
 			  <form id="bookForm" onsubmit="info_from_form(); return false" autocomplete="off">
 				<div class="form-group">
 				  <label for="exampleInputBook1">Book Name</label>
-				  <input name="bookName" type="text" class="form-control" id="exampleInputBook1" placeholder="The Very Hungry Caterpillar">
+				  <input name="bookName" type="text" class="form-control" id="exampleInputBook1" placeholder="The Very Hungry Caterpillar" required>
 				</div>
 				<div class="form-group">
 				  <label for="exampleInputISBN1">ISBN</label>
-				  <input name="isbn" type="text" class="form-control" id="exampleInputISBN" placeholder="978-3-16-148410-0">
+				  <input name="isbn" type="text"
+				  class="form-control isbn" id="exampleInputISBN" placeholder="978-3-16-148410-0"
+				  pattern="(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]" required>
 				</div>
 				<div class="form-group">
 				  <label for="exampleInputAuthor">Author</label>
-				  <input name="author" type="text" class="form-control" id="exampleInputAuthor" placeholder="John Smith">
+				  <input name="author" type="text" class="form-control" id="exampleInputAuthor" placeholder="John Smith" required>
 				</div>
         <div class="form-group">
 				  <label for="exampleInputEdition">Edition/Copyright</label>
-				  <input name="edition" type="text" class="form-control" id="exampleInputEdition" placeholder="2002">
+				  <input name="edition" type="text" class="form-control" id="exampleInputEdition" placeholder="2002" required>
 				</div>
         <div class="form-group">
 				  <label for="exampleInputAuthor">Publisher</label>
-				  <input name="publisher" type="text" class="form-control" id="exampleInputPublisher" placeholder="Penguin Random House">
+				  <input name="publisher" type="text" class="form-control" id="exampleInputPublisher" placeholder="Penguin Random House" required>
 				</div>
 				<div class="form-group">
 				  <label>Subject</label>
-				  <select id="subjectDown"></select>
+				  <select id="subjectDown" required></select>
 				</div>
 				<button type="submit" class="btn">OK</button>
 			  </form>
@@ -103,19 +107,20 @@
 		<form id="inputForm" onsubmit="updateData('insert'); return false" autocomplete="off">
 		  <div class="form-group">
 			<label for="exampleInputName1" id="merchantName">Seller name</label>
-			<input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name">
+			<input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name" pattern="\S.*\S" required>
 		  </div>
 		  <div class="form-group">
 			<label for="exampleInputPrice1">Price</label>
-			<input name="price" type="text" class="form-control" id="exampleInputPrice1" placeholder="100.00">
+			<input name="price" type="text" class="form-control" id="exampleInputPrice1" placeholder="100.00"
+			pattern="\$?\d+(\.\d{2})?" required>
 		  </div>
 		  <div class="form-group">
 			<label for="exampleInputPrice1">Email</label>
-			<input name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="example@email.com">
+			<input name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="example@email.com" required>
 		  </div>
 		  <div class="form-group">
 			<label for="exampleInputPassword1">Password</label>
-			<input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+			<input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
 		  </div>
 		  <div class="form-group">
 			<label for="exampleInputDetails">Details</label>
