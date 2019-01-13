@@ -163,11 +163,16 @@ function data_to_string(formData) {
   var str = "";
 
   var c = 0;
-  for(var pair of formData) {
+  var entries = formData.entries();
+  var entry = entries.next();
+  while(!entry.done) {
+    var pair = entry.value;
     if(c != 0) str += "&";
     else c = 1;
 
     str += pair[0] + "=" + remove_special(pair[1]);
+
+    entry = entries.next();
   }
 
   return str;
