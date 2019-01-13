@@ -1,12 +1,12 @@
-function removeData(deleteReq, tableID, id, password) {
+function removeData(deleteReq, tableID, id, password, succ, fail) {
   var ajax = new XMLHttpRequest();
 
   ajax.onreadystatechange = function() {
     if(this.readyState == 4) {
-	  console.log(this.status);
       if(this.status == 200) {
         if (!this.responseText) {
           display_message(MESSAGES.PASS, true);
+		  fail();
         }
         else {
           var data = JSON.parse(this.responseText);
@@ -18,10 +18,12 @@ function removeData(deleteReq, tableID, id, password) {
           }
 
           loadTableData(tableID);
+		  succ();
         }
       }
       else if(this.status == 269) {
         display_message(MESSAGES.ERR);
+		fail();
         updateData("refresh");
       }
     }
@@ -33,12 +35,14 @@ function removeData(deleteReq, tableID, id, password) {
   ajax.send("id=" + id + "&password=" + remove_special(password));
 }
 
-function deleteData(id, form) {
+function deleteData(id, form, succ) {
   var req = (state === STATES.SELL) ? "deleteSellData" : "deleteBuyData";
   var tableID = (state === STATES.SELL) ? "sellTable" : "buyTable";
   var password = form.password.value;
   try {
-    removeData(req, tableID, id, password);
+    removeData(req, tableID, id, password,
+		function () {$(form).remove(); hideMessage();},
+		function() {form.reset()});
   }
   catch(e) {
 	console.log(e);
@@ -56,7 +60,7 @@ function passPrompt(id, el) {
 	var container = (state === STATES.SELL) ? "#sellingOffers" : "#buyingOffers";
 	
 	var form = $(document.createElement("form"));
-	form.submit(function() { deleteData(id, this) });
+	form.submit(function() { deleteData(id, this); return false;});
 	form.addClass('password-prompt');
 	
 	form.html("<input name='password' type='password' class='form-control' placeholder='Password' required> \

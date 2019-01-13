@@ -1,6 +1,5 @@
 tags = function() {
   function populate_element(elName, data) {
-    console.log(elName, data);
     var el = document.getElementById(elName);
     var htmlStr = "<ul class='tags'>";
 
