@@ -60,10 +60,10 @@ function get_table(req, res, table, condition) {
   // Don't retrieve password, otherwise it's accessible client-side
   // Use an inner join to get the textbook and subject name
   global.db.all("SELECT a.uuid, a.name, a.price, a.email, a.book_id, b.bookName, \
-   b.isbn, b.author, c.subjectName, d.comment FROM " + table + " AS a INNER JOIN textbooks \
-   AS b INNER JOIN subjects AS c INNER JOIN comments AS d \
-   ON a.book_id = b.uuid AND b.subject_id = c.uuid AND a.comment_id = d.uuid " +
-   condition + " ORDER BY c.rowid", (err, rows) => {
+   b.isbn, b.author, b.publisher, b.edition, c.subjectName, d.comment FROM " +
+   table + " AS a INNER JOIN textbooks AS b INNER JOIN subjects AS c INNER JOIN \
+   comments AS d ON a.book_id = b.uuid AND b.subject_id = c.uuid AND a.comment_id \
+   = d.uuid " + condition + " ORDER BY c.rowid", (err, rows) => {
     if (err) {
       throw err;
     }

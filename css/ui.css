@@ -20,7 +20,7 @@
 	border-radius: 25px;
 	overflow: hidden;
 	border: 1px solid var(--theme-color);
-	
+
 	position: relative;
 }
 .navbar li {
@@ -95,6 +95,15 @@
 	border-radius: 6px;
 	white-space: normal;
 	font-size: 14px;
+}
+
+.tagbox {
+	margin-top: 5vh;
+}
+
+.tagbox ul {
+	width: 40%;
+	margin: auto;
 }
 
 .floating-btn {
@@ -175,7 +184,7 @@
 	width: 1.5em;
 	line-height: 1.5em;
 	height: 1.5em;
-	
+
 	margin-left: 0.5em;
 }
 #msgBox .close-btn:hover {
