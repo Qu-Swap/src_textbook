@@ -185,14 +185,10 @@
 #offerSearch .form-group {
 	margin-bottom: 0.5rem;
 }
-/* Offer table */
-#sellingOffers,
-#buyingOffers {
-	overflow-x: auto;
-}
+
 #sellTable,
 #buyTable {
-	min-width: 800px;
+	overflow-x: auto;
 }
 
 #sellTable.empty,
@@ -208,6 +204,7 @@
   display: flex;
   flex-flow: column;
   width: 100%;
+  min-width: 800px;
 }
 
 .omni thead, .omni tr {
@@ -267,7 +264,23 @@
 	color: var(--theme-color) !important;
 	background-color: white;
 }
-
+.password-prompt {
+	display: flex;
+	background-color: #f0f0f0;
+	border-radius: var(--input-rad);
+	padding: 0;
+	width: 50vw;
+	min-width: 400px;
+	border: 1px solid #ced4da;
+}
+.password-prompt .form-control {
+	border-left: none;
+	border-top: none;
+	border-bottom: none;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	
+}
 /* Details */
 .floating-btn.indent {
 	left: 35px;

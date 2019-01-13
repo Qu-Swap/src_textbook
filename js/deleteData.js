@@ -3,8 +3,9 @@ function removeData(deleteReq, tableID, id, password) {
 
   ajax.onreadystatechange = function() {
     if(this.readyState == 4) {
+	  console.log(this.status);
       if(this.status == 200) {
-        if(!this.responseText) {
+        if (!this.responseText) {
           display_message(MESSAGES.PASS, true);
         }
         else {
@@ -32,15 +33,39 @@ function removeData(deleteReq, tableID, id, password) {
   ajax.send("id=" + id + "&password=" + remove_special(password));
 }
 
-function deleteData(deleteReq, tableID, id) {
-  var password = prompt("Please input the password.");
-  if(password === null) {return};
-
+function deleteData(id, form) {
+  var req = (state === STATES.SELL) ? "deleteSellData" : "deleteBuyData";
+  var tableID = (state === STATES.SELL) ? "sellTable" : "buyTable";
+  var password = form.password.value;
   try {
-    removeData(deleteReq, tableID, id, password);
+    removeData(req, tableID, id, password);
   }
   catch(e) {
 	console.log(e);
     display_message(MESSAGES.ERR);
   }
+}
+function closePrompt(el) {
+	// The "element" is actually the remove button not the form, so let's delete its parent instead.
+	$(el).parent().remove();
+}
+function passPrompt(id, el) {
+	// Let's only have one password prompt open at a time
+	$('.password-prompt').remove();
+	
+	var container = (state === STATES.SELL) ? "#sellingOffers" : "#buyingOffers";
+	
+	var form = $(document.createElement("form"));
+	form.submit(function() { deleteData(id, this) });
+	form.addClass('password-prompt');
+	
+	form.html("<input name='password' type='password' class='form-control' placeholder='Password' required> \
+			   <button type='button' onclick='closePrompt(this)' class='btn'><i class='fas fa-times'></i></button>\
+			   <button type='submit' class='btn'><i class='fas fa-check'></i></button>")
+	
+	$(container).append(form);
+	var pos = $(el).offset();
+	pos.left -= form.width()
+	form.offset(pos);
+	
 }
