@@ -12,7 +12,7 @@
 
 .page-title {
 	margin-bottom: 0.7em;
-	
+
 }
 
 .static-content p {
@@ -39,4 +39,10 @@
 
 .footer li a:hover {
 	opacity: 1 !important;
+}
+
+.quote {
+	display: block;
+	width: 80%;
+	margin: 5vh auto;
 }
