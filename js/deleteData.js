@@ -72,4 +72,7 @@ function passPrompt(id, el) {
 	pos.left -= form.width()
 	form.offset(pos);
 	
+	// Focus the password input
+	form.find("input").focus();
+	
 }
