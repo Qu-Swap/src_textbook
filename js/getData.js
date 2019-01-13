@@ -41,7 +41,7 @@ function requestData(getReq, elementID) {
     			var el = loaded[element];
     			switch(el) {
     				case "subjectDown":
-    				  loadSelectData(el);
+    				  loadSelectData();
     				  break;
     				default:
     				  loadTableData(el);
@@ -117,17 +117,11 @@ function loadTableData(tableID) {
   }
 }
 
-function loadSelectData(selectID) {
-  var data, htmlStr, inner, select;
+function loadSelectData() {
 
-  switch(selectID) {
-    case "subjectDown":
-      data = subjectData;
-      htmlStr = "";
-      inner = "subjectName";
-      select = subjectDown;
-      break;
-  }
+  var data = subjectData;
+  var htmlStr = "";
+  var inner = "subjectName";
 
   for(var i = 0; i < data.length; i++) {
     var currentEntry = data[i];
@@ -135,7 +129,7 @@ function loadSelectData(selectID) {
     + currentEntry[inner] + "</option>";
   }
 
-  select.innerHTML = htmlStr;
+  subjectDown.html(htmlStr);
 }
 
 // Populates a single table with textbook search results

@@ -34,17 +34,13 @@ function display_message(msg) {
 			msgText.html("Request was created successfully!");
 			break;
 		case MESSAGES.DELETE:
-			msgText.html("Offer was deleted successfully!");
+			msgText.html("Listing was deleted successfully!");
 			break;
 		case MESSAGES.BOOK:
 			msgText.html("Choose a textbook first.");
 			break;
 		case MESSAGES.PASS:
 			msgText.html("Bad password.");
-			msgText.addClass("fail");
-			break;
-		case MESSAGES.NET:
-			msgText.html("Choose a textbook first.");
 			msgText.addClass("fail");
 			break;
 		case MESSAGES.ERR:

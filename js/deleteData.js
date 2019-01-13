@@ -41,7 +41,7 @@ function deleteData(id, form, succ) {
   var password = form.password.value;
   try {
     removeData(req, tableID, id, password,
-		function () {$(form).remove(); hideMessage();},
+		function () {$(form).remove(); display_message(MESSAGES.DELETE, true);},
 		function() {form.reset()});
   }
   catch(e) {
