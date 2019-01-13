@@ -76,7 +76,11 @@
 #nav.sell:before{
 	transform: translateX(100%);
 }
-
+.no-transition,
+.no-transition:before,
+.no-transition *{
+	transition: none !important;
+}
 
 .tags {
 	list-style: none;

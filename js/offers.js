@@ -24,7 +24,11 @@ function set_inactive() {
 // Update the layout depending on whether "Buy Offers" or "Sell Offers" is selected
 function update_layout(val) {
   state = val;
-
+  // If this is the first time we're switching
+  
+  if (!nav.hasClass("sell") && !nav.hasClass("buy")) {
+	  nav.addClass("no-transition");
+  }
   set_inactive();
 
   switch(state) {
@@ -37,6 +41,8 @@ function update_layout(val) {
 	  nav.addClass("sell");
       break;
   }
+  nav.one("click", function() {nav.removeClass("no-transition"); });
+  
 }
 
 function newOffer() {

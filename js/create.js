@@ -22,7 +22,11 @@ function set_inactive() {
 // Update the layout depending on whether "Buy Books" or "Sell Books" is selected
 function update_layout(val) {
   state = val;
-
+  
+  if (!nav.hasClass("sell") && !nav.hasClass("buy")) {
+	  nav.addClass("no-transition");
+  }
+  
   set_inactive();
 
   switch(state) {
@@ -39,6 +43,8 @@ function update_layout(val) {
       merchantName.html("Seller name");
       break;
   }
+  
+  nav.one("click", function() {nav.removeClass("no-transition"); });
 }
 
 function book_change() {
