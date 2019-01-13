@@ -6,7 +6,7 @@ function get_data(uuid, postReq, sellBuy) {
       var data = JSON.parse(this.responseText);
 
       if(data.length > 0) {
-        populate(data[0], sellBuy);
+        populate(data[0], sellBuy, uuid);
       }
     }
   }
@@ -23,7 +23,7 @@ function isBlank(str) {
     return (!str || /^\s*$/.test(str));
 }
 
-function populate(data, sellBuy) {
+function populate(data, sellBuy, uuid) {
   document.getElementById("none").style.display = "none";
 
   var offerDetails = document.getElementById("offerDetails");
@@ -42,14 +42,18 @@ function populate(data, sellBuy) {
   <div class=\"spacer\"></div>\
   <p><span class=\"propname\">Book Name:</span> " + data["bookName"] + "</p>\
   <p><span class=\"propname\">Author:</span> " + data["author"] + "</p>\
+  <p><span class=\"propname\">Edition:</span> " + data["edition"] + "</p>\
+  <p><span class=\"propname\">Publisher:</span> " + data["publisher"] + "</p>\
   <p><span class=\"propname\">ISBN:</span> " + data["isbn"] + "</p>\
-  <p><span class=\"propname\">Subject:</span> " + data["subjectName"] + "</p>";
+  <p><span class=\"propname\">Subject:</span> " + data["subjectName"] + "</p>\
+  <div class='tagbox' id='" + uuid + "'></div>";
 
   extraDetails.innerHTML =
   "<h2>Additional Details</h2>\
   <div class=\"spacer\"></div>\
   <i>" + data["comment"] + "</i>";
 
+  tags.populate_tags(data["book_id"], uuid);
 
   offerDetails.style.display = "block";
   bookDetails.style.display = "block";
