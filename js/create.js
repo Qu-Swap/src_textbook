@@ -25,6 +25,7 @@ function update_layout(val) {
   
   if (!nav.hasClass("sell") && !nav.hasClass("buy")) {
 	  nav.addClass("no-transition");
+	  nav.one("click", function() {nav.removeClass("no-transition"); });
   }
   
   set_inactive();
@@ -44,7 +45,6 @@ function update_layout(val) {
       break;
   }
   
-  nav.one("click", function() {nav.removeClass("no-transition"); });
 }
 
 function book_change() {

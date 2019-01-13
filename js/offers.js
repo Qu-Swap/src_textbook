@@ -28,6 +28,7 @@ function update_layout(val) {
   
   if (!nav.hasClass("sell") && !nav.hasClass("buy")) {
 	  nav.addClass("no-transition");
+	  nav.one("click", function() {nav.removeClass("no-transition"); });
   }
   set_inactive();
 
@@ -41,7 +42,6 @@ function update_layout(val) {
 	  nav.addClass("sell");
       break;
   }
-  nav.one("click", function() {nav.removeClass("no-transition"); });
   
 }
 
