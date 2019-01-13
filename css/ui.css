@@ -205,9 +205,7 @@
 	overflow-x: auto;
 }
 
-#sellTable.empty,
-#buyTable.empty,
-#queriedBooks.empty {
+.empty {
 	min-width: unset !important;
 }
 
