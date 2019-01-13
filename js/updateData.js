@@ -3,6 +3,9 @@ function insertData(postReq, tableID) {
 
   var form = $("#inputForm");
   var data = new FormData(form[0]);
+  if (data.get("price").startsWith("$") {
+	data.set("price", data.get("price").substring(1));
+  }
 
   var dataStr = data_to_string(data);
 
