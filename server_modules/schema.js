@@ -39,14 +39,14 @@ module.exports = {
         });
 
         global.db.run("CREATE TABLE sellers(uuid NOT NULL PRIMARY KEY, name TEXT, \
-        price DOUBLE, email TEXT, password TEXT, book_id, comment_id, FOREIGN KEY \
+        price DOUBLE, email TEXT, password TEXT, time TEXT, book_id, comment_id, FOREIGN KEY \
         (book_id) REFERENCES textbooks(uuid), FOREIGN KEY (comment_id) REFERENCES \
         comments(uuid))", (err) => {
           if (err){}
         });
 
         global.db.run("CREATE TABLE buyers(uuid NOT NULL PRIMARY KEY, name TEXT, \
-        price DOUBLE, email TEXT, password TEXT, book_id, comment_id, FOREIGN KEY \
+        price DOUBLE, email TEXT, password TEXT, time TEXT, book_id, comment_id, FOREIGN KEY \
         (book_id) REFERENCES textbooks(uuid), FOREIGN KEY (comment_id) REFERENCES \
         comments(uuid))", (err) => {
           if (err){}

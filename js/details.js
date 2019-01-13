@@ -35,7 +35,8 @@ function populate(data, sellBuy, uuid) {
   <div class=\"spacer\"></div>\
   <p><span class=\"propname\">" + sellBuy + " Name:</span> " + data["name"] + "</p>\
   <p><span class=\"propname\">Price:</span> " + data["price"] + "</p>\
-  <p><span class=\"propname\">Contact Email:</span> " + data["email"] + "</p>";
+  <p><span class=\"propname\">Contact Email:</span> " + data["email"] + "</p>\
+  <p><span class=\"propname\">Date of Post:</span> " + data["time"] + "</p>";
 
   bookDetails.innerHTML =
   "<h2>Book Details</h2>\

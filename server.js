@@ -59,11 +59,11 @@ function get_table(req, res, table, condition) {
 
   // Don't retrieve password, otherwise it's accessible client-side
   // Use an inner join to get the textbook and subject name
-  global.db.all("SELECT a.uuid, a.name, a.price, a.email, a.book_id, b.bookName, \
+  global.db.all("SELECT a.uuid, a.name, a.price, a.email, a.book_id, a.time, b.bookName, \
    b.isbn, b.author, b.publisher, b.edition, c.subjectName, d.comment FROM " +
    table + " AS a INNER JOIN textbooks AS b INNER JOIN subjects AS c INNER JOIN \
    comments AS d ON a.book_id = b.uuid AND b.subject_id = c.uuid AND a.comment_id \
-   = d.uuid " + condition + " ORDER BY c.rowid", (err, rows) => {
+   = d.uuid " + condition + " ORDER BY a.rowid DESC", (err, rows) => {
     if (err) {
       throw err;
     }
@@ -98,6 +98,7 @@ function post_entry(req, res, table) {
     var price = req.body.price;
     var email = req.body.email;
     var password = req.body.password;
+    var time = new Date().toString();
     var book_id = req.body.book_id;
     var comment_id = comments.insert(req, res);
 
@@ -107,9 +108,9 @@ function post_entry(req, res, table) {
     }
 
     passmod.hash_salt(password).then(function(hash) {
-      var data = [id, name, price, email, hash, book_id, comment_id];
+      var data = [id, name, price, email, hash, time, book_id, comment_id];
 
-      global.db.run("INSERT INTO " + table + " VALUES(?, ?, ?, ?, ?, ?, ?)", data, () => {
+      global.db.run("INSERT INTO " + table + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)", data, () => {
         get_table(req, res, table);
       });
     });
