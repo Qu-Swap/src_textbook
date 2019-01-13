@@ -25,18 +25,20 @@ function set_inactive() {
 function update_layout(val) {
   state = val;
 
-  set_inactive();
+  animate.fade(() => {
+    set_inactive();
 
-  switch(state) {
-    case STATES.BUY:
-      buyBtn.addClass("active");
-	  nav.addClass("buy");
-      break;
-    case STATES.SELL:
-      sellBtn.addClass("active");
-	  nav.addClass("sell");
-      break;
-  }
+    switch(state) {
+      case STATES.BUY:
+        buyBtn.addClass("active");
+  	  nav.addClass("buy");
+        break;
+      case STATES.SELL:
+        sellBtn.addClass("active");
+  	  nav.addClass("sell");
+        break;
+    }
+  });
 }
 
 function newOffer() {
