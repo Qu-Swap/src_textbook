@@ -23,24 +23,22 @@ function set_inactive() {
 function update_layout(val) {
   state = val;
 
-  animate.fade(() => {
-    set_inactive();
+  set_inactive();
 
-    switch(state) {
-      case STATES.BUY:
-        buyBtn.addClass("active");
-  	    nav.addClass("buy");
-        formText.html("Submit a <i>request</i>.");
-        merchantName.html("Buyer name");
-        break;
-      case STATES.SELL:
-        sellBtn.addClass("active");
-  	    nav.addClass("sell");
-        formText.html("Submit an <i>offer</i>.");
-        merchantName.html("Seller name");
-        break;
-    }
-  });
+  switch(state) {
+    case STATES.BUY:
+      buyBtn.addClass("active");
+	  nav.addClass("buy");
+      formText.html("Submit a <i>request</i>.");
+      merchantName.html("Buyer name");
+      break;
+    case STATES.SELL:
+      sellBtn.addClass("active");
+	  nav.addClass("sell");
+      formText.html("Submit an <i>offer</i>.");
+      merchantName.html("Seller name");
+      break;
+  }
 }
 
 function book_change() {

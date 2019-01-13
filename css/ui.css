@@ -60,11 +60,6 @@
 	display: block;
 }
 
-/* Fade effect for non-navbar */
-#fadebox {
-	transition: 0.3s;
-}
-
 #nav:before {
 	content: '';
 	display: block;
