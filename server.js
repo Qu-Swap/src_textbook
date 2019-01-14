@@ -33,6 +33,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Static elements
 app.use("/css", express.static(__dirname + "/css"));
 app.use("/js", express.static(__dirname + "/js"));
+app.use("/media", express.static(__dirname + "/media"));
 app.use("/", express.static(__dirname + "/html"));
 
 // Send homepage
