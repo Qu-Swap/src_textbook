@@ -53,7 +53,7 @@ app.use(function(req, res, next) {
 });
 
 // General method for sending buying/selling table
-function get_table(req, res, table, condition) {
+function get_table(req, res, table, condition, extra) {
   if(!condition) {
     condition = "";
   }
@@ -64,7 +64,7 @@ function get_table(req, res, table, condition) {
    b.isbn, b.author, b.publisher, b.edition, c.subjectName, d.comment FROM " +
    table + " AS a INNER JOIN textbooks AS b INNER JOIN subjects AS c INNER JOIN \
    comments AS d ON a.book_id = b.uuid AND b.subject_id = c.uuid AND a.comment_id \
-   = d.uuid " + condition + " ORDER BY a.rowid DESC", (err, rows) => {
+   = d.uuid " + condition + " ORDER BY a.rowid DESC", extra, (err, rows) => {
     if (err) {
       throw err;
     }
@@ -77,16 +77,16 @@ function get_table(req, res, table, condition) {
 function search_table(req, res, table) {
   var query = req.body.query;
   var condition = "AND (a.name || b.bookName || b.author || c.subjectName LIKE \
-  '%" + query + "%' OR b.isbn = '" + query + "')";
+  (?) OR b.isbn = (?))";
 
-  get_table(req, res, table, condition);
+  get_table(req, res, table, condition, ['%' + query + '%', query]);
 }
 
 // General method for looking up entry details based on uuid
 function search_table_details(req, res, table) {
-  var condition = "AND a.uuid = \"" + req.body.query + "\"";
+  var condition = "AND a.uuid = (?)";
 
-  get_table(req, res, table, condition);
+  get_table(req, res, table, condition, [req.body.query]);
 }
 
 // General method for inserting data
@@ -123,7 +123,7 @@ function delete_entry(req, res, table) {
   var id = req.body.id;
   var password = req.body.password;
 
-  global.db.all("SELECT password FROM " + table + " WHERE uuid = \"" + id +"\"", (err, rows) => {
+  global.db.all("SELECT * FROM " + table + " WHERE uuid = (?)", [id], (err, rows) => {
     if (err) {
       throw err;
     }
@@ -135,9 +135,17 @@ function delete_entry(req, res, table) {
     else {
       passmod.verify(password, rows[0].password).then(function(result) {
         if(result) {
-          global.db.run("DELETE FROM " + table + " WHERE uuid = \"" + id + "\"", () => {
+          global.db.run("DELETE FROM " + table + " WHERE uuid = (?)", [id], () => {
             get_table(req, res, table);
           });
+
+          // Move to respective history table
+          var delTime = new Date().toString();
+          var e = rows[0];
+          var data = [e.uuid, e.name, e.price, e.email, e.password, e.time,
+          delTime, e.book_id, e.comment_id];
+
+          global.db.run("INSERT INTO " + table + "_history VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", data);
         }
         else {
           res.send();
