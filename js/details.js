@@ -24,43 +24,43 @@ function isBlank(str) {
 }
 
 function populate(data, sellBuy, uuid) {
-  document.getElementById("none").style.display = "none";
+  $("#none").css("display", "none");
 
-  var offerDetails = document.getElementById("offerDetails");
-  var bookDetails = document.getElementById("bookDetails");
-  var extraDetails = document.getElementById("extraDetails");
+  var offerDetails = $("#offerDetails");
+  var bookDetails = $("#bookDetails");
+  var extraDetails = $("#extraDetails");
 
-  offerDetails.innerHTML =
-  "<h2>Offer Details</h2>\
-  <div class=\"spacer\"></div>\
-  <p><span class=\"propname\">" + sellBuy + " Name:</span> " + data["name"] + "</p>\
-  <p><span class=\"propname\">Price:</span> " + data["price"] + "</p>\
-  <p><span class=\"propname\">Contact Email:</span> " + data["email"] + "</p>\
-  <p><span class=\"propname\">Date of Post:</span> " + data["time"] + "</p>";
+  offerDetails.html(
+  `<h2>Offer Details</h2>
+  <div class="spacer"></div>
+  <p><span class="propname">${sellBuy} Name:</span> ${data["name"]}</p>
+  <p><span class="propname">Price:</span> ${data["price"]}</p>
+  <p><span class="propname">Contact Email:</span> ${data["email"]}</p>
+  <p><span class="propname">Date of Post:</span> ${data["time"]}</p>`);
 
-  bookDetails.innerHTML =
-  "<h2>Book Details</h2>\
-  <div class=\"spacer\"></div>\
-  <p><span class=\"propname\">Book Name:</span> " + data["bookName"] + "</p>\
-  <p><span class=\"propname\">Author:</span> " + data["author"] + "</p>\
-  <p><span class=\"propname\">Edition:</span> " + data["edition"] + "</p>\
-  <p><span class=\"propname\">Publisher:</span> " + data["publisher"] + "</p>\
-  <p><span class=\"propname\">ISBN:</span> " + data["isbn"] + "</p>\
-  <p><span class=\"propname\">Subject:</span> " + data["subjectName"] + "</p>\
-  <div class='tagbox' id='" + uuid + "'></div>";
+  bookDetails.html(
+  `<h2>Book Details</h2>
+  <div class="spacer"></div>
+  <p><span class="propname">Book Name:</span> ${data["bookName"]}</p>
+  <p><span class="propname">Author:</span> ${data["author"]}</p>
+  <p><span class="propname">Edition:</span> ${data["edition"]}</p>
+  <p><span class="propname">Publisher:</span> ${data["publisher"]}</p>
+  <p><span class="propname">ISBN:</span> ${data["isbn"]}</p>
+  <p><span class="propname">Subject:</span> ${data["subjectName"]}</p>
+  <div class='tagbox' id="${uuid}"></div>`);
 
-  extraDetails.innerHTML =
-  "<h2>Additional Details</h2>\
-  <div class=\"spacer\"></div>\
-  <i>" + data["comment"] + "</i>";
+  extraDetails.html(
+  `<h2>Additional Details</h2>
+  <div class="spacer"></div>
+  <i>${data["comment"]}</i>`);
 
   tags.populate_tags(data["book_id"], uuid);
 
-  offerDetails.style.display = "block";
-  bookDetails.style.display = "block";
+  offerDetails.css("display", "block");
+  bookDetails.css("display", "block");
 
   if (!isBlank(data["comment"])) {
-	extraDetails.style.display = "block";
+	extraDetails.css("display", "block");
   }
 
   update_back(sellBuy);
@@ -68,10 +68,10 @@ function populate(data, sellBuy, uuid) {
 function update_back(sellBuy) {
 	var back = document.getElementById("back");
 	if (sellBuy === "Seller") {
-		back.href += "?state=" + STATES.SELL;
+		back.href += `?state=${STATES.SELL}`;
 	}
 	else {
-		back.href += "?state=" + STATES.BUY;
+		back.href += `?state=${STATES.BUY}`;
 	}
 }
 

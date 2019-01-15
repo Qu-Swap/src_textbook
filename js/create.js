@@ -67,7 +67,7 @@ function update_search_layout(val) {
   searchState = val;
 
   for (var i = 1; i <= TOTALSEARCHSTATES; i++) {
-    var el = $("#searchState" + (i).toString());
+    var el = $(`#searchState${i}`);
 
     if(i === searchState) {
       el.css("display", "block");
@@ -83,13 +83,12 @@ function show_form_info() {
   var form = $("#bookForm");
   var formData = new FormData(form[0]);
 
-  var htmlStr = "<p>Book Name: " + selectBookInfo["bookName"] + "</p>\
-  <p>Author: " + selectBookInfo["author"] + "</p>\
-  <p>ISBN: " + selectBookInfo["isbn"] + "</p>\
-  <p>Edition/Copyright: " + selectBookInfo["edition"] + "</p>\
-  <p>Publisher: " + selectBookInfo["publisher"] + "</p>\
-  <p>Subject: " + (selectBookInfo["subjectName"] ?
-  selectBookInfo["subjectName"] : get_subject_name(subjectID)) + "</p>";
+  var htmlStr = `<p>Book Name: ${selectBookInfo["bookName"]}</p>
+  <p>Author: ${selectBookInfo["author"]}</p>
+  <p>ISBN: ${selectBookInfo["isbn"]}</p>
+  <p>Edition/Copyright: ${selectBookInfo["edition"]}</p>
+  <p>Publisher: ${selectBookInfo["publisher"]}</p>
+  <p>Subject: ${selectBookInfo["subjectName"] ? selectBookInfo["subjectName"] : get_subject_name(subjectID)} </p>`;
 
   bookInfo.html(htmlStr);
   update_search_layout(4);
@@ -101,9 +100,9 @@ function info_from_form() {
 
   // Should be made constant
   var columns = ["bookName", "author", "isbn", "edition", "publisher"];
-  selectBookInfo = {}
+  selectBookInfo = {};
 
-  for(category of columns) {
+  for (category of columns) {
     selectBookInfo[category] = formData.get(category);
   }
 
@@ -117,7 +116,7 @@ function set_book_info(index) {
 }
 
 function toggle_element(elementID) {
-  var el = $("#" + elementID);
+  var el = $(`#{elementID}`);
 
   if(el.css("display") == "none" ) {
     el.css("display", "block");
@@ -127,7 +126,7 @@ function toggle_element(elementID) {
   }
 }
 function back() {
-	window.location.href = "offers.html?state=" + state;
+	window.location.href = `offers.html?state=${state}`;
 }
 
 const TOTALSEARCHSTATES = 4;

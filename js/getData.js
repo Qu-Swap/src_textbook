@@ -90,16 +90,16 @@ function loadTableData(tableID) {
 		for(var i = 0; i < data.length; i++) {
 		  var currentEntry = data[i];
 
-		  htmlStr += "<tr>\
-		  <td>" + currentEntry["bookName"] + "</td>\
-		  <td>" + currentEntry["name"] + "</td>\
-		  <td>" + currentEntry["price"] + "</td>\
-		  <td>" + currentEntry["email"] + "</td>\
-	  <td id='" + currentEntry["uuid"] + "'></td>\
-		  <td><a class='btn-small' href=\"details.html?" + currentEntry["uuid"] + "\"><i class='fas fa-ellipsis-h'></i></a>\
-		  <a class='btn-small' href='mailto:" + currentEntry["email"] + "'><i class='fas fa-reply'></i></a>\
-		  <a class='btn-small delete' onclick=\"passPrompt('" + currentEntry["uuid"] + "', this)\"><i class='fas fa-trash-alt'></i></a</td>\
-		  </tr>";
+		  htmlStr += `<tr>
+		  <td>${currentEntry["bookName"]}</td>
+		  <td>${currentEntry["name"]}</td>
+		  <td>${currentEntry["price"]}</td>
+		  <td>${currentEntry["email"]}</td>
+		  <td id='${currentEntry["uuid"]}'></td>
+		  <td><a class='btn-small' href="details.html?${currentEntry["uuid"]}"><i class='fas fa-ellipsis-h'></i></a>
+		  <a class='btn-small' href='mailto:${currentEntry["email"]}'><i class='fas fa-reply'></i></a>
+		  <a class='btn-small delete' onclick="passPrompt('${currentEntry["uuid"]}', this)"><i class='fas fa-trash-alt'></i></a</td>
+		  </tr>`;
 		}
 
 		htmlStr += "</tbody></table>";
@@ -125,8 +125,7 @@ function loadSelectData() {
 
   for(var i = 0; i < data.length; i++) {
     var currentEntry = data[i];
-    htmlStr += "<option value=\"" + currentEntry["uuid"] + "\" >"
-    + currentEntry[inner] + "</option>";
+    htmlStr += `<option value="${currentEntry["uuid"]}">${currentEntry[inner]}</option>`;
   }
 
   subjectDown.html(htmlStr);
@@ -134,7 +133,7 @@ function loadSelectData() {
 
 // Populates a single table with textbook search results
 function loadSearchedTextbooks(tableID) {
-  var table = document.getElementById(tableID);
+  var table = $(`#${tableID}`);
   var htmlStr = "";
 
   if(queriedBookData.length > 0) {
@@ -149,22 +148,22 @@ function loadSearchedTextbooks(tableID) {
     for(var i = 0; i < queriedBookData.length; i++) {
       var currentEntry = queriedBookData[i];
 
-      htmlStr += "<tr>\
-      <td>" + currentEntry["bookName"] + "</td>\
-      <td>" + currentEntry["author"] + "</td>\
-      <td>" + currentEntry["isbn"] + "</td>\
-      <td>" + currentEntry["edition"] + "</td>\
-      <td><a class='btn-small' onclick=\"set_book_info(" + i.toString() + ")\"]><i class='fas fa-arrow-right'></i></a></td>\
-      </tr>";
+      htmlStr += `<tr>
+      <td>${currentEntry["bookName"]}</td>
+      <td>${currentEntry["author"]}</td>
+      <td>${currentEntry["isbn"]}</td>
+      <td>${currentEntry["edition"]}</td>
+      <td><a class='btn-small' onclick="set_book_info(${i})"><i class='fas fa-arrow-right'></i></a></td>
+      </tr>`;
     }
-	table.classList.remove("empty");
+	table.removeClass("empty");
   }
   else {
     htmlStr += "<tr><td>No textbooks found</td></tr>";
-	table.classList.add("empty");
+	table.addClass("empty");
   }
 
-  table.innerHTML = htmlStr;
+  table.html(htmlStr);
 
 }
 

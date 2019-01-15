@@ -63,7 +63,7 @@ function display_message(msg) {
 function hideMessage() {
 	// So that on reload the message will still be gone
 	var url = window.location.href.split(/[?#]/)[0];
-	window.history.replaceState({}, document.title, url + "?state=" + state);
+	window.history.replaceState({}, document.title, `${url}?state=${state}`);
 	// Add a class to the messagebox so that it will hide
 	msgBox.addClass("hide");
 	msgBox.on("transitionend", function() {

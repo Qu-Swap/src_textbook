@@ -15,11 +15,11 @@ function insertData(postReq, tableID) {
     var bookForm = $("#bookForm");
     var bookData = new FormData(bookForm[0]);
 
-    dataStr += "&" + data_to_string(bookData) + "&subject_id=" + subjectID;
+    dataStr += `&${data_to_string(bookData)}&subject_id=${subjectID}`;
   }
   // If the user came directly from 2 states ago – selected existing book
   else if(searchState === TOTALSEARCHSTATES && prevSearchState === TOTALSEARCHSTATES - 2){
-    dataStr += "&book_id=" + selectBookInfo["uuid"];
+    dataStr += `&book_id=${selectBookInfo["uuid"]}`;
   }
   else {
     display_message(MESSAGES.BOOK);
@@ -30,7 +30,7 @@ function insertData(postReq, tableID) {
     if (this.readyState == 4 && this.status == 200) {
     var msgState = state === STATES.SELL ? MESSAGES.CREATE_OFFER : MESSAGES.CREATE_REQUEST;
 		// Redirect the user to the success page
-		window.location.href = "offers.html?state=" + state + "&msg=" + msgState;
+		window.location.href = `offers.html?state=${state}&msg=${msgState}`;
 	}
   };
   ajax.open("POST", postReq, true);
@@ -173,7 +173,7 @@ function data_to_string(formData) {
     if(c != 0) str += "&";
     else c = 1;
 
-    str += pair[0] + "=" + remove_special(pair[1]);
+    str += `${pair[0]}=${remove_special(pair[1])}`;
 
     entry = entries.next();
   }
