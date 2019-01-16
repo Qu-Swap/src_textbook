@@ -9,18 +9,40 @@ module.exports = {
     });
   },
   insert: function(req, res) {
-    var id = global.uuid();
-    var bookName = req.body.bookName;
-    var isbn = req.body.isbn;
-    var author = req.body.author;
-    var publisher = req.body.publisher;
-    var edition = req.body.edition;
-    var subject_id = req.body.subject_id;
-    var data = [id, bookName, isbn, author, publisher, edition, subject_id];
+    return new Promise(function(resolve, reject) {
+      // If the book_id is not empty, then the user has selected an existing book
+      if(req.body.book_id) {
+        resolve(req.body.book_id);
+        return;
+      }
 
-    global.db.run("INSERT INTO textbooks VALUES(?, ?, ?, ?, ?, ?, ?)", data);
+      var id = global.uuid();
+      var bookName = req.body.bookName;
+      var isbn = req.body.isbn;
+      var author = req.body.author;
+      var publisher = req.body.publisher;
+      var edition = req.body.edition;
+      var subject_id = req.body.subject_id;
+      var data = [id, bookName, isbn, author, publisher, edition, subject_id];
 
-    return id;
+      global.db.all("SELECT * FROM textbooks WHERE isbn = (?)", isbn, (err, rows) => {
+        if(err) {
+          reject();
+          return;
+        }
+
+        /* If the book already exists (same ISBN), then force the user to choose
+        that one */
+        if(rows.length > 0) {
+          resolve(rows[0].uuid);
+        }
+        else {
+          global.db.run("INSERT INTO textbooks VALUES(?, ?, ?, ?, ?, ?, ?)", data, () => {
+            resolve(id);
+          });
+        }
+      });
+    });
   },
   search: function(req, res) {
     var query = req.body.query;

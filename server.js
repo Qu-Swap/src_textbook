@@ -100,15 +100,14 @@ function post_entry(req, res, table) {
     var email = req.body.email;
     var password = req.body.password;
     var time = new Date().toString();
-    var book_id = req.body.book_id;
+    var book_id;
     var comment_id = comments.insert(req, res);
 
-    // If the book_id is empty, then the user is inserting a new textbook
-    if(!book_id) {
-      book_id = textbooks.insert(req, res);
-    }
+    textbooks.insert(req, res).then(function(result) {
+      book_id = result;
 
-    passmod.hash_salt(password).then(function(hash) {
+      return passmod.hash_salt(password);
+    }).then(function(hash) {
       var data = [id, name, price, email, hash, time, book_id, comment_id];
 
       global.db.run("INSERT INTO " + table + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)", data, () => {
