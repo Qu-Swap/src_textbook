@@ -10,6 +10,7 @@ global.path = __dirname + "/data/";
 // Imports
 var textbooks = require("./server_modules/textbooks");
 var subjects = require("./server_modules/subjects");
+var courses = require("./server_modules/courses");
 var comments = require("./server_modules/comments");
 var schema = require("./server_modules/schema");
 var passmod = require("./server_modules/password")
@@ -167,6 +168,12 @@ app.get("/getBuyData", function(req, res) {
 // GET request for getting textbook data
 app.get("/getTextbookData", textbooks.get_table);
 
+// GET request for getting a list of subjects
+app.get('/getSubjects', subjects.get_subjects);
+
+// GET request for getting ALL course data
+app.get("/getCourseData", courses.get_all);
+
 // POST request for inserting sell data
 app.post("/postSellData", function(req, res) {
   post_entry(req, res, "sellers");
@@ -189,9 +196,6 @@ app.post('/deleteBuyData', function(req, res) {
 
 // POST request for searching textbooks
 app.post('/postSearchData', textbooks.search);
-
-// GET request for getting a list of subjects
-app.get('/getSubjects', subjects.get_subjects);
 
 // POST request for getting details for a selling offer
 app.post('/postDetailsSellingOffers', function(req, res) {
