@@ -122,6 +122,8 @@ function post_entry(req, res, table) {
 function delete_entry(req, res, table) {
   var id = req.body.id;
   var password = req.body.password;
+  var success = req.body.success === '1' ? 1 : 0;
+  console.log(req.body.success, success);
 
   global.db.all("SELECT * FROM " + table + " WHERE uuid = (?)", [id], (err, rows) => {
     if (err) {
@@ -143,9 +145,9 @@ function delete_entry(req, res, table) {
           var delTime = new Date().toString();
           var e = rows[0];
           var data = [e.uuid, e.name, e.price, e.email, e.password, e.time,
-          delTime, e.book_id, e.comment_id];
+          delTime, success, e.book_id, e.comment_id];
 
-          global.db.run("INSERT INTO " + table + "_history VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", data);
+          global.db.run("INSERT INTO " + table + "_history VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data);
         }
         else {
           res.send();

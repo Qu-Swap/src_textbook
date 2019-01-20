@@ -275,7 +275,34 @@
 	color: var(--theme-color) !important;
 	background-color: white;
 }
-.password-prompt {
+
+.success-prompt {
+	justify-content: center;
+  align-items: center;
+	flex-direction: column;
+}
+
+.success-prompt .box {
+	margin: 0;
+	padding: 1vh;
+}
+
+.close-corner {
+	position: absolute;
+	top: -19px;
+	right: -19px;
+
+	background-color: var(--theme-color);
+	color: white;
+	border-radius: 100%;
+}
+
+.close-corner:hover {
+	color: var(--theme-color) !important;
+	background-color: white;
+}
+
+.password-prompt, .success-prompt {
 	display: flex;
 	background-color: #f0f0f0;
 	border-radius: var(--input-rad);
