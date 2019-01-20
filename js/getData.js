@@ -3,6 +3,7 @@ var sellData;
 var buyData;
 var subjectData;
 var queriedBookData;
+var tableSort = {key: null, desc: false};
 
 var loaded;
 
@@ -78,7 +79,6 @@ function getData(getReq, elementID) {
     display_message(MESSAGES.NET, true);
   }
 }
-
 // Creates multiple tables in a div element to show buying/selling offers
 function loadTableData(tableID) {
 	var data = (tableID == "sellTable") ? sellData : buyData;
@@ -88,21 +88,26 @@ function loadTableData(tableID) {
 
     if(data.length > 0) {
 		htmlStr = "<table class=\"omni table table-striped table-bordered\">\
-					   <thead><tr><th>Textbook Name</th>";
+					   <thead><tr><th class='bookName'>Textbook Name</th>";
 		if (tableID === "sellTable") {
-			htmlStr += "<th>Seller Name</th>"
+			htmlStr += "<th class='name'>Seller Name</th>"
 		} else {
-			htmlStr += "<th>Buyer Name</th>"
+			htmlStr += "<th class='name'>Buyer Name</th>"
 		}
 
-		htmlStr += "<th>Price (USD)</th>\
-		<th>Contact Email</th>\
+		htmlStr += "<th class='price'>Price (USD)</th>\
+		<th class='email'>Contact Email</th>\
 		<th>Tags</th>\
 		<th>Actions</th>\
 		</tr></thead><tbody>";
 
-		for(var i = 0; i < data.length; i++) {
-		  var currentEntry = data[i];
+		if (tableSort.key && data[0].hasOwnProperty(tableSort.key)) {
+			// Sort the table data by a given key
+			// It's OK to lose the original order of `data` because it's just copied from `buyData` or `sellData`
+			data.sort((a, b) => a[tableSort.key] > b[tableSort.key] ? 1 : -1);
+			if (tableSort.desc) data.reverse();
+		}
+		for (let currentEntry of data) {
 
 		  htmlStr += `<tr>
 		  <td>${currentEntry["bookName"]}</td>
@@ -126,7 +131,7 @@ function loadTableData(tableID) {
 
   /* Populate tags after html is loaded, just in case the textbook request happens
   faster than the stringbuilder by some miracle */
-  for(entry of data) {
+  for (let entry of data) {
     tags.populate_tags(entry["book_id"], entry["uuid"]);
   }
 }
@@ -137,8 +142,7 @@ function loadSelectData() {
   var htmlStr = "";
   var inner = "subjectName";
 
-  for(var i = 0; i < data.length; i++) {
-    var currentEntry = data[i];
+  for (let currentEntry of data) {
     htmlStr += `<option value="${currentEntry["uuid"]}">${currentEntry[inner]}</option>`;
   }
 
@@ -182,8 +186,7 @@ function loadSearchedTextbooks(tableID) {
 }
 
 function get_subject_name(subjectID) {
-  for(var i = 0; i < subjectData.length; i++) {
-    var currentEntry = subjectData[i];
+  for (let currentEntry of subjectData) {
 
     if(currentEntry["uuid"] === subjectID) {
       return currentEntry["subjectName"];

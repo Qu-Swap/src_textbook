@@ -1,2 +1,6 @@
-.DS_Store
-.Rhistory
+**/.DS_Store
+**/.Rhistory
+.idea
+data/offers.db
+data/offers.db-journal
+node_modules/*

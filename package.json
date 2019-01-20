@@ -1,9 +1,10 @@
 {
-  "name": "testserver",
+  "name": "qu-swap",
   "version": "1.0.0",
-  "description": "test database",
+  "description": "Bookswap app with database",
   "main": "server.js",
   "dependencies": {
+    "bcrypt": "3.0.0",
     "express": "^4.16.4",
     "sqlite3": "^4.0.4",
     "uuid": "^3.3.2"
@@ -15,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/askdfjlas/src_textbook.git"
+    "url": "git+https://github.com/SR-Textbook-Service/src_textbook.git"
   },
-  "author": "",
+  "author": "Simon's Rock Homies",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/askdfjlas/src_textbook/issues"
+    "url": "https://github.com/SR-Textbook-Service/src_textbook/issues"
   },
-  "homepage": "https://github.com/askdfjlas/src_textbook#readme"
+  "homepage": "https://github.com/SR-Textbook-Service/src_textbook"
 }
