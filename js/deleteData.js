@@ -1,5 +1,4 @@
 function removeData(deleteReq, tableID, id, password, complete, succ, fail) {
-  console.log(complete);
   var ajax = new XMLHttpRequest();
 
   ajax.onreadystatechange = function() {

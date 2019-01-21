@@ -123,7 +123,6 @@ function delete_entry(req, res, table) {
   var id = req.body.id;
   var password = req.body.password;
   var success = req.body.success === '1' ? 1 : 0;
-  console.log(req.body.success, success);
 
   global.db.all("SELECT * FROM " + table + " WHERE uuid = (?)", [id], (err, rows) => {
     if (err) {
