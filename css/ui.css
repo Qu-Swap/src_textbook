@@ -217,7 +217,21 @@
   width: 100%;
   min-width: 800px;
 }
-
+.omni th {
+	white-space: nowrap;
+}
+.omni th.sort {
+	cursor: pointer;
+	position: relative;
+}
+.omni th.sort i {
+	position: absolute;
+	right: 0.75rem;
+	line-height: 1.15em;
+	z-index: 10;
+	color: var(--tag-color);
+	font-size: 1.5em;
+}
 .omni thead, .omni tr {
 	width: 100%;
 	display: table;
@@ -241,10 +255,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.omni td:nth-child(3)::before {
-	content: '$';
-}
-.omni td:last-child {
+.omni td.btn-actions {
 	white-space: nowrap;
 	overflow-wrap: normal;
 	overflow: visible;

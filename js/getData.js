@@ -67,22 +67,22 @@ function getData(getReq, elementID) {
 }
 // Creates multiple tables in a div element to show buying/selling offers
 function loadTableData(tableID) {
-	var data = (tableID == "sellTable") ? sellData : buyData;
+	var data = ((tableID == "sellTable") ? sellData : buyData).slice();
 
 	var table = $("#" + tableID);
 	var htmlStr;
 
     if(data.length > 0) {
 		htmlStr = "<table class=\"omni table table-striped table-bordered\">\
-					   <thead><tr><th class='bookName'>Textbook Name</th>";
+					   <thead><tr><th class='sort' data-sort='bookName'>Textbook Name</th>";
 		if (tableID === "sellTable") {
-			htmlStr += "<th class='name'>Seller Name</th>"
+			htmlStr += "<th class='sort' data-sort='name'>Seller Name</th>"
 		} else {
-			htmlStr += "<th class='name'>Buyer Name</th>"
+			htmlStr += "<th class='sort' data-sort='name'>Buyer Name</th>"
 		}
 
-		htmlStr += "<th class='price'>Price (USD)</th>\
-		<th class='email'>Contact Email</th>\
+		htmlStr += "<th class='sort' data-sort='price'>Price</th>\
+		<th class='sort' data-sort='email'>Contact Email</th>\
 		<th>Tags</th>\
 		<th>Actions</th>\
 		</tr></thead><tbody>";
@@ -98,10 +98,10 @@ function loadTableData(tableID) {
 		  htmlStr += `<tr>
 		  <td>${currentEntry["bookName"]}</td>
 		  <td>${currentEntry["name"]}</td>
-		  <td>${currentEntry["price"]}</td>
+		  <td>$${currentEntry["price"]}</td>
 		  <td>${currentEntry["email"]}</td>
 		  <td id='${currentEntry["uuid"]}'></td>
-		  <td><a class='btn-small' href="details.html?${currentEntry["uuid"]}"><i class='fas fa-ellipsis-h'></i></a>
+		  <td class='btn-actions'><a class='btn-small' href="details.html?${currentEntry["uuid"]}"><i class='fas fa-ellipsis-h'></i></a>
 		  <a class='btn-small' href='mailto:${currentEntry["email"]}'><i class='fas fa-reply'></i></a>
 		  <a class='btn-small delete' onclick="passPrompt('${currentEntry["uuid"]}', this)"><i class='fas fa-trash-alt'></i></a</td>
 		  </tr>`;
@@ -114,7 +114,31 @@ function loadTableData(tableID) {
 	}
 
   table.html(htmlStr);
-
+  if (tableSort.key) {
+	  var icon = $(document.createElement("i"));
+	  icon.addClass("fas sort-icon");
+	  icon.addClass(tableSort.desc ? "fa-caret-down" : "fa-caret-up");
+	  
+	  $(`th.sort[data-sort='${tableSort.key}']`).append(icon);
+  }
+  
+  // Add sorting options to the header
+  $('th.sort').click(function (){
+	// We want the sort to cycle through three states
+	if (tableSort.key != this.dataset.sort) {
+		// col is the new sort
+		tableSort.key = this.dataset.sort;
+		tableSort.desc = false;
+	}
+	else {
+		if (!tableSort.desc) {
+			tableSort.desc = true;
+		} else {
+			tableSort.key = null;
+		}
+	}
+	loadTableData(tableID);
+  });
   /* Populate tags after html is loaded, just in case the textbook request happens
   faster than the stringbuilder by some miracle */
   for (let entry of data) {
