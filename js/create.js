@@ -22,12 +22,12 @@ function set_inactive() {
 // Update the layout depending on whether "Buy Books" or "Sell Books" is selected
 function update_layout(val) {
   state = val;
-  
+
   if (!nav.hasClass("sell") && !nav.hasClass("buy")) {
 	  nav.addClass("no-transition");
 	  nav.one("click", function() {nav.removeClass("no-transition"); });
   }
-  
+
   set_inactive();
 
   switch(state) {
@@ -44,7 +44,7 @@ function update_layout(val) {
       merchantName.html("Seller name");
       break;
   }
-  
+
 }
 
 function book_change() {
@@ -116,7 +116,7 @@ function set_book_info(index) {
 }
 
 function toggle_element(elementID) {
-  var el = $(`#{elementID}`);
+  var el = $(`#${elementID}`);
 
   if(el.css("display") == "none" ) {
     el.css("display", "block");

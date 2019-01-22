@@ -1,0 +1,59 @@
+body {
+  overflow-y: scroll !important;
+}
+
+.label {
+  display: block;
+  height: 50px;
+  width: 80%;
+
+  margin: 10px auto;
+  text-align: center;
+  line-height: 50px;
+
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px #0004;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-box {
+  margin: 20px auto 10px auto;
+  padding: 0;
+
+	width: calc(100% - 150px);
+  height: 50px;
+
+  display: table;
+  table-layout: fixed;
+}
+
+.header {
+  text-align: center;
+  display: table-cell;
+
+  vertical-align: middle;
+  overflow: hidden;
+
+  font-weight: bold;
+}
+
+.subject-drop {
+  background-color: var(--theme-color);
+  color: white;
+  transition: 0.1s color ease-out, 0.1s background-color ease-out;
+}
+
+.subject-drop:hover {
+  background-color: white;
+  color: var(--theme-color);
+  cursor: pointer;
+}
+
+.course {
+  background-color: var(--tag-color);
+  color: white;
+}

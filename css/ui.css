@@ -286,7 +286,34 @@
 	color: var(--theme-color) !important;
 	background-color: white;
 }
-.password-prompt {
+
+.success-prompt {
+	justify-content: center;
+  align-items: center;
+	flex-direction: column;
+}
+
+.success-prompt .box {
+	margin: 0;
+	padding: 1vh;
+}
+
+.close-corner {
+	position: absolute;
+	top: -19px;
+	right: -19px;
+
+	background-color: var(--theme-color);
+	color: white;
+	border-radius: 100%;
+}
+
+.close-corner:hover {
+	color: var(--theme-color) !important;
+	background-color: white;
+}
+
+.password-prompt, .success-prompt {
 	display: flex;
 	background-color: #f0f0f0;
 	border-radius: var(--input-rad);
@@ -301,7 +328,7 @@
 	border-bottom: none;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
-	
+
 }
 /* Details */
 .floating-btn.indent {
@@ -340,7 +367,8 @@
 	border-radius: var(--input-rad);
 }
 .book-search h4 {
-	margin-bottom: 0.8rem;
+	margin-bottom: 0;
+	margin-right: 4px;
 }
 .book-search .form-group,
 #offerSearch .form-group {
@@ -442,7 +470,7 @@
 	border-radius: var(--input-rad);
 }
 #newEntry #inputForm {
-	overflow: auto;
+	overflow: visible;
 	margin-bottom: 10px;
 }
 .form-control {

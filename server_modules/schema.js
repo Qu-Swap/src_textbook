@@ -53,15 +53,15 @@ module.exports = {
         });
 
         global.db.run("CREATE TABLE sellers_history(uuid NOT NULL PRIMARY KEY, name TEXT, \
-        price DOUBLE, email TEXT, password TEXT, time TEXT, delTime TEXT, book_id, comment_id, FOREIGN KEY \
-        (book_id) REFERENCES textbooks(uuid), FOREIGN KEY (comment_id) REFERENCES \
+        price DOUBLE, email TEXT, password TEXT, time TEXT, delTime TEXT, success INTEGER, book_id, \
+        comment_id, FOREIGN KEY (book_id) REFERENCES textbooks(uuid), FOREIGN KEY (comment_id) REFERENCES \
         comments(uuid))", (err) => {
           if (err){}
         });
 
         global.db.run("CREATE TABLE buyers_history(uuid NOT NULL PRIMARY KEY, name TEXT, \
-        price DOUBLE, email TEXT, password TEXT, time TEXT, delTime TEXT, book_id, comment_id, FOREIGN KEY \
-        (book_id) REFERENCES textbooks(uuid), FOREIGN KEY (comment_id) REFERENCES \
+        price DOUBLE, email TEXT, password TEXT, time TEXT, delTime TEXT, success INTEGER, book_id, \
+        comment_id, FOREIGN KEY (book_id) REFERENCES textbooks(uuid), FOREIGN KEY (comment_id) REFERENCES \
         comments(uuid))", (err) => {
           if (err){}
         });

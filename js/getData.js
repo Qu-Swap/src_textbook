@@ -7,6 +7,20 @@ var tableSort = {key: null, desc: false};
 
 var loaded;
 
+// Basic format of GET request, will be better integrated someday
+function basic_get(getReq, callback) {
+  var ajax = new XMLHttpRequest();
+
+  ajax.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+      callback(JSON.parse(this.responseText));
+    }
+  }
+
+  ajax.open("GET", getReq, true);
+  ajax.send();
+}
+
 /* Function to request data from the server, it currently waits before
 all responses are received before populating the html elements. This is done
 in case in the future elements will need data from multiple responses. As a
@@ -103,7 +117,7 @@ function loadTableData(tableID) {
 		  <td id='${currentEntry["uuid"]}'></td>
 		  <td class='btn-actions'><a class='btn-small' href="details.html?${currentEntry["uuid"]}"><i class='fas fa-ellipsis-h'></i></a>
 		  <a class='btn-small' href='mailto:${currentEntry["email"]}'><i class='fas fa-reply'></i></a>
-		  <a class='btn-small delete' onclick="passPrompt('${currentEntry["uuid"]}', this)"><i class='fas fa-trash-alt'></i></a</td>
+		  <a class='btn-small delete' onclick="successPrompt('${currentEntry["uuid"]}', this)"><i class='fas fa-trash-alt'></i></a</td>
 		  </tr>`;
 		}
 
