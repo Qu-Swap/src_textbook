@@ -289,38 +289,44 @@
 
 .success-prompt {
 	justify-content: center;
-  align-items: center;
+	align-items: center;
 	flex-direction: column;
+	width: 350px;
 }
-
-.success-prompt .box {
-	margin: 0;
-	padding: 1vh;
+.success-prompt p {
+	margin-top: 6px;
+	margin-bottom: 6px;
 }
 
 .close-corner {
 	position: absolute;
-	top: -19px;
-	right: -19px;
-
-	background-color: var(--theme-color);
-	color: white;
-	border-radius: 100%;
+	top: 0;
+	right: 0;
 }
-
 .close-corner:hover {
-	color: var(--theme-color) !important;
-	background-color: white;
+	color: #777;
 }
-
+.success-prompt .btns {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.success-prompt .btns .btn {
+	margin: 0 5px;
+}
+.success-prompt .btns .btn:hover {
+	color: #555;	
+}
 .password-prompt, .success-prompt {
 	display: flex;
 	background-color: #f0f0f0;
 	border-radius: var(--input-rad);
 	padding: 0;
-	width: 50vw;
-	min-width: 400px;
 	border: 1px solid #ced4da;
+}
+.password-prompt {
+	width: 40vw;
+	min-width: 400px;
 }
 .password-prompt .form-control {
 	border-left: none;
@@ -408,6 +414,7 @@
 	transform: translateX(-17px) translateY(-22px);
 	display: inline-block;
 }
+
 #searchState2 {
 	overflow: auto;
 }

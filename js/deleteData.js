@@ -56,35 +56,34 @@ function closePrompt(el) {
 
 // Ask the user whether their transaction was successful
 function successPrompt(id, el) {
-  $('.success-prompt').remove();
-  $('.password-prompt').remove();
+	$('.success-prompt').remove();
+	$('.password-prompt').remove();
 
-  var container = (state === STATES.SELL) ? "#sellingOffers" : "#buyingOffers";
+	var container = (state === STATES.SELL) ? "#sellingOffers" : "#buyingOffers";
 
-  var form = $(document.createElement("form"));
+	var form = $(document.createElement("form"));
 	form.submit(function() {$(this).remove(); passPrompt(id, el, $(this).attr('action')); return false;});
 	form.addClass('success-prompt');
 
-	form.html(`<p class='box'>Was your transaction successful?</p> \
-			   <button type='button' onclick='closePrompt(this)' class='btn close-corner'><i class='fas fa-times'></i></button>\
-         <div class='box'>\
-			   <button type='submit' onclick="this.form.action='yes'" class='btn' style='margin-right: 2.5%'>Yes</button>\
-         <button type='submit' onclick="this.form.action='no'" class='btn'>No</button></div>`)
+	form.html(`<p>Was your transaction successful?</p> 
+			   <button type='button' onclick='closePrompt(this)' class='btn close-corner'><i class='fas fa-times'></i></button>
+			   <div class='btns'>
+					<button type='submit' onclick="this.form.action='yes'" class='btn'>Yes</button>
+					<button type='submit' onclick="this.form.action='no'" class='btn'>No</button>
+			   </div>`)
 
 	$(container).append(form);
 	var pos = $(el).offset();
 	pos.left -= form.width()
 	form.offset(pos);
-
-	form.find("input").focus();
 }
 
 function passPrompt(id, el, action) {
-  var complete = action === "yes" ? 1 : 0;
+	var complete = action === "yes" ? 1 : 0;
 
 	// Let's only have one prompt open at a time
 	$('.password-prompt').remove();
-  $('.success-prompt').remove();
+	$('.success-prompt').remove();
 
 	var container = (state === STATES.SELL) ? "#sellingOffers" : "#buyingOffers";
 
