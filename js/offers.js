@@ -42,6 +42,8 @@ function update_layout(val) {
 	  nav.addClass("sell");
       break;
   }
+  let url = window.location.href.split(/[?#]/)[0];
+  window.history.replaceState({}, document.title, `${url}?state=${state}`);
   
 }
 
