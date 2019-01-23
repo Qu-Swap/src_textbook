@@ -208,6 +208,22 @@
 	min-width: unset !important;
 }
 
+.table-bookName {
+	width: 35%;
+}
+
+.table-price {
+	width: 10%;
+}
+
+.table-actions {
+	width: 15%;
+}
+
+.table-name, .table-email, .table-tags, {
+	width: 20%;
+}
+
 .omni {
   border-collapse: collapse;
   table-layout: fixed;
@@ -315,7 +331,7 @@
 	margin: 0 5px;
 }
 .success-prompt .btns .btn:hover {
-	color: #555;	
+	color: #555;
 }
 .password-prompt, .success-prompt {
 	display: flex;
