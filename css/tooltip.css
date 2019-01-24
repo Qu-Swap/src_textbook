@@ -19,6 +19,7 @@
     transform-origin: 100% 0%;
 	opacity: 1;
 	transition-timing-function: steps(1, end);
+	pointer-events: auto;
 }
 
 .help-tip p{    /* The tooltip */
@@ -39,6 +40,7 @@
 	opacity: 0;
 	transition: 0.3s opacity;
 	transition-timing-function: steps(1, start);
+	pointer-events: none;
 }
 
 .help-tip p:before { /* The pointer of the tooltip */

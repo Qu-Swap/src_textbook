@@ -129,15 +129,15 @@ function loadTableData(tableID) {
 
   table.html(htmlStr);
   if (tableSort.key) {
+	  table.find(`th.sort i`).remove()
 	  var icon = $(document.createElement("i"));
 	  icon.addClass("fas sort-icon");
 	  icon.addClass(tableSort.desc ? "fa-caret-down" : "fa-caret-up");
-	  
-	  $(`th.sort[data-sort='${tableSort.key}']`).append(icon);
+	  table.find(`th.sort[data-sort='${tableSort.key}']`).append(icon);
   }
   
   // Add sorting options to the header
-  $('th.sort').click(function (){
+  table.find('th.sort').click(function (){
 	// We want the sort to cycle through three states
 	if (tableSort.key != this.dataset.sort) {
 		// col is the new sort
