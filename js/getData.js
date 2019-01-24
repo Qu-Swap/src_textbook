@@ -88,17 +88,17 @@ function loadTableData(tableID) {
 
     if(data.length > 0) {
 		htmlStr = "<table class=\"omni table table-striped table-bordered\">\
-					   <thead><tr><th class='sort' data-sort='bookName'>Textbook Name</th>";
+					   <thead><tr><th class='sort table-bookName' data-sort='bookName'>Textbook Name</th>";
 		if (tableID === "sellTable") {
-			htmlStr += "<th class='sort' data-sort='name'>Seller Name</th>"
+			htmlStr += "<th class='sort table-name' data-sort='name'>Seller Name</th>"
 		} else {
-			htmlStr += "<th class='sort' data-sort='name'>Buyer Name</th>"
+			htmlStr += "<th class='sort table-name' data-sort='name'>Buyer Name</th>"
 		}
 
-		htmlStr += "<th class='sort' data-sort='price'>Price</th>\
-		<th class='sort' data-sort='email'>Contact Email</th>\
-		<th>Tags</th>\
-		<th>Actions</th>\
+		htmlStr += "<th class='sort table-price' data-sort='price'>Price</th>\
+		<th class='sort table-email' data-sort='email'>Contact Email</th>\
+		<th class='table-tags'>Tags</th>\
+		<th class='table-actions'>Actions</th>\
 		</tr></thead><tbody>";
 
 		if (tableSort.key && data[0].hasOwnProperty(tableSort.key)) {
@@ -110,12 +110,12 @@ function loadTableData(tableID) {
 		for (let currentEntry of data) {
 
 		  htmlStr += `<tr>
-		  <td>${currentEntry["bookName"]}</td>
-		  <td>${currentEntry["name"]}</td>
-		  <td>$${currentEntry["price"]}</td>
-		  <td>${currentEntry["email"]}</td>
-		  <td id='${currentEntry["uuid"]}'></td>
-		  <td class='btn-actions'><a class='btn-small' href="details.html?${currentEntry["uuid"]}"><i class='fas fa-ellipsis-h'></i></a>
+		  <td class="table-bookName">${currentEntry["bookName"]}</td>
+		  <td class="table-name">${currentEntry["name"]}</td>
+		  <td class="table-price">$${currentEntry["price"]}</td>
+		  <td class="table-email">${currentEntry["email"]}</td>
+		  <td class="table-tags" id='${currentEntry["uuid"]}'></td>
+		  <td class='btn-actions table-actions'><a class='btn-small' href="details.html?${currentEntry["uuid"]}"><i class='fas fa-ellipsis-h'></i></a>
 		  <a class='btn-small' href='mailto:${currentEntry["email"]}'><i class='fas fa-reply'></i></a>
 		  <a class='btn-small delete' onclick="successPrompt('${currentEntry["uuid"]}', this)"><i class='fas fa-trash-alt'></i></a</td>
 		  </tr>`;
@@ -134,8 +134,9 @@ function loadTableData(tableID) {
 	  icon.addClass("fas sort-icon");
 	  icon.addClass(tableSort.desc ? "fa-caret-down" : "fa-caret-up");
 	  table.find(`th.sort[data-sort='${tableSort.key}']`).append(icon);
+
   }
-  
+
   // Add sorting options to the header
   table.find('th.sort').click(function (){
 	// We want the sort to cycle through three states
