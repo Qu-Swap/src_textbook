@@ -47,10 +47,27 @@
     color: var(--theme-color);
 }
 
+.guide-btn {
+	position: absolute;
+	right: 0;
+	margin: 8px;
+
+	background-color: #272727;
+	color: white !important;
+	border: 2px solid white;
+
+	opacity: 0.9;
+	transition: 0.2s;
+}
+
+.guide-btn:hover {
+	opacity: 1;
+}
+
 .welcome-image .footer li a {
 	color: white;
 	text-shadow: 0 0 5px #000a;
-	opacity: 0.8;
+	opacity: 0.85;
 }
 
 @media screen and (max-width: 768px), screen and (max-aspect-ratio: 3/2) {

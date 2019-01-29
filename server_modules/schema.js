@@ -17,7 +17,8 @@ module.exports = {
       global.db.serialize(() => {
         // Queries here will be serialized
         global.db.run("CREATE TABLE courses(uuid NOT NULL PRIMARY KEY, courseName TEXT, \
-        shortName TEXT, link TEXT, subject_id, FOREIGN KEY (subject_id) REFERENCES subjects(uuid))",
+        shortName TEXT, description TEXT, link TEXT, subject_id, FOREIGN KEY (subject_id) \
+        REFERENCES subjects(uuid))",
         (err) => {
           if (err){}
         });

@@ -1,3 +1,4 @@
+const COURSEFILE = "courses.json"
 var fs = require("fs");
 
 /* Function to manage setting up callbacks for insertion, this is needed otherwise
@@ -30,10 +31,12 @@ function insert_json_course(course, subject_id) {
   var id = global.uuid();
   var name = course["Name"];
   var short = course["Short"];
+  var desc = course["Description"];
   var link = course["Link"];
-  var data = [id, name, short, link, subject_id];
 
-  global.db.run("INSERT INTO courses VALUES(?, ?, ?, ?, ?)", data);
+  var data = [id, name, short, desc, link, subject_id];
+
+  global.db.run("INSERT INTO courses VALUES(?, ?, ?, ?, ?, ?)", data);
 
   return id;
 }
@@ -89,34 +92,5 @@ module.exports = {
 
       manage_json_data(course, course["Books"]);
     }
-  },
-  /* Function to get ALL course data: only used for the improved course guide */
-  get_all: function(req, res) {
-    global.db.all("SELECT a.courseName, a.shortName, b.subjectName FROM courses \
-    as a INNER JOIN subjects as b ON a.subject_id = b.uuid ORDER BY b.rowid",
-    (err, rows) => {
-      if(err) {
-        throw err;
-      }
-
-      // Change rows into 2D array of objects
-      var courseObj = [];
-      var prevSubject = rows[0]["subjectName"];
-      var currentList = [];
-
-      for(var i = 0; i < rows.length; i++) {
-        row = rows[i];
-
-        if(row["subjectName"] !== prevSubject) {
-          courseObj.push(currentList);
-          currentList = [];
-          prevSubject = row["subjectName"];
-        }
-
-        currentList.push(row);
-      }
-
-      res.send(courseObj);
-    });
   }
 }

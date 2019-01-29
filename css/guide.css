@@ -21,7 +21,7 @@ body {
 }
 
 .header-box {
-  margin: 20px auto 10px auto;
+  margin: 20px auto 20px auto;
   padding: 0;
 
 	width: calc(100% - 150px);
@@ -53,7 +53,53 @@ body {
   cursor: pointer;
 }
 
+.book-drop {
+  padding: 1% 2%;
+
+  font-weight: bold;
+  transition: 0.1s color ease-out, 0.1s background-color ease-out;
+  border: 2px solid black;
+}
+
+.book-drop:hover {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
 .course {
   background-color: var(--tag-color);
   color: white;
+  transition: 0.1s color ease-out, 0.1s background-color ease-out;
+}
+
+.course:hover {
+  background-color: white;
+  color: var(--tag-color);
+  cursor: pointer;
+}
+
+.course-header {
+  text-align: center;
+  margin-bottom: 4%;
+}
+
+.course-info {
+  width: 80%;
+  margin: auto;
+  padding: 4%;
+
+  border: 2px solid black;
+  border-radius: 8px;
+}
+
+.book-info {
+  margin-top: -2px;
+  padding: 1% 2%;
+
+  border: 2px solid black;
+}
+
+.book-info p {
+  margin-bottom: 0.5em;
 }

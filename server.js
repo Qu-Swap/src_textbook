@@ -35,6 +35,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use("/css", express.static(__dirname + "/css"));
 app.use("/js", express.static(__dirname + "/js"));
 app.use("/media", express.static(__dirname + "/media"));
+app.use("/data/courses.json", express.static(__dirname + "/data/courses.json"));
 app.use("/", express.static(__dirname + "/html"));
 
 // Send homepage
@@ -171,9 +172,6 @@ app.get("/getTextbookData", textbooks.get_table);
 
 // GET request for getting a list of subjects
 app.get('/getSubjects', subjects.get_subjects);
-
-// GET request for getting ALL course data
-app.get("/getCourseData", courses.get_all);
 
 // POST request for inserting sell data
 app.post("/postSellData", function(req, res) {
