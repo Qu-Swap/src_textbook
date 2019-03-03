@@ -1,4 +1,10 @@
 RewriteEngine On
+
+# Force HTTPS
+RewriteCond %{HTTPS} !on [NC]
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301]
+
+# Redirect to node.js server
 RewriteRule ^$ http://127.0.0.1:8085/ [P,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
