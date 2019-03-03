@@ -88,7 +88,7 @@ function show_form_info() {
   <p>ISBN: ${selectBookInfo["isbn"]}</p>
   <p>Edition/Copyright: ${selectBookInfo["edition"]}</p>
   <p>Publisher: ${selectBookInfo["publisher"]}</p>
-  <p>Subject: ${selectBookInfo["subjectName"] ? selectBookInfo["subjectName"] : get_subject_name(subjectID)} </p>`;
+  <p>Subject: ${selectBookInfo["subjectName"] ? selectBookInfo["subjectName"] : getDataModule.get_subject_name(subjectID)} </p>`;
 
   bookInfo.html(htmlStr);
   update_search_layout(4);
@@ -110,7 +110,7 @@ function info_from_form() {
 }
 
 function set_book_info(index) {
-  selectBookInfo = queriedBookData[index];
+  selectBookInfo = getDataModule.queriedBookData[index];
 
   show_form_info();
 }
@@ -156,5 +156,5 @@ function init() {
   update_search_layout(1);
 
   loaded = [];
-  getData('getSubjects', 'subjectDown');
+  getDataModule.getData('getSubjects', 'subjectDown');
 }

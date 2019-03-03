@@ -25,7 +25,7 @@ function set_inactive() {
 function update_layout(val) {
   state = val;
   // If this is the first time we're switching
-  
+
   if (!nav.hasClass("sell") && !nav.hasClass("buy")) {
 	  nav.addClass("no-transition");
 	  nav.one("click", function() {nav.removeClass("no-transition"); });
@@ -44,7 +44,7 @@ function update_layout(val) {
   }
   let url = window.location.href.split(/[?#]/)[0];
   window.history.replaceState({}, document.title, `${url}?state=${state}`);
-  
+
 }
 
 function newOffer() {
@@ -69,7 +69,7 @@ function init() {
   display_message(query.msg || MESSAGES.NONE);
 
   loaded = [];
-  getData('getSellData', 'sellTable');
-  getData('getBuyData', 'buyTable');
+  getDataModule.getData('getSellData', 'sellTable');
+  getDataModule.getData('getBuyData', 'buyTable');
 
 }

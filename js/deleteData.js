@@ -6,24 +6,24 @@ function removeData(deleteReq, tableID, id, password, complete, succ, fail) {
       if(this.status == 200) {
         if (!this.responseText) {
           display_message(MESSAGES.PASS, true);
-		  fail();
+		      fail();
         }
         else {
           var data = JSON.parse(this.responseText);
           if(tableID === "buyTable") {
-            buyData = data;
+            getDataModule.buyData = data;
           }
           else {
-            sellData = data;
+            getDataModule.sellData = data;
           }
 
-          loadTableData(tableID);
-		  succ();
+          getDataModule.loadTableData(tableID);
+		      succ();
         }
       }
       else if(this.status == 269) {
         display_message(MESSAGES.ERR);
-		fail();
+		    fail();
         updateData("refresh");
       }
     }
@@ -65,7 +65,7 @@ function successPrompt(id, el) {
 	form.submit(function() {$(this).remove(); passPrompt(id, el, $(this).attr('action')); return false;});
 	form.addClass('success-prompt');
 
-	form.html(`<p>Was your transaction successful?</p> 
+	form.html(`<p>Was your transaction successful?</p>
 			   <button type='button' onclick='closePrompt(this)' class='btn close-corner'><i class='fas fa-times'></i></button>
 			   <div class='btns'>
 					<button type='submit' onclick="this.form.action='yes'" class='btn'>Yes</button>

@@ -77,13 +77,13 @@ function basic_request(tableID) {
       var data = JSON.parse(this.responseText);
 
       if(tableID === "buyTable") {
-        buyData = data;
+        getDataModule.buyData = data;
       }
       else {
-        sellData = data;
+        getDataModule.sellData = data;
       }
 
-      loadTableData(tableID);
+      getDataModule.loadTableData(tableID);
     }
   }
 
@@ -138,9 +138,9 @@ function searchTextbooks(postReq, tableID) {
 
   ajax.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
-      queriedBookData = JSON.parse(this.responseText);
+      getDataModule.queriedBookData = JSON.parse(this.responseText);
 
-      loadSearchedTextbooks(tableID);
+      getDataModule.loadSearchedTextbooks(tableID);
     }
   }
 

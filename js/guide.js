@@ -73,7 +73,7 @@ guide = function() {
   }
 
   function init() {
-    basic_get("/data/courses.json", populate_courses);
+    getDataModule.basic_get("/data/courses.json", populate_courses);
   }
 
   return {
