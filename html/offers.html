@@ -45,7 +45,7 @@
 			<p id="msgText"></p>
 			<i class="fas fa-times close-btn" onclick="hideMessage()"></i>
 		</div>
-		<form id="offerSearch" onsubmit="updateData('search'); return false" autocomplete="off">
+		<form id="offerSearch" onsubmit="updateDataModule.updateData('search'); return false" autocomplete="off">
 			<div class="form-group">
 				<input name="query" type="text" class="form-control" id="exampleInputSearch" placeholder="Search">
 				<button type="submit" class="btn"><i class="fas fa-search"></i></button>

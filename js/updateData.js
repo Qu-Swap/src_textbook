@@ -1,187 +1,192 @@
-function insertData(postReq, tableID) {
-  var ajax = new XMLHttpRequest();
+updateDataModule = function() {
+  function insertData(postReq, tableID) {
+    var ajax = new XMLHttpRequest();
 
-  var form = $("#inputForm");
-  var data = new FormData(form[0]);
-  if (data.get("price").startsWith("$")) {
-	data.set("price", data.get("price").substring(1));
-  }
-
-  var dataStr = data_to_string(data);
-
-  /* If the user is at the last search state (i.e. the confirmation thing) and
-  was at the new book details form previously */
-  if(searchState === TOTALSEARCHSTATES && prevSearchState === TOTALSEARCHSTATES - 1) {
-    var bookForm = $("#bookForm");
-    var bookData = new FormData(bookForm[0]);
-
-    dataStr += `&${data_to_string(bookData)}&subject_id=${subjectID}`;
-  }
-  // If the user came directly from 2 states ago – selected existing book
-  else if(searchState === TOTALSEARCHSTATES && prevSearchState === TOTALSEARCHSTATES - 2){
-    dataStr += `&book_id=${selectBookInfo["uuid"]}`;
-  }
-  else {
-    display_message(MESSAGES.BOOK);
-    return;
-  }
-
-  ajax.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-    var msgState = state === STATES.SELL ? MESSAGES.CREATE_OFFER : MESSAGES.CREATE_REQUEST;
-		// Redirect the user to the success page
-		window.location.href = `offers.html?state=${state}&msg=${msgState}`;
-	}
-  };
-  ajax.open("POST", postReq, true);
-  ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  ajax.send(dataStr);
-
-/*   if(bookForm) {
-    bookForm.reset();
-  }
-  form.reset();
-
-  update_search_layout(1); */
-
-}
-
-// A very basic search request
-function search_data(postReq, tableID) {
-  var ajax = basic_request(tableID);
-
-  var form = $("#offerSearch");
-  var data = new FormData(form[0]);
-
-  var dataStr = data_to_string(data);
-
-  ajax.open("POST", postReq, true);
-  ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  ajax.send(dataStr);
-}
-
-// Refresh the data in a table
-function refresh_data(getReq, tableID) {
-  var ajax = basic_request(tableID);
-
-  ajax.open("GET", getReq, true);
-  ajax.send();
-}
-
-// The basic format for a POST request which populates one of the tables
-function basic_request(tableID) {
-  var ajax = new XMLHttpRequest();
-
-  ajax.onreadystatechange = function() {
-    if(this.readyState == 4 && this.status == 200) {
-      var data = JSON.parse(this.responseText);
-
-      if(tableID === "buyTable") {
-        getDataModule.buyData = data;
-      }
-      else {
-        getDataModule.sellData = data;
-      }
-
-      getDataModule.loadTableData(tableID);
+    var form = $("#inputForm");
+    var data = new FormData(form[0]);
+    if (data.get("price").startsWith("$")) {
+  	data.set("price", data.get("price").substring(1));
     }
+
+    var dataStr = data_to_string(data);
+
+    /* If the user is at the last search state (i.e. the confirmation thing) and
+    was at the new book details form previously */
+    if(searchState === TOTALSEARCHSTATES && prevSearchState === TOTALSEARCHSTATES - 1) {
+      var bookForm = $("#bookForm");
+      var bookData = new FormData(bookForm[0]);
+
+      dataStr += `&${data_to_string(bookData)}&subject_id=${subjectID}`;
+    }
+    // If the user came directly from 2 states ago – selected existing book
+    else if(searchState === TOTALSEARCHSTATES && prevSearchState === TOTALSEARCHSTATES - 2){
+      dataStr += `&book_id=${selectBookInfo["uuid"]}`;
+    }
+    else {
+      display_message(MESSAGES.BOOK);
+      return;
+    }
+
+    ajax.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+      var msgState = state === STATES.SELL ? MESSAGES.CREATE_OFFER : MESSAGES.CREATE_REQUEST;
+  		// Redirect the user to the success page
+  		window.location.href = `offers.html?state=${state}&msg=${msgState}`;
+  	}
+    };
+    ajax.open("POST", postReq, true);
+    ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    ajax.send(dataStr);
   }
 
-  return ajax;
-}
+  // A very basic search request
+  function search_data(postReq, tableID) {
+    var ajax = basic_request(tableID);
 
-function updateData(option) {
-  try {
-    switch(option) {
-      case "insert":
-        switch(state) {
-          case STATES.BUY:
-            insertData(BUYREQUEST[0], BUYREQUEST[1]);
-            break;
-          case STATES.SELL:
-            insertData(SELLREQUEST[0], SELLREQUEST[1]);
-            break;
+    var form = $("#offerSearch");
+    var data = new FormData(form[0]);
+
+    var dataStr = data_to_string(data);
+
+    ajax.open("POST", postReq, true);
+    ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    ajax.send(dataStr);
+  }
+
+  // Refresh the data in a table
+  function refresh_data(getReq, tableID) {
+    var ajax = basic_request(tableID);
+
+    ajax.open("GET", getReq, true);
+    ajax.send();
+  }
+
+  // The basic format for a POST request which populates one of the tables
+  function basic_request(tableID) {
+    var ajax = new XMLHttpRequest();
+
+    ajax.onreadystatechange = function() {
+      if(this.readyState == 4 && this.status == 200) {
+        var data = JSON.parse(this.responseText);
+
+        if(tableID === "buyTable") {
+          getDataModule.buyData = data;
         }
-        break;
-      case "search":
-        // Search through both tables
-        search_data(SELLREQUEST[2], SELLREQUEST[1]);
-        search_data(BUYREQUEST[2], BUYREQUEST[1]);
-        break;
-      // Refresh the data through a fresh GET request from the database
-      case "refresh":
-        switch(state) {
-          case STATES.BUY:
-            refresh_data('getSellData', 'sellTable');
-            break;
-          case STATES.SELL:
-            refresh_data('getBuyData', 'buyTable');
-            break;
+        else {
+          getDataModule.sellData = data;
         }
-        break;
+
+        getDataModule.loadTableData(tableID);
+      }
+    }
+
+    return ajax;
+  }
+
+  function updateData(option) {
+    try {
+      switch(option) {
+        case "insert":
+          switch(state) {
+            case STATES.BUY:
+              insertData(BUYREQUEST[0], BUYREQUEST[1]);
+              break;
+            case STATES.SELL:
+              insertData(SELLREQUEST[0], SELLREQUEST[1]);
+              break;
+          }
+          break;
+        case "search":
+          // Search through both tables
+          search_data(SELLREQUEST[2], SELLREQUEST[1]);
+          search_data(BUYREQUEST[2], BUYREQUEST[1]);
+          break;
+        // Refresh the data through a fresh GET request from the database
+        case "refresh":
+          switch(state) {
+            case STATES.BUY:
+              refresh_data('getSellData', 'sellTable');
+              break;
+            case STATES.SELL:
+              refresh_data('getBuyData', 'buyTable');
+              break;
+          }
+          break;
+      }
+    }
+
+    catch(e) {
+  	console.log(e);
+      display_message(MESSAGES.NET);
     }
   }
 
-  catch(e) {
-	console.log(e);
-    display_message(MESSAGES.NET);
+
+  function searchTextbooks(postReq, tableID) {
+    var ajax =  new XMLHttpRequest();
+
+    var form = $("#searchForm");
+    var data = new FormData(form[0]);
+    var dataStr = data_to_string(data);
+
+    ajax.onreadystatechange = function() {
+      if(this.readyState == 4 && this.status == 200) {
+        getDataModule.queriedBookData = JSON.parse(this.responseText);
+
+        getDataModule.loadSearchedTextbooks(tableID);
+      }
+    }
+
+    ajax.open("POST", postReq, true);
+    ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    ajax.send(dataStr);
+    form.trigger("reset");
   }
-}
 
-
-function searchTextbooks(postReq, tableID) {
-  var ajax =  new XMLHttpRequest();
-
-  var form = $("#searchForm");
-  var data = new FormData(form[0]);
-  var dataStr = data_to_string(data);
-
-  ajax.onreadystatechange = function() {
-    if(this.readyState == 4 && this.status == 200) {
-      getDataModule.queriedBookData = JSON.parse(this.responseText);
-
-      getDataModule.loadSearchedTextbooks(tableID);
+  // Update the book list using a column among book name, isbn, or author
+  function updateBookList() {
+    try {
+      searchTextbooks("postSearchData", "queriedBooks");
+      update_search_layout(2);
+    }
+    catch(e) {
+  	console.log(e);
+      display_message(MESSAGES.ERR);
     }
   }
 
-  ajax.open("POST", postReq, true);
-  ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  ajax.send(dataStr);
-  form.trigger("reset");
-}
+  function data_to_string(formData) {
+    var str = "";
 
-// Update the book list using a column among book name, isbn, or author
-function updateBookList() {
-  try {
-    searchTextbooks("postSearchData", "queriedBooks");
-    update_search_layout(2);
-  }
-  catch(e) {
-	console.log(e);
-    display_message(MESSAGES.ERR);
-  }
-}
+    var c = 0;
+    var entries = formData.entries();
+    var entry = entries.next();
+    while(!entry.done) {
+      var pair = entry.value;
+      if(c != 0) str += "&";
+      else c = 1;
 
-function data_to_string(formData) {
-  var str = "";
+      str += `${pair[0]}=${remove_special(pair[1])}`;
 
-  var c = 0;
-  var entries = formData.entries();
-  var entry = entries.next();
-  while(!entry.done) {
-    var pair = entry.value;
-    if(c != 0) str += "&";
-    else c = 1;
+      entry = entries.next();
+    }
 
-    str += `${pair[0]}=${remove_special(pair[1])}`;
-
-    entry = entries.next();
+    return str;
   }
 
-  return str;
-}
+  // Remove special characters (& and =) from query string
+  function remove_special(str) {
+    return str.replace(/&/g, "%26").replace(/=/g, "%3D");
+  }
 
-// Remove special characters (& and =) from query string
-function remove_special(str) {
-  return str.replace(/&/g, "%26").replace(/=/g, "%3D");
-}
+  return {
+    insertData: insertData,
+    search_data: search_data,
+    basic_request: basic_request,
+    updateData: updateData,
+    searchTextbooks: searchTextbooks,
+    updateBookList: updateBookList,
+    data_to_string: data_to_string,
+    remove_special: remove_special
+  }
+}();

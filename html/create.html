@@ -64,7 +64,7 @@
 						  If you can't find it, we'll allow you to insert a new one yourself.</p>
 					</div>
 				</div>
-			  <form id="searchForm" onsubmit="updateBookList(); return false" autocomplete="off">
+			  <form id="searchForm" onsubmit="updateDataModule.updateBookList(); return false" autocomplete="off">
 				<div class="form-group">
 				  <input name="query" type="text" class="form-control" id="exampleInputBookName1" placeholder="Search">
 				  <button type="submit" class="btn"><i class="fas fa-search"></i></button>
@@ -124,7 +124,7 @@
 
 	  <div id="newEntry">
 		<h4 class="smallbox">Details</h4>
-		<form id="inputForm" onsubmit="updateData('insert'); return false" autocomplete="off">
+		<form id="inputForm" onsubmit="updateDataModule.updateData('insert'); return false" autocomplete="off">
 		  <div class="form-group">
 			<label for="exampleInputName1" id="merchantName">Seller name</label>
 			<input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name" pattern="\S.*\S" required>

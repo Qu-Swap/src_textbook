@@ -24,7 +24,7 @@ function removeData(deleteReq, tableID, id, password, complete, succ, fail) {
       else if(this.status == 269) {
         display_message(MESSAGES.ERR);
 		    fail();
-        updateData("refresh");
+        updateDataModule.updateData("refresh");
       }
     }
   }
@@ -32,7 +32,7 @@ function removeData(deleteReq, tableID, id, password, complete, succ, fail) {
   ajax.open("POST", deleteReq, true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-  ajax.send(`id=${id}&password=${remove_special(password)}&success=${complete}`);
+  ajax.send(`id=${id}&password=${updateDataModule.remove_special(password)}&success=${complete}`);
 }
 
 function deleteData(id, form, complete) {
