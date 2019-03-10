@@ -118,7 +118,7 @@ getDataModule = function() {
   		  <td class="table-tags" id='${currentEntry["uuid"]}'></td>
   		  <td class='btn-actions table-actions'><a class='btn-small' href="details.html?${currentEntry["uuid"]}"><i class='fas fa-ellipsis-h'></i></a>
   		  <a class='btn-small' href='mailto:${currentEntry["email"]}'><i class='fas fa-reply'></i></a>
-  		  <a class='btn-small delete' onclick="successPrompt('${currentEntry["uuid"]}', this)"><i class='fas fa-trash-alt'></i></a</td>
+  		  <a class='btn-small delete' onclick="deleteDataModule.successPrompt('${currentEntry["uuid"]}', this)"><i class='fas fa-trash-alt'></i></a</td>
   		  </tr>`;
   		}
 
