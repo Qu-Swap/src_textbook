@@ -1,0 +1,48 @@
+.static-page {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.static-content {
+	padding: 20px 10px;
+}
+
+.page-title {
+	margin-bottom: 0.7em;
+
+}
+
+.static-content p {
+	color: #333;
+}
+
+.footer {
+	width: 100%;
+	list-style: none;
+	display: flex;
+	justify-content: center;
+	padding: 0;
+}
+
+.footer li {
+	margin: 4px 15px;
+}
+
+.footer li a {
+	color: black;
+	opacity: 0.6;
+	text-decoration: none;
+}
+
+.footer li a:hover {
+	opacity: 1 !important;
+}
+
+.quote {
+	display: block;
+	width: 80%;
+	margin: 5vh auto;
+}

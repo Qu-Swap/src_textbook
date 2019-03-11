@@ -1,0 +1,98 @@
+/* Code modified from https://tutorialzine.com/2014/07/css-inline-help-tips */
+.help-tip{
+    text-align: center;
+    background-color: var(--tag-color);
+    border-radius: 50%;
+    cursor: default;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.help-tip:before {
+    content:'?';
+    font-weight: bold;
+    color:#fff;
+}
+
+.help-tip:hover p{
+    display: block;
+    transform-origin: 100% 0%;
+	opacity: 1;
+	transition-timing-function: steps(1, end);
+	pointer-events: auto;
+}
+
+.help-tip p{    /* The tooltip */
+    position: relative;
+    left: -88px;
+    text-align: left;
+    background-color: #1E2021;
+    padding: 10px;
+    width: 200px;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    right: -4px;
+    color: #FFF;
+    font-size: 13px;
+    line-height: 1.4;
+
+	display: block;
+	opacity: 0;
+	transition: 0.3s opacity;
+	transition-timing-function: steps(1, start);
+	pointer-events: none;
+}
+
+.small.help-tip p {
+  left: -91.5px !important;
+}
+
+.help-tip p:before { /* The pointer of the tooltip */
+    position: absolute;
+    content: '';
+    width:0;
+    height: 0;
+    border:6px solid transparent;
+    border-bottom-color:#1E2021;
+    left: 94px;
+    top:-12px;
+}
+
+.help-tip p:after{ /* Prevents the tooltip from being hidden */
+    width: 100%;
+    height: 40px;
+    content: '';
+    position: absolute;
+    top:-40px;
+    left:0;
+}
+.help-tip.tip-header {
+	width: 1.5rem;
+    height: 1.5rem;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+}
+.help-tip.tip-label {
+	width: 1.1rem;
+    height: 1.1rem;
+	font-size: 0.9rem;
+	line-height: 1.1rem;
+}
+
+/* Styling for lines containing tooltips */
+.tip-line-header {
+	margin-bottom: 0.8rem;
+}
+.tip-line-header h4 {
+	display: inline-block;
+	vertical-align: middle;
+}
+.tip-line-label {
+	margin-bottom: 0.5rem;
+}
+.tip-line-label label {
+	margin-bottom: 0;
+	margin-right: 0.5%;
+	display: inline-block;
+	vertical-align: middle;
+}

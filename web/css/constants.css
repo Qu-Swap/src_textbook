@@ -1,0 +1,10 @@
+:root {
+	--theme-color: #BD2026;
+	--tag-color: #1076ED;
+	--input-rad: 4px;
+}
+@media screen and (max-width: 768px), screen and (max-aspect-ratio: 3/2) {
+	:root {
+		--input-rad: 6px;
+	}
+}
