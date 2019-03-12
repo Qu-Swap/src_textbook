@@ -1,5 +1,5 @@
 module.exports = {
-  insert: function(req, res) {
+  insert: function(req) {
     var id = global.uuid();
     var comment = req.body.details;
 

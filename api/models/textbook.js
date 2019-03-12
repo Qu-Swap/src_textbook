@@ -8,7 +8,7 @@ module.exports = {
         res.send(rows);
     });
   },
-  insert: function(req, res) {
+  insert: function(req) {
     return new Promise(function(resolve, reject) {
       // If the book_id is not empty, then the user has selected an existing book
       if(req.body.book_id) {
@@ -35,12 +35,12 @@ module.exports = {
         that one */
         if(rows.length > 0) {
           resolve(rows[0].uuid);
+          return
         }
-        else {
-          global.db.run("INSERT INTO textbooks VALUES(?, ?, ?, ?, ?, ?, ?)", data, () => {
-            resolve(id);
-          });
-        }
+
+        global.db.run("INSERT INTO textbooks VALUES(?, ?, ?, ?, ?, ?, ?)", data, () => {
+          resolve(id);
+        });
       });
     });
   },
