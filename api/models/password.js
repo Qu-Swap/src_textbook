@@ -2,7 +2,9 @@ var bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 module.exports = {
-  hash_salt: function(password) {
+  hash_salt: function(req) {
+    var password = req.body.password;
+
     return new Promise(function(resolve, reject) {
       bcrypt.hash(password, saltRounds, function(err, hash) {
         resolve(hash);

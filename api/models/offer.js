@@ -19,7 +19,12 @@ module.exports = {
       callback(rows);
     });
   },
-
+  // Get the entire row for a specific entry
+  get_full_single: function(uuid, table, callback) {
+    global.db.all("SELECT * FROM " + table + " WHERE uuid = (?)", [uuid], (err, rows) => {
+      callback(rows);
+    });
+  },
   // General method for inserting offers and requests
   post_entry: function(req, book_id, comment_id, hash, table) {
     return new Promise(function(resolve, reject) {
@@ -35,6 +40,26 @@ module.exports = {
       global.db.run("INSERT INTO " + table + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)", data, () => {
         resolve();
       });
+    });
+  },
+  // General method for searching one of the sell/buy tables based on a query
+  search_table: function(req, table, callback) {
+    var query = req.body.query;
+    var condition = "AND (a.name || b.bookName || b.author || c.subjectName LIKE \
+    (?) OR b.isbn = (?))";
+
+    this.get_table(table, callback, condition, ['%' + query + '%', query]);
+  },
+  // General method for looking up entry details based on uuid
+  search_table_details: function(uuid, table, callback) {
+    var condition = "AND a.uuid = (?)";
+
+    this.get_table(table, callback, condition, [uuid]);
+  },
+  // General method for offer deletion
+  delete_entry: function(uuid, table, callback) {
+    global.db.run("DELETE FROM " + table + " WHERE uuid = (?)", [uuid], () => {
+      callback();
     });
   }
 }
