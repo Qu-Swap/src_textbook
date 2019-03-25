@@ -36,13 +36,13 @@ module.exports = {
       }
     });
   },
-  get_subjects: function(req, res) {
+  get_subjects: function(callback) {
     global.db.all("SELECT * FROM SUBJECTS", (err, rows) => {
       if(err) {
         throw err;
       }
 
-      res.send(rows);
+      callback(rows);
     });
   }
 }

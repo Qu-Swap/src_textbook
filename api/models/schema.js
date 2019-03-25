@@ -1,6 +1,6 @@
 // Imports
-var subjects = require("./subjects");
-var courses = require("./courses");
+var Subject = require("./subject");
+var Course = require("./course");
 
 /* An error means that the database has already been populated, and so we can
 connect immediately */
@@ -11,8 +11,8 @@ var errHandler = function(err) {
 module.exports = {
   setup: function() {
     // Generate tables, ignore an error if the table already exists
-    subjects.create_table().then(() => {
-      return subjects.insert_subjects(global.path + "subjects.csv");
+    Subject.create_table().then(() => {
+      return Subject.insert_subjects(global.path + "subjects.csv");
     }).then(() => {
       global.db.serialize(() => {
         // Queries here will be serialized
@@ -35,7 +35,7 @@ module.exports = {
           if (err){}
           else {
             // Populate courses and their respective textbooks
-            courses.populate(global.path + "courses.json");
+            Course.populate(global.path + "courses.json");
           }
         });
 

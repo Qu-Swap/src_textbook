@@ -8,8 +8,7 @@ global.uuid = require("uuid/v4");
 global.path = __dirname + "/data/";
 
 // Imports
-var subjects = require("./api/models/subjects");
-var schema = require("./api/models/schema");
+var Schema = require("./api/models/schema");
 
 // Open database
 const sqlite3 = require('sqlite3').verbose();
@@ -19,10 +18,11 @@ global.db = new sqlite3.Database(global.path + "offers.db", sqlite3.OPEN_READWRI
   }
 
   // Setup schema
-  schema.setup();
+  Schema.setup();
 });
 
 // Middleware and controllers
+app.use(require("./api/middlewares"));
 app.use(require("./api/controllers"));
 
 // Static elements
@@ -37,20 +37,6 @@ app.use("/", express.static(__dirname + "/web/views/static"));
 app.get("/index.html", function(req, res) {
   res.sendFile(__dirname + "/web/views/static/welcome.html");
 });
-
-// Remove HTML tags
-app.use(function(req, res, next) {
-  for(var key in req.body) {
-    if(!req.body.hasOwnProperty(key)) continue;
-
-    req.body[key] = req.body[key].replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  }
-
-  next();
-});
-
-// GET request for getting a list of subjects
-app.get('/getSubjects', subjects.get_subjects);
 
 // Listen on the server
 server.listen(8085, function() {
