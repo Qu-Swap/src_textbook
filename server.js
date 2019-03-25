@@ -8,11 +8,8 @@ global.uuid = require("uuid/v4");
 global.path = __dirname + "/data/";
 
 // Imports
-var textbooks = require("./api/models/textbook");
 var subjects = require("./api/models/subjects");
-var courses = require("./api/models/courses");
 var schema = require("./api/models/schema");
-var passmod = require("./api/models/password")
 
 // Open database
 const sqlite3 = require('sqlite3').verbose();
@@ -52,17 +49,8 @@ app.use(function(req, res, next) {
   next();
 });
 
-// GET request for getting textbook data
-app.get("/getTextbookData", textbooks.get_table);
-
 // GET request for getting a list of subjects
 app.get('/getSubjects', subjects.get_subjects);
-
-// POST request for searching textbooks
-app.post('/postSearchData', textbooks.search);
-
-// POST request for getting tags for a certain book
-app.post('/postBookTags', textbooks.get_tags);
 
 // Listen on the server
 server.listen(8085, function() {

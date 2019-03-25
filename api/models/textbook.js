@@ -1,11 +1,11 @@
 module.exports = {
-  get_table: function(req, res) {
+  get_table: function(callback) {
     global.db.all("SELECT * FROM textbooks", (err, rows) => {
         if (err) {
           throw err;
         }
 
-        res.send(rows);
+        callback(rows);
     });
   },
   insert: function(req) {
@@ -44,9 +44,8 @@ module.exports = {
       });
     });
   },
-  search: function(req, res) {
-    var query = req.body.query;
-
+  // Search for textbooks based on book name, course name, etc.
+  search: function(query, callback) {
     global.db.all("SELECT a.rowid, a.*, b.subjectName FROM textbooks as a INNER JOIN \
     subjects as b ON a.bookName || a.author || a.isbn || b.subjectName LIKE (?) \
     AND a.subject_id = b.uuid UNION SELECT a.rowid, a.*, b.subjectName FROM \
@@ -59,16 +58,17 @@ module.exports = {
         throw err;
       }
 
-      res.send(rows);
+      callback(rows);
     });
   },
-  get_tags: function(req, res) {
+  // Get the tags for a book given its book_id
+  get_tags: function(uuid, callback) {
     global.db.all("SELECT a.predicate, b.shortName, b.courseName FROM \
     course_requirements AS a INNER JOIN courses AS b ON a.course_id = b.uuid \
-    AND a.book_id = (?)", [req.body.uuid], (err, rows) => {
+    AND a.book_id = (?)", [uuid], (err, rows) => {
       if(err) {}
 
-      res.send(rows);
+      callback(rows);
     });
   }
 };
