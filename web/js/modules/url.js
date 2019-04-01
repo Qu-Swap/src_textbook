@@ -21,38 +21,38 @@ function QueryStringToJSON() {
     return JSON.parse(JSON.stringify(result));
 }
 
-function display_message(msg) {
-	msgBox.css("display", "");
-	msgBox.removeClass("hide");
-	msgText.removeClass("fail");
+function display_message(box, text, msg) {
+	box.css("display", "");
+	box.removeClass("hide");
+	box.removeClass("fail");
 
 	switch (msg) {
 		case MESSAGES.CREATE_OFFER:
-			msgText.html("Offer was created successfully!");
+			text.html("Offer was created successfully!");
 			break;
 		case MESSAGES.CREATE_REQUEST:
-			msgText.html("Request was created successfully!");
+			text.html("Request was created successfully!");
 			break;
 		case MESSAGES.DELETE:
-			msgText.html("Listing was deleted successfully!");
+			text.html("Listing was deleted successfully!");
 			break;
 		case MESSAGES.BOOK:
-			msgText.html("Choose a textbook first.");
+			text.html("Choose a textbook first.");
 			break;
 		case MESSAGES.PASS:
-			msgText.html("Bad password.");
-			msgText.addClass("fail");
+			text.html("Bad password.");
+			text.addClass("fail");
 			break;
 		case MESSAGES.ERR:
-			msgText.html("An error occurred.");
-			msgText.addClass("fail");
+			text.html("An error occurred.");
+			text.addClass("fail");
 			break;
 		case MESSAGES.NET:
-			msgText.html("A network error occurred.");
-			msgText.addClass("fail");
+			text.html("A network error occurred.");
+			text.addClass("fail");
 			break;
 		default:
-			msgBox.css("display", "none");
+			box.css("display", "none");
 	}
 	/*
     if ((msgBox.offset().top - $(window).scrollTop()) > window.innerHeight) {
@@ -60,14 +60,14 @@ function display_message(msg) {
     } */
 
 }
-function hideMessage() {
+function hideMessage(box) {
 	// So that on reload the message will still be gone
 	var url = window.location.href.split(/[?#]/)[0];
 	window.history.replaceState({}, document.title, `${url}?state=${state}`);
 	// Add a class to the messagebox so that it will hide
-	msgBox.addClass("hide");
-	msgBox.on("transitionend", function() {
-		msgBox.css("display", "none");
+	box.addClass("hide");
+	box.on("transitionend", function() {
+		box.css("display", "none");
 	});
 
 }

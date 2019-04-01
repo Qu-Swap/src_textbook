@@ -1,4 +1,4 @@
-guide = function() {
+main = function() {
   var courseData = [];
 
   function populate_courses(data) {
@@ -77,7 +77,6 @@ guide = function() {
   }
 
   return {
-    populate_courses: populate_courses,
     init: init
   }
 }();

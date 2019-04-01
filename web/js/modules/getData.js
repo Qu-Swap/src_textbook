@@ -1,4 +1,6 @@
 getDataModule = function() {
+  const TOTALASSETS = 2;
+  
   var sellData;
   var buyData;
   var subjectData;
@@ -213,7 +215,6 @@ getDataModule = function() {
 
   function get_subject_name(subjectID) {
     for (let currentEntry of subjectData) {
-
       if(currentEntry["uuid"] === subjectID) {
         return currentEntry["subjectName"];
       }
