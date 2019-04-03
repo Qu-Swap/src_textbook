@@ -1,14 +1,15 @@
+// BUY = selling offers, SELL = buying offers
+const SELLREQUEST = ["postSellData", "sellTable", "postSearchSellingOffers"];
+const BUYREQUEST = ["postBuyData", "buyTable", "postSearchBuyingOffers"];
+const TOTALASSETS = 2;
+
+var state;
+var msgBox, msgText;
+
 main = function() {
-  // BUY = selling offers, SELL = buying offers
-  const SELLREQUEST = ["postSellData", "sellTable", "postSearchSellingOffers"];
-  const BUYREQUEST = ["postBuyData", "buyTable", "postSearchBuyingOffers"];
-
-  var state;
-
   var sellBtn, sellingOffers;
   var buyBtn, buyingOffers;
   var nav;
-  var msgBox, msgText;
 
   // Set both buttons at the top to be unselected
   function set_inactive() {

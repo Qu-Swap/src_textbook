@@ -23,16 +23,16 @@ updateDataModule = function() {
       dataStr += `&book_id=${selectBookInfo["uuid"]}`;
     }
     else {
-      display_message(MESSAGES.BOOK);
+      display_message(msgBox, msgText, MESSAGES.BOOK);
       return;
     }
 
     ajax.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-      var msgState = state === STATES.SELL ? MESSAGES.CREATE_OFFER : MESSAGES.CREATE_REQUEST;
-  		// Redirect the user to the success page
-  		window.location.href = `offers.html?state=${state}&msg=${msgState}`;
-  	}
+        var msgState = state === STATES.SELL ? MESSAGES.CREATE_OFFER : MESSAGES.CREATE_REQUEST;
+    		// Redirect the user to the success page
+    		window.location.href = `offers.html?state=${state}&msg=${msgState}`;
+      }
     };
     ajax.open("POST", postReq, true);
     ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -116,8 +116,8 @@ updateDataModule = function() {
     }
 
     catch(e) {
-  	console.log(e);
-      display_message(MESSAGES.NET);
+  	   console.log(e);
+       display_message(msgBox, msgText, MESSAGES.NET);
     }
   }
 
@@ -147,11 +147,11 @@ updateDataModule = function() {
   function updateBookList() {
     try {
       searchTextbooks("postSearchData", "queriedBooks");
-      update_search_layout(2);
+      main.update_search_layout(2);
     }
     catch(e) {
   	console.log(e);
-      display_message(MESSAGES.ERR);
+      display_message(msgBox, msgText, MESSAGES.ERR);
     }
   }
 

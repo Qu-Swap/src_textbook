@@ -9,6 +9,7 @@ var MESSAGES = Object.freeze(
 	 ERR: "e",
 	 NONE:"0"
 	});
+
 function QueryStringToJSON() {
     var pairs = location.search.slice(1).split('&');
 
@@ -24,7 +25,7 @@ function QueryStringToJSON() {
 function display_message(box, text, msg) {
 	box.css("display", "");
 	box.removeClass("hide");
-	box.removeClass("fail");
+	text.removeClass("fail");
 
 	switch (msg) {
 		case MESSAGES.CREATE_OFFER:
@@ -54,10 +55,6 @@ function display_message(box, text, msg) {
 		default:
 			box.css("display", "none");
 	}
-	/*
-    if ((msgBox.offset().top - $(window).scrollTop()) > window.innerHeight) {
-		msgBox.scrollIntoView({ block: "start", behavior: 'smooth' });
-    } */
 
 }
 function hideMessage(box) {

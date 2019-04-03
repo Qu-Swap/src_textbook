@@ -6,7 +6,7 @@ deleteDataModule = function() {
       if(this.readyState == 4) {
         if(this.status == 200) {
           if (!this.responseText) {
-            display_message(MESSAGES.PASS, true);
+            display_message(msgBox, msgText, MESSAGES.PASS);
   		      fail();
           }
           else {
@@ -23,7 +23,7 @@ deleteDataModule = function() {
           }
         }
         else if(this.status == 269) {
-          display_message(MESSAGES.ERR);
+          display_message(msgBox, msgText, MESSAGES.ERR);
   		    fail();
           updateDataModule.updateData("refresh");
         }
@@ -42,12 +42,12 @@ deleteDataModule = function() {
     var password = form.password.value;
     try {
       removeData(req, tableID, id, password, complete,
-  		function () {$(form).remove(); display_message(MESSAGES.DELETE, true);},
+  		function () {$(form).remove(); display_message(msgBox, msgText, MESSAGES.DELETE, true);},
   		function() {form.reset()});
     }
     catch(e) {
   	console.log(e);
-      display_message(MESSAGES.ERR);
+      display_message(msgBox, msgText, MESSAGES.ERR);
     }
   }
   function closePrompt(el) {

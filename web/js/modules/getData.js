@@ -1,6 +1,4 @@
 getDataModule = function() {
-  const TOTALASSETS = 2;
-  
   var sellData;
   var buyData;
   var subjectData;
@@ -78,7 +76,7 @@ getDataModule = function() {
     }
     catch (e) {
   	console.log(e);
-      display_message(MESSAGES.NET, true);
+      display_message(msgBox, msgText, MESSAGES.NET);
     }
   }
 
@@ -165,7 +163,6 @@ getDataModule = function() {
   }
 
   function loadSelectData() {
-
     var data = subjectData;
     var htmlStr = "";
     var inner = "subjectName";
@@ -199,7 +196,7 @@ getDataModule = function() {
         <td>${currentEntry["author"]}</td>
         <td>${currentEntry["isbn"]}</td>
         <td>${currentEntry["edition"]}</td>
-        <td><a class='btn-small' onclick="set_book_info(${i})"><i class='fas fa-arrow-right'></i></a></td>
+        <td><a class='btn-small' onclick="main.set_book_info(${i})"><i class='fas fa-arrow-right'></i></a></td>
         </tr>`;
       }
   	table.removeClass("empty");
