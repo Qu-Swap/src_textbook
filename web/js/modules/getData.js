@@ -7,20 +7,6 @@ getDataModule = function() {
 
   var loaded = [];
 
-  // Basic format of GET request, will be better integrated someday
-  function basic_get(getReq, callback) {
-    var ajax = new XMLHttpRequest();
-
-    ajax.onreadystatechange = function() {
-      if(this.readyState == 4 && this.status == 200) {
-        callback(JSON.parse(this.responseText));
-      }
-    }
-
-    ajax.open("GET", getReq, true);
-    ajax.send();
-  }
-
   /* Function to request data from the server, it currently waits before
   all responses are received before populating the html elements. This is done
   in case in the future elements will need data from multiple responses. As a
@@ -68,16 +54,6 @@ getDataModule = function() {
 
     ajax.open("GET", getReq, true);
     ajax.send();
-  }
-
-  function getData(getReq, elementID) {
-    try {
-      this.requestData(getReq, elementID);
-    }
-    catch (e) {
-  	console.log(e);
-      display_message(msgBox, msgText, MESSAGES.NET);
-    }
   }
 
   // Creates multiple tables in a div element to show buying/selling offers
@@ -228,7 +204,6 @@ getDataModule = function() {
     loaded: loaded,
 
     // Public functions
-    basic_get: basic_get,
     requestData: requestData,
     getData: getData,
     loadTableData: loadTableData,

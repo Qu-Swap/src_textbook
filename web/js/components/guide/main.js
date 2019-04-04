@@ -23,14 +23,14 @@ main = function() {
         // A parent div must be closed, other than the first iteration
         if(i !== 0) htmlStr += "</div>";
 
-        htmlStr += `<button class="subject-drop label" onclick="toggle_element\
+        htmlStr += `<button class="subject-drop label" onclick="layout.toggle_element\
         ('subject_${i}')">${course.Subject}</button>\
         <div id="subject_${i}" style="display: none">`;
 
         prevSubject = course.Subject;
       }
 
-      htmlStr += `<div class="course label" onclick="toggle_element\
+      htmlStr += `<div class="course label" onclick="layout.toggle_element\
       ('course_info_${i}')">${course.Short}</div>`;
 
       htmlStr += `<div class="course-info" id="course_info_${i}" \
@@ -38,7 +38,7 @@ main = function() {
       <h3 class="course-header">Course Info</h3>\
       <p><b>Full Course Name:</b> ${course.Name}</p>\
       <p><b>Description:</b> ${course.Description}</p>\
-      <div class="book-drop" onclick="toggle_element('books_${i}')">&#8250 Textbooks</div>\
+      <div class="book-drop" onclick="layout.toggle_element('books_${i}')">&#8250 Textbooks</div>\
       <div id="books_${i}" style="display: none">`;
 
       // Books dropdown
@@ -73,7 +73,7 @@ main = function() {
   }
 
   function init() {
-    getDataModule.basic_get("/data/courses.json", populate_courses);
+    request.get("/data/courses.json", populate_courses);
   }
 
   return {

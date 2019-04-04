@@ -65,8 +65,8 @@ main = function() {
     update_layout(query.state || STATES.BUY);
     display_message(msgBox, msgText, query.msg || MESSAGES.NONE);
 
-    getDataModule.getData('getSellData', 'sellTable');
-    getDataModule.getData('getBuyData', 'buyTable');
+    data.get('getSellData', 'sellTable');
+    data.get('getBuyData', 'buyTable');
   }
 
   return {

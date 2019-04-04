@@ -121,17 +121,6 @@ main = function() {
     show_form_info();
   }
 
-  function toggle_element(elementID) {
-    var el = $(`#${elementID}`);
-
-    if(el.css("display") == "none" ) {
-      el.css("display", "block");
-    }
-    else {
-      el.css("display", "none");
-    }
-  }
-
   function back() {
   	window.location.href = `offers.html?state=${state}`;
   }
